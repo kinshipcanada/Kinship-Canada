@@ -1,0 +1,125 @@
+import Navbar from '../../components/Root/Navbar.js'
+import Subnav from '../../components/Root/Subnav.js'
+import Loader from '../../components/Root/Loader.js'
+import LoginRequired from '../../components/Root/LoginRequired.js'
+
+import { supabase } from '../../lib/supabaseClient.js'
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
+
+export default function AppIndex() {
+
+	const [loading, setLoading] = useState(true)
+	const [user, setUser] = useState(null)
+	const [profile, setProfile] = useState(null)
+	const [proof, setProof] = useState(null)
+	const userLoggedIn = supabase.auth.user()
+
+	const fetchUser = async () => {
+		const userLoggedIn = supabase.auth.user()
+
+		if (userLoggedIn) {
+			setUser(userLoggedIn)
+			const profile = await supabase
+			  .from('profiles')
+			  .select()
+			  .eq('id', userLoggedIn.id)
+			setProfile(profile.data[0])
+			fetchProofs()
+		} else {
+			setLoading(false)
+		}
+	}
+
+	const fetchProofs = async () => {
+		const data = await supabase
+		  .from('proof')
+		  .select()
+
+		setProof(data.data)
+		setLoading(false)
+	}
+
+	useEffect(()=>{
+		fetchUser()
+	},[])
+
+	if (loading) {
+		return (
+			<div>
+				<Navbar />
+				<div className="relative min-h-screen">
+			      <main className="max-w-7xl mx-auto pb-10 pl-8 pr-8 pt-10">
+			        <div className="lg:grid lg:grid-cols-12 lg:gap-x-5">
+			          <Subnav />
+			          <div className="space-y-6 sm:px-6 lg:px-0 lg:col-span-9">
+			          	<div className = 'flex items-center justify-center'>
+			            	<Loader />
+			            </div>
+			          </div>
+			        </div>
+			      </main>
+			    </div>
+			</div>
+		)
+	} else {
+
+		if (user) {
+			return (
+				<div>
+					<Navbar />
+					<div className="relative min-h-screen">
+				      <main className="max-w-7xl mx-auto pb-10 pl-8 pr-8 pt-10">
+				        <div className="lg:grid lg:grid-cols-12 lg:gap-x-5">
+				          <Subnav />
+				          <div className="space-y-6 sm:px-6 lg:px-0 lg:col-span-9">
+				            Proof of donation, {profile.first_name}
+								<div>
+									{proof.map((proofItem) => (
+							          <div>
+							          	{proofItem.available ? 
+							          		<div id = {proofItem.id}>
+							          			Proof for your donation on {proofItem.created_at}
+												{proofItem.causes.causes.map((cause) => (
+										          <div>
+										          	{cause.cause} : ${cause.amount} donation
+										          </div>
+										        ))}
+										        <a href = {proofItem.proof_link} download>Download Proof Package</a>
+											</div>
+
+							          		: 
+
+											<div>
+												Proof isn't availiable, but is on the way.
+											</div>
+							          	}
+							          </div>
+							        ))}
+								</div>
+				          </div>
+				        </div>
+				      </main>
+				    </div>
+				</div>
+			)
+		} else {
+			return (
+				<div>
+					<Navbar />
+					<div className="relative min-h-screen">
+				      <main className="max-w-7xl mx-auto pb-10 pl-8 pr-8 pt-10">
+				        <div className="lg:grid lg:grid-cols-12 lg:gap-x-5">
+				          <Subnav />
+
+				          <div className="space-y-6 sm:px-6 lg:px-0 lg:col-span-9">
+				            <LoginRequired />
+				          </div>
+				        </div>
+				      </main>
+				    </div>
+				</div>
+			)
+		}
+	}
+}
