@@ -2,6 +2,7 @@ import Navbar from '../../components/Root/Navbar.js'
 import Subnav from '../../components/Root/Subnav.js'
 import FullPageLoad from '../../components/Root/FullPageLoad.js'
 import Loader from '../../components/Root/Loader.js'
+import LoginRequired from '../../components/Root/LoginRequired'
 
 import { supabase } from '../../lib/supabaseClient.js'
 import { useState, useEffect } from 'react'
@@ -11,7 +12,7 @@ export default function AppIndex() {
 
 	const [loading, setLoading] = useState(true)
 	const [user, setUser] = useState(null)
-	const [profile, setProfile] = useState(null)
+	const [profile, setProfile] = useState([])
 	const userLoggedIn = supabase.auth.user()
 
 	const fetchUser = async () => {
@@ -23,8 +24,14 @@ export default function AppIndex() {
 			  .from('profiles')
 			  .select()
 			  .eq('id', userLoggedIn.id)
-			setProfile(profile)
-			setLoading(false)
+
+			if (profile) {
+				setProfile(profile.data[0])
+				setLoading(false)
+			} else {
+				setProfile([])
+				setLoading(false)
+			}
 		} else {
 			setLoading(false)
 		}
@@ -63,7 +70,7 @@ export default function AppIndex() {
 				          <Subnav />
 
 				          <div className="space-y-6 sm:px-6 lg:px-0 lg:col-span-9">
-				            Welcome to your dashboard, {profile.data[0].first_name}
+				            Welcome to your dashboard, {profile.first_name}
 				          </div>
 				        </div>
 				      </main>

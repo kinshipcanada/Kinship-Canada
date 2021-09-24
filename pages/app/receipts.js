@@ -3,6 +3,7 @@ import Subnav from '../../components/Root/Subnav.js'
 import FullPageLoad from '../../components/Root/FullPageLoad.js'
 import Loader from '../../components/Root/Loader.js'
 import DownloadCard from '../../components/Receipts/DownloadCard.js'
+import LoginRequired from '../../components/Root/LoginRequired'
 
 import { supabase } from '../../lib/supabaseClient.js'
 import { useState, useEffect } from 'react'

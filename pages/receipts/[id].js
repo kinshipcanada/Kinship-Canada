@@ -4,25 +4,29 @@ import Head from 'next/head'
 import { supabase } from '../../lib/supabaseClient'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
-import html2canvas from 'html2canvas';
 
-export default function Receipt() {
+import {
+    PrinterIcon,
+    DownloadIcon
+} from '@heroicons/react/outline'
+
+export default function Receipt(props) {
 
     const [loading, setLoading] = useState(true)
     const [receipt, setReceipt] = useState(null)
+    const [id, setId] = useState(null)
     const [error, setError] = useState(null)
 
     const router = useRouter();
-    const id = router.query.id;
-
+    const ref = router.query.id;
     // FIX TO PASS VARIABLE UUID
 
-    const fetchReceipt = async (id) => {
-
+    const fetchReceipt = async (reference) => {
+        
         const { data, error } = await supabase
             .from('ayn')
             .select()
-            .eq('id', '0cd109dc-4f31-4773-81ae-ecde6bf256b5')
+            .eq('id', reference)
         
         if(error) {
             console.log(error.message)
@@ -34,9 +38,37 @@ export default function Receipt() {
         }
     }
 
+    const downloadReceipt = async (event) => {
+        
+        event.preventDefault();
+
+        router.push('https://ugpxhhdljfbaswjteasm.supabase.in/storage/v1/object/public/receipts/' + ref + '.png');
+        
+    }
+
+    const printReceipt = async (event) => {
+
+        event.preventDefault()
+
+        window.open('https://ugpxhhdljfbaswjteasm.supabase.in/storage/v1/object/public/receipts/' + ref + '.png').print()
+    }
+
+    const fetchId = () => {
+        setId(ref)
+    }
+
     useEffect(()=>{
-        fetchReceipt(id)
-    },[])
+
+        fetchId()
+        
+        if (ref) {
+            fetchReceipt(ref)
+        } else {
+            setLoading(true)
+        }
+
+    },[id])
+
     if (loading) {
         return (
             <div className = 'w-screen h-screen flex items-center justify-center'>
@@ -51,7 +83,6 @@ export default function Receipt() {
                 </p>
             )
         } else {
-            console.log(receipt[0])
             return (
                 <div className = 'w-screen h-screen bg-gray-50 sm:p-12 p-8'>
                     <div className="md:flex md:items-center md:justify-between flex">
@@ -59,19 +90,25 @@ export default function Receipt() {
                             <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">{receipt.name}'s receipt from {receipt.date}</h2>
                         </div>
                         <div className="sm:mt-4 flex md:mt-0 md:ml-4">
-                            <button
-                                type="button"
-                                className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                            >
-                                Download
-                            </button>
-                            <button
-                                type="button"
-                                className="ml-3 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                                onClick={()=>{window.print()}}
-                            >
-                                Print
-                            </button>
+                            <form onSubmit={downloadReceipt}>
+                                <button
+                                    type='submit'
+                                    className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                                >
+                                    Download
+                                    <DownloadIcon className = 'ml-1 w-4 h-4'/>
+                                </button>
+                            </form>
+                            <form onSubmit={downloadReceipt}>
+                                <button
+                                    type="submit"
+                                    className="ml-3 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                                
+                                >
+                                    Print
+                                    <PrinterIcon className = 'ml-1 w-4 h-4'/>
+                                </button>
+                            </form>
                         </div>
                     </div>
 
@@ -123,6 +160,3 @@ export default function Receipt() {
     }
     
 }
-
-      
-  
