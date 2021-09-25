@@ -44,7 +44,6 @@ function classNames(...classes) {
 export default function Navbar({cart}) {
 	const user = supabase.auth.user()
 
-  console.log(cart)
   	return (
     <Popover className="relative bg-white">
       <div className="flex justify-between items-center px-4 py-6 sm:px-6 md:justify-start md:space-x-10 border border-gray-300">
