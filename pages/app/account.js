@@ -284,47 +284,6 @@ export default function AppIndex() {
 											</div>
 										</div>
 										</fieldset>
-										<fieldset>
-										<div>
-											<legend className="text-base font-medium text-gray-900">Push Notifications</legend>
-											<p className="text-sm text-gray-500">These are delivered via SMS to your mobile phone.</p>
-										</div>
-										<div className="mt-4 space-y-4">
-											<div className="flex items-center">
-											<input
-												id="push-everything"
-												name="push-notifications"
-												type="radio"
-												className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300"
-											/>
-											<label htmlFor="push-everything" className="ml-3 block text-sm font-medium text-gray-700">
-												Everything
-											</label>
-											</div>
-											<div className="flex items-center">
-											<input
-												id="push-email"
-												name="push-notifications"
-												type="radio"
-												className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300"
-											/>
-											<label htmlFor="push-email" className="ml-3 block text-sm font-medium text-gray-700">
-												Same as email
-											</label>
-											</div>
-											<div className="flex items-center">
-											<input
-												id="push-nothing"
-												name="push-notifications"
-												type="radio"
-												className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300"
-											/>
-											<label htmlFor="push-nothing" className="ml-3 block text-sm font-medium text-gray-700">
-												No push notifications
-											</label>
-											</div>
-										</div>
-										</fieldset>
 									</form>
 									</div>
 								</div>
