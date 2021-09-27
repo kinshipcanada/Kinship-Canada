@@ -79,7 +79,7 @@ const causes = [
 			}
 		  ],
 		eligible: true,
-		blurb: 'Help cover a family&apos;s basic needs'
+		blurb: "Help cover a family's basic needs, including housing and food."
 	},
 	{
 		id: "cd610320-4978-4c63-a5dd-bd6bc26e5553",
@@ -108,69 +108,14 @@ const causes = [
 			  ]
 			},
 			{
-			  "name": "Al-Ayn",
+			  "name": "Africa",
 			  "options": []
 			}
 		],
 		eligible: true,
-		blurb: 'Educate the next generation'
+		blurb: "Educate the next generation. Covers a student's tuition, books, and stationary."
 	},
-	{
-		id: 849272,
-		name: 'Widows',
-		bgColor: 'bg-blue-600',
-		regions: ['India'],
-		icon: GlobeIcon,
-		blurb: 'Donate to orphans, help pay for school, etc etc'
-	},
-	{
-		id: 119372,
-		name: 'Medical Aid',
-		icon: HeartIcon,
-		bgColor: 'bg-pink-600',
-		regions: ['Africa', 'India', 'Iraq'],
-		blurb: 'Donate to orphans, help pay for school, etc etc'
-	},
-	{
-		id: 989387,
-		name: 'Housing',
-		bgColor: 'bg-purple-600',
-		icon: HomeIcon,
-		regions: ['India', 'Iraq'],
-		blurb: 'Donate to orphans, help pay for school, etc etc'
-	},
-	{
-		id: 421152,
-		name: 'Khums',
-		icon: CashIcon,
-		bgColor: 'bg-yellow-600',
-		regions: ['Iraq'],
-		blurb: 'Donate to orphans, help pay for school, etc etc'
-	},
-	{
-		id: 782923,
-		name: 'Qadha',
-		icon: GiftIcon,
-		bgColor: 'bg-green-600',
-		regions: ['India'],
-		blurb: 'Donate to orphans, help pay for school, etc etc'
-	},
-	{
-		id: 391038,
-		name: 'Quran',
-		icon: BookOpenIcon,
-		bgColor: 'bg-blue-600',
-		regions: ['India'],
-		blurb: 'Donate to orphans, help pay for school, etc etc'
-	},
-	{
-		id: 471937,
-		name: 'Microfinancing',
-		icon: CurrencyDollarIcon,
-		bgColor: 'bg-red-600',
-		regions: ['India', 'Iraq'],
-		blurb: 'Donate to orphans, help pay for school, etc etc'
-	},
+	
 
 ]
 
@@ -344,46 +289,57 @@ export default function Home() {
 			</div>
 			<div className="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
 				{causes.map((cause) => (
-				<li key={cause.name} className="col-span-1 flex shadow-sm rounded-md">
-					<div
-					className={classNames(
-						cause.bgColor,
-						'flex-shrink-0 flex items-center justify-center w-16 text-white text-sm font-medium rounded-l-md'
-					)}
-					>
-						<cause.icon className = 'w-6 h-6'/>
-					</div>
-					<div className="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white rounded-r-md truncate">
-					<div className="flex-1 px-4 py-2 text-sm truncate">
-						<label htmlFor = {cause.id} className="text-gray-900 font-medium hover:text-gray-600">{cause.name}</label>
-						<p className="text-gray-500">{cause.blurb}</p>
-					</div>
-					<div className="flex-shrink-0 pr-2">
-						<input type = 'checkbox' id = {cause.id} 
-							onChange = {(e)=>{
-								let status = e.target.checked;
+					<>
+						<div className="bg-white overflow-hidden shadow rounded-lg">
+						<div className="px-4 py-5 sm:px-6">
+							<div className = 'flex flex-col'>
+								<div className = 'flex'>
+									<div
+										className={cause.bgColor +  ' text-white p-3 rounded mb-3 w-auto h-auto'}
+									>
+										<cause.icon className = 'w-6 h-6'/>
+									</div>
+								</div>
+								<div>
+									<label htmlFor = {cause.id} className="text-gray-900 font-medium hover:text-gray-600">{cause.name}</label>
+									<p className="text-gray-500 text-sm">{cause.blurb}</p>
+									<p className = 'text-sm font-semibold mt-2'>Availiable in:{' '}
+										{cause.regions.map((region, regionIdx)=>(
+											<span className = 'font-normal'>{region.name} | </span>
+										))}
+									</p>
+								</div>
+							</div>
+						</div>
+						<div className="bg-gray-50">
+							<label className = 'w-full h-full flex items-center cursor-pointer px-4 py-5 sm:p-6'>
+							<input type = 'checkbox' id = {cause.id} 
+								onChange = {(e)=>{
+									let status = e.target.checked;
 
-								if (status) {
-									causeList.push(cause);
-									let temp = {
-										name: cause.name,
-										id: cause.id,
-										region: undefined,
-										eligible: cause.eligible,
+									if (status) {
+										causeList.push(cause);
+										let temp = {
+											name: cause.name,
+											id: cause.id,
+											region: undefined,
+											eligible: cause.eligible,
+										}
+										userCauses.push(temp);
+									} else {
+										let index = causeList.indexOf(cause.id);
+										causeList.splice(index, 1);
+										let user_index = userCauses.indexOf(cause.id);
+										userCauses.splice(user_index, 1);
 									}
-									userCauses.push(temp);
-								} else {
-									let index = causeList.indexOf(cause.id);
-									causeList.splice(index, 1);
-									let user_index = userCauses.indexOf(cause.id);
-									userCauses.splice(user_index, 1);
-								}
-							}}
-							className = 'ml-3 mr-2 rounded-md'
-						/>
-					</div>
-					</div>
-				</li>
+								}}
+								className = 'text-lg ml-3 mr-2 rounded-md'
+							/>
+							<p className = 'text-md font-medium'>Select {cause.name}</p>
+							</label>
+						</div>
+						</div>
+					</>
 				))}
 			</div>
 
