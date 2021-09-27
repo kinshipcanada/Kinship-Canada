@@ -75,7 +75,7 @@ export default function SubNav() {
       <aside className="py-6 px-2 sm:px-6 lg:py-0 lg:px-0 lg:col-span-3">
         <nav className="space-y-1">
           {subNavigation.map((item) => (
-          	<Link href = {item.href}>
+          	<Link href = {item.href} key={item.name}>
 	            <a
 	              key={item.name}
 	              className={classNames(
