@@ -1,1 +1,10 @@
-Kinship is a registered Canadian charity.
+## Kinship Canada
+
+Kinship Canada is a registered Canadian charity. This is the code for the frontend of our site, including donation forms, the dashboard, and any other pages.
+
+## Our Stack
+Kinship is built off a number of technologies. Our frontend is primarily built with NextJS and Supabase, and deployed with Vercel. We also use TailwindCSS
+
+We store our information in both Postgres and MySQL databases, as well as AWS S3 and Supabase Storage. Our internal APIs for generating tax receipts, donation processing, and more, are primarily written in Python. 
+
+Internal APIs are not open source but if you would like to contribute send us an email at (here)[info@kinshipcanada.com]
