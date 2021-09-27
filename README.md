@@ -7,4 +7,4 @@ Kinship is built off a number of technologies. Our frontend is primarily built w
 
 We store our information in both Postgres and MySQL databases, as well as AWS S3 and Supabase Storage. Our internal APIs for generating tax receipts, donation processing, and more, are primarily written in Python. 
 
-Internal APIs are not open source but if you would like to contribute send us an email at (here)[info@kinshipcanada.com]
+Internal APIs are not open source but if you would like to contribute send us an email at [here](info@kinshipcanada.com).
