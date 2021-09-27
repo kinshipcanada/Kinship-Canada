@@ -35,7 +35,7 @@ export default function Features() {
               <blockquote>
                 <div>
                   <p className="text-base text-gray-500">
-                    &ldquo;Dropping barrel bombs has never been easier with Kinship Canada. I receive 40% back on every bomb I drop!&rdquo;
+                    &ldquo;Quote coming...&rdquo;
                   </p>
                 </div>
                 <footer className="mt-3">
@@ -47,7 +47,7 @@ export default function Features() {
                         alt=""
                       />
                     </div>
-                    <div className="text-base font-medium text-gray-700">Bashar Assad, Resident Dictator</div>
+                    <div className="text-base font-medium text-gray-700">Quote</div>
                   </div>
                 </footer>
               </blockquote>
