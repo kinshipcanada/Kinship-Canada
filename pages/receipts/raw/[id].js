@@ -118,7 +118,7 @@ export default function Receipt(props) {
                     </span>
                     <span className = 'flex mb-1'>
                         <p  className="font-bold text-gray-800 mr-1">Causes: </p>
-                        <p className="font-medium text-gray-800 mb-1">{receipt.causes.map((cause)=>(<div>{cause}</div>))}</p>
+                        <p className="font-medium text-gray-800 mb-1">{receipt.causes.map((cause)=>(<div key = {cause.id}>{cause}</div>))}</p>
                     </span>
                     <span className = 'flex mb-1'>
                         <p  className="font-bold text-gray-800 mr-1">Total Amount Eligible: </p>

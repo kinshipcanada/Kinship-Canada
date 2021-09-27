@@ -3,7 +3,7 @@ import { CheckIcon, ClockIcon, QuestionMarkCircleIcon, XIcon } from '@heroicons/
 import { useState, useEffect } from 'react'
 import Loader from '../components/Root/Loader'
 import Link from 'next/link'
-
+import ReactTooltip from 'react-tooltip';
 
 export default function Home() {
 
@@ -18,13 +18,13 @@ export default function Home() {
   const [recurringAmt, setRecurringAmt] = useState(0.00)
 
   useEffect(()=>{
-    if (JSON.parse(localStorage.getItem('cart')) != null) {
-      if (JSON.parse(localStorage.getItem('cart')).length == 0) {
+    if (JSON.parse(localStorage.getItem('kinship_cart')) != null) {
+      if (JSON.parse(localStorage.getItem('kinship_cart')).length == 0) {
         setEmpty(true)
         setLoading(false)
       } else {
-        setCart(JSON.parse(localStorage.getItem('cart')));
-        let obj = JSON.parse(localStorage.getItem('cart'));
+        setCart(JSON.parse(localStorage.getItem('kinship_cart')));
+        let obj = JSON.parse(localStorage.getItem('kinship_cart'));
 
         for (let i = 0; i < obj.length; i++) {
           let recurringVal = obj[i]['recurring'];
@@ -68,8 +68,9 @@ export default function Home() {
 
   }
 
-  const removeFromCart = (obj, rec) => {
+  const removeFromCart = (obj, rec, id) => {
     setLoading(true)
+    let item = document.getElementById(id);
     for (var i = 0; i < cart.length; i++) {
       if (cart[i]['id'] === obj) {
           if (cart[i]['recurring'] == rec) {
@@ -78,7 +79,8 @@ export default function Home() {
       }
     }
     setCart(cart)
-    localStorage.setItem('cart', JSON.stringify(cart));
+    localStorage.setItem('kinship_cart', JSON.stringify(cart));
+    item.classList.add('hidden')
     setLoading(false);
   }
 
@@ -91,7 +93,7 @@ export default function Home() {
       <div className="bg-white">
       <div className="max-w-2xl mx-auto pt-16 pb-24 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
         <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">Donation Basket</h1>
-        <form className="mt-12 lg:grid lg:grid-cols-12 lg:gap-x-12 lg:items-start xl:gap-x-16">
+        <form method = 'POST' action = '/api/checkout_sessions' className="mt-12 lg:grid lg:grid-cols-12 lg:gap-x-12 lg:items-start xl:gap-x-16">
           <section aria-labelledby="cart-heading" className="lg:col-span-7">
             <h2 id="cart-heading" className="sr-only">
               Items in your Donation Basket
@@ -113,7 +115,7 @@ export default function Home() {
 
               <ul role="list" className="border-t border-b border-gray-200 divide-y divide-gray-200">
               {cart.map((cause, causeIdx) => (
-                <li key={cause.id} className="flex py-6 sm:py-10">
+                <li key={cause.id} id = {cause.id + '_' + cause.recurring + '_' + cause.region} className="flex py-6 sm:py-10">
                   <div className="flex-shrink-0">
                     <img
                       src={cause.imageSrc}
@@ -149,7 +151,10 @@ export default function Home() {
                         
 
                         <div className="absolute top-0 right-0">
-                          <button onClick = {()=>{removeFromCart(cause.id, cause.recurring)}} type="button" className="-m-2 p-2 inline-flex text-gray-400 hover:text-gray-500">
+                          <button onClick = {()=>{
+                            let id = cause.id + '_' + cause.recurring + '_' + cause.region;
+                            removeFromCart(cause.id, cause.recurring, id)
+                          }} type="button" className="-m-2 p-2 inline-flex text-gray-400 hover:text-gray-500">
                             <span className="sr-only">Remove</span>
                             <XIcon className="h-5 w-5" aria-hidden="true" />
                           </button>
@@ -237,7 +242,7 @@ export default function Home() {
 
               :
 
-              <form onSubmit = {checkout}>
+              <div>
                 <dl className="mt-6 space-y-4">
                   <div className="flex items-center justify-between">
                     <dt className="text-sm text-gray-600">Subtotal</dt>
@@ -256,10 +261,11 @@ export default function Home() {
                     <div className = 'flex items-center justify-between'>
                       <dt className="flex text-sm text-gray-600">
                         <span>Fees Covering</span>
-                        <a href="#" className="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500">
+                        <a href="#" className="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500"  data-tip="Kinship pays for all expenses out of pocket, including credit card processing fees. If you'd like, you can also cover processing fees for us.">
                           <span className="sr-only">Learn more about how tax is calculated</span>
                           <QuestionMarkCircleIcon className="h-5 w-5" aria-hidden="true" />
                         </a>
+                        <ReactTooltip place="top" type="dark" effect="float"/>
                       </dt>
                       <dd className="text-sm font-medium text-gray-900">${feesCovering.toFixed(2)}</dd>
                     </div>
@@ -269,12 +275,54 @@ export default function Home() {
                           let status = e.target.checked;
                           let amt
                           if (status) {
-                            amt = 0.029*subtotal;
+                            let obj = JSON.parse(localStorage.getItem('cart'));
+                            let subtotalAmt = 0.00; 
+
+                            for (let i = 0; i < obj.length; i++) {
+                              let recurringVal = obj[i]['recurring'];
+                              let amount = obj[i]['amount'];
+                              let eligibleVal = obj[i]['eligible'];
+
+                              if (eligibleVal) {
+                                setEligible(eligible + amount);
+                              }
+
+                              subtotalAmt += amount;
+
+                              if (recurringVal) {
+                                setRecurringAmt((1.029*recurringAmt) + amount)
+                              } else {
+                                setOneTime((1.029*oneTime) + amount)
+                              }
+
+                            }
+
+                            setFeesCovering(0.029*subtotalAmt);
+
+
                           } else {
-                            amt = 0.00
+                            let amt = 0.00
+                            let obj = JSON.parse(localStorage.getItem('cart'));
+
+                            for (let i = 0; i < obj.length; i++) {
+                              let recurringVal = obj[i]['recurring'];
+                              let amount = obj[i]['amount'];
+                              let eligibleVal = obj[i]['eligible'];
+
+                              if (eligibleVal) {
+                                setEligible(eligible + amount);
+                              }
+
+                              if (recurringVal) {
+                                setRecurringAmt(recurringAmt + amount)
+                              } else {
+                                setOneTime(oneTime + amount)
+                              }
+
+                            }
+                            setFeesCovering(amt)
                           }
 
-                          setFeesCovering(amt)
 
                         }  
                       }
@@ -307,12 +355,12 @@ export default function Home() {
                     </dd>
                   </div>
                 </dl>
-              </form>
+              </div>
               
             }
             <div className="mt-6">
               <button
-                type="submit"
+                type = 'submit'
                 className="w-full bg-blue-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-blue-500"
               >
                 Checkout

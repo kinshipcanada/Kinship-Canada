@@ -87,7 +87,7 @@ export default function Receipt(props) {
                 <div className = 'w-screen h-screen bg-gray-50 sm:p-12 p-8'>
                     <div className="md:flex md:items-center md:justify-between flex">
                         <div className="flex-1 min-w-0">
-                            <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">{receipt.name}'s receipt from {receipt.date}</h2>
+                            <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">{receipt.name}&apos;s receipt from {receipt.date}</h2>
                         </div>
                         <div className="sm:mt-4 flex md:mt-0 md:ml-4">
                             <form onSubmit={downloadReceipt}>
@@ -146,7 +146,7 @@ export default function Receipt(props) {
                         </span>
                         <span className = 'flex mb-1'>
                             <p  className="font-bold text-gray-800 mr-1">Causes: </p>
-                            <p className="font-medium text-gray-800 mb-1">{receipt.causes.map((cause)=>(<div>{cause}</div>))}</p>
+                            <p className="font-medium text-gray-800 mb-1">{receipt.causes.map((cause)=>(<div key = {cause.id}>{cause}</div>))}</p>
                         </span>
                         <span className = 'flex mb-1'>
                             <p  className="font-bold text-gray-800 mr-1">Total Amount Eligible: </p>

@@ -136,7 +136,7 @@ export default function AppIndex() {
 						              </thead>
 						              <tbody>
 						                {donations.map((donation, donationIdx) => (
-						                  <tr key={donation.created_at} className={donationIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+						                  <tr key={donation.donationIdx} className={donationIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
 						                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
 						                    	{donation.causes.causes.map((cause) => (
 						                    		<div>{cause.cause}: ${cause.amount}</div>

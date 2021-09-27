@@ -11,12 +11,14 @@
   "dependencies": {
     "@headlessui/react": "^1.4.1",
     "@heroicons/react": "^1.0.4",
+    "@popperjs/core": "^2.10.1",
     "@stripe/stripe-js": "^1.17.1",
     "@supabase/supabase-js": "^1.22.3",
     "@tailwindcss/forms": "^0.3.3",
     "next": "^11.1.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "react-tooltip": "^4.2.21",
     "react-use-cart": "^1.11.2",
     "stripe": "^8.176.0",
     "uuid": "^8.3.2"

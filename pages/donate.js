@@ -1,9 +1,13 @@
 import Navbar from '../components/Root/Navbar.js'
 import { supabase } from '../lib/supabaseClient'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, Fragment } from 'react'
 import { RadioGroup } from '@headlessui/react'
-import { AcademicCapIcon, UserGroupIcon, BriefcaseIcon, GlobeIcon, HeartIcon, HomeIcon, CashIcon, GiftIcon, BookOpenIcon, CurrencyDollarIcon } from '@heroicons/react/outline'
+import { AcademicCapIcon, CheckIcon, UserGroupIcon, BriefcaseIcon, GlobeIcon, HeartIcon, HomeIcon, CashIcon, GiftIcon, BookOpenIcon, CurrencyDollarIcon } from '@heroicons/react/outline'
 import { DotsVerticalIcon } from '@heroicons/react/solid'
+import Image from 'next/image'
+import { Dialog, Transition } from '@headlessui/react'
+import { useRouter } from 'next/dist/client/router'
+import Link from 'next/link'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -11,58 +15,110 @@ function classNames(...classes) {
 
 const causes = [
 	{
-		id: 239023,
+		id: "1f9856db-d3f4-4d82-ae9b-0c343998d512",
 		name: 'Orphans',
 		icon: UserGroupIcon,
 		bgColor: 'bg-blue-600',
 		regions: [
 			{
-				name: 'Iraq',
-				options: [
-					{
-						amount: 500,
-						interval: 'year',
-						buys: 'food, housing, and education'
-					}
-				]
+			  "name": "Iraq",
+			  "options": [
+				{
+				  "amount": 500,
+				  "interval": "year",
+				  "buys": "Education for one orphan for one year"
+				}
+			  ]
 			},
 			{
-				name: 'India',
-				options: []
+			  "name": "India",
+			  "options": []
 			},
 			{
-				name: 'Al-Ayn',
-				options: [
-					{
-						amount: 150,
-						interval: 'month'
-					}
-				]
+			  "name": "Al-Ayn",
+			  "options": [
+				{
+				  "amount": 150,
+				  "interval": "month",
+				  "buys": "Complete care for one orphan for one month"
+				}
+			  ]
 			}
 		],
 		eligible: true,
-		blurb: 'Donate to orphans, help pay for school, etc etc'
+		blurb: 'Cover housing, education, and food for an orphan'
 	},
 	{
-		id: 432341,
+		id: "90c7ced8-db3b-49fd-83bf-2e9502b5089f",
 		name: 'Poverty Relief',
 		icon: BriefcaseIcon,
 		bgColor: 'bg-red-600',
-		regions: ['Africa', 'India', 'Iraq'],
-		blurb: 'Donate to orphans, help pay for school, etc etc'
+		regions: [
+			{
+			  "name": "Iraq",
+			  "options": []
+			},
+			{
+			  "name": "India",
+			  "options": [
+				{
+				  "amount": 250,
+				  "interval": "one-time",
+				  "buys": "Basic hand pump"
+				},
+				{
+				  "amount": 650,
+				  "interval": "one-time",
+				  "buys": "Deluxe hand pump"
+				}
+			  ]
+			},
+			{
+			  "name": "Al-Ayn",
+			  "options": []
+			}
+		  ],
+		eligible: true,
+		blurb: 'Help cover a family&apos;s basic needs'
 	},
 	{
-		id: 255432,
+		id: "cd610320-4978-4c63-a5dd-bd6bc26e5553",
 		name: 'Education',
-		bgColor: 'bg-green-600',
 		icon: AcademicCapIcon,
-		regions: ['Africa', 'India', 'Iraq'],
-		blurb: 'Donate to orphans, help pay for school, etc etc'
+		bgColor: 'bg-green-600',
+		regions: [
+			{
+			  "name": "Iraq",
+			  "options": [
+				{
+				  "amount": 142,
+				  "interval": "month",
+				  "buys": "schooling, books, and supplies for one child"
+				}
+			  ]
+			},
+			{
+			  "name": "India",
+			  "options": [
+			  {
+				"amount": 550,
+				"interval": "month",
+				"buys": "schooling, books, and supplies for one child"
+			  }
+			  ]
+			},
+			{
+			  "name": "Al-Ayn",
+			  "options": []
+			}
+		],
+		eligible: true,
+		blurb: 'Educate the next generation'
 	},
 	{
 		id: 849272,
 		name: 'Widows',
-		bgColor: 'bg-indigo-600',
+		bgColor: 'bg-blue-600',
 		regions: ['India'],
 		icon: GlobeIcon,
 		blurb: 'Donate to orphans, help pay for school, etc etc'
@@ -125,15 +181,18 @@ export default function Home() {
 	const [cart, setCart] = useState([])
 	const [userCauses, setUserCauses] = useState([])
 	const [dropdownAmounts, setDropdownAmounts] = useState([])
+	const [addToBasketButton, setAddToBasketButton] = useState('Add to basket')
 
 	const [stepOneError, setStepOneError] = useState(null);
 	const [stepThreeError, setStepThreeError] = useState(null);
 
 	const [stateSample, setStateSample] = useState('hello');
+	const [open, setOpen] = useState(false)
 
+	const cancelButtonRef = useRef(null)
 	useEffect(()=>{
-		if (JSON.parse(localStorage.getItem('cart')) != null) {
-		setCart(JSON.parse(localStorage.getItem('cart')))
+		if (JSON.parse(localStorage.getItem('kinship_cart')) != null) {
+		setCart(JSON.parse(localStorage.getItem('kinship_cart')))
 		} 
 	},[])
 
@@ -179,7 +238,7 @@ export default function Home() {
 		}
 
 		setCart(cart)
-		localStorage.setItem('cart', JSON.stringify(cart));
+		localStorage.setItem('kinship_cart', JSON.stringify(cart));
 
 	}
 
@@ -192,7 +251,7 @@ export default function Home() {
 		}
 		}
 		setCart(cart)
-		localStorage.setItem('cart', JSON.stringify(cart));
+		localStorage.setItem('kinship_cart', JSON.stringify(cart));
 	}
 
 	const submitStepOne = (event) => {
@@ -208,10 +267,16 @@ export default function Home() {
 	const submitStepTwo = (event) => {
 		event.preventDefault();
 
+		let new_userCauses = []
+
+
 		for (let i = 0; i < userCauses.length; i++) {
 			if (userCauses[i]['region'] == undefined) {
 				setStepThreeError('Please select a region')
 			} else {
+
+				
+
 				for (let i = 0; i < userCauses.length; i++) {
 					let id = userCauses[i]['id'];
 					let region = userCauses[i]['region'];
@@ -231,15 +296,18 @@ export default function Home() {
 					}
 
 					let temp = {
-						id: id,
+						id: userCauses[i]['id'],
+						eligible: userCauses[i]['eligible'],
+						name: userCauses[i]['name'],
+						region: userCauses[i]['region'],
 						options: options,
-						region: region,
 					}
-					dropdownAmounts.push(temp);
-					let new_dropdown = [...dropdownAmounts];
-					setDropdownAmounts(new_dropdown);
-					setStep(3);
+
+					userCauses[i]['options'] = options;
 				}
+
+				setStep(3);
+
 			}
 		}
 	}
@@ -259,7 +327,9 @@ export default function Home() {
 			
 			addToCart(amountToAdd, causeToAddID, causeToAddName, eligible, recurring, region)
 		}
-		
+
+		setAddToBasketButton('Added to basket succesfully!')
+		setOpen(true)
 	}
 
   	return (
@@ -269,7 +339,7 @@ export default function Home() {
 	  	<form  onSubmit = {submitStepOne} className = {step == 1 ? '' : 'opacity-50'}>
 		  	<div className="md:flex md:items-center md:justify-between">
 				<div className="flex-1 min-w-0">
-				<h2 className={step == 1 ? "text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate" : "text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate opacity-50"}>Choose A Cause</h2>
+				<h2 className={step == 1 ? "text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate" : "text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate opacity-50"}>Step One: Choose A Cause</h2>
 				</div>
 			</div>
 			<div className="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -302,7 +372,6 @@ export default function Home() {
 										eligible: cause.eligible,
 									}
 									userCauses.push(temp);
-									console.log(temp)
 								} else {
 									let index = causeList.indexOf(cause.id);
 									causeList.splice(index, 1);
@@ -335,39 +404,77 @@ export default function Home() {
 
       	
       		{
-		    	step == 2 ?
+		    	step >= 2 ?
 
 		    		<div>
 
-					    <div className="md:flex md:items-center md:justify-between">
+					    <div className={step == 2 ? "md:flex md:items-center md:justify-between" : "md:flex md:items-center md:justify-between opacity-25"}>
 					      <div className="flex-1 min-w-0">
 					        <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">Choose A Region</h2>
 					      </div>
 					    </div>
 
-			      	<div className = 'mt-4 mb-4'>
+			      	<div className = {step == 2 ? 'mt-4 mb-4' : 'mt-4 mb-4 opacity-50'}>
 					  	<form onSubmit = {submitStepTwo}>
 							{causeList.map((cause)=>(
-								<div>
-									<h1>{cause.name}</h1>
+								<div key = {cause.id}>
+									{console.log(cause)}
+									<h3 className="text-xl font-semibold leading-7 text-gray-900 sm:text-xl sm:truncate">Cause: {cause.name}</h3>
 									<div key = {cause.id}>
-										<div className = 'grid grid-cols-4 gap-6'>
+										<div className = 'grid grid-cols-4 gap-6 mt-4 mb-4'>
 											{cause.regions.map((region)=>(
-												<div className = 'col-span-1 p-4 shadow-md'>
-													<input type = 'radio' value = {region.name} name = {cause.id} id = {region.name + cause.id} onClick = {(e)=>{
-														let regionVal = e.target.value;
-														let causeVal = cause.id;
-														let status = e.target.checked;
+												<label key = {region.name} className = 'col-span-1 p-4 border rounded flex justify-between items-center' htmlFor = {region.name + cause.id}>
+													<div className = 'flex flex-row items-center'>
+														<input type = 'radio' className = 'mr-2' value = {region.name} name = {cause.id} id = {region.name + cause.id} onClick = {(e)=>{
+															let regionVal = e.target.value;
+															let causeVal = cause.id;
+															let status = e.target.checked;
 
-														for (let i = 0; i < userCauses.length; i++) {
-															if (userCauses[i]['id'] == causeVal) {
-																userCauses[i]['region'] = regionVal;
+															for (let i = 0; i < userCauses.length; i++) {
+																if (userCauses[i]['id'] == causeVal) {
+																	userCauses[i]['region'] = regionVal;
+																}
 															}
+												
+														}}/>
+														<p className = 'text-lg font-semibold' >{region.name}</p>
+													</div>
+													<div>
+														{
+															region.name == 'Africa'
+
+															?
+
+															<div>
+																<Image src = '/regions/africa.png' width = '60' height = '60' />
+															</div>
+
+															:
+
+															region.name == 'India'
+
+															?
+
+															<div>
+																<Image src = '/regions/india.png' width = '60' height = '60' />
+															</div>
+
+															:
+
+															region.name == 'Iraq' 
+														
+															?
+
+															<div>
+																<Image src = '/regions/iraq.png' width = '60' height = '60' />
+															</div>
+
+															:
+
+															''
 														}
-											
-													}}/>
-													<label htmlFor = {region.name + cause.id}>{region.name}</label>
-												</div>
+													</div>
+												</label>
 											))}
 										</div>
 									</div>
@@ -382,7 +489,9 @@ export default function Home() {
 
 								''
 							}
-							<button type = 'submit'>Continue</button>
+							<div className = 'p-4 flex justify-center'>
+								<button type = 'submit' className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Continue</button>
+							</div>
 						</form>
 			      	</div>
 			      </div>
@@ -404,7 +513,7 @@ export default function Home() {
 			      	<div className = 'flex justify-between mt-4 mb-4'>
 					  <form onSubmit = {submitStepTwo}>
 							{causeList.map((cause)=>(
-								<div>
+								<div key = {cause.id}>
 									<h1>{cause.name}</h1>
 									<div>
 										Regions selected
@@ -420,6 +529,8 @@ export default function Home() {
 
 			{
 		    	step == 3 ?
+				
+				<form className="md:flex md:items-center md:justify-between" onSubmit = {submitStepThree}>
 
 		    		<div>
 
@@ -430,14 +541,14 @@ export default function Home() {
 					    </div>
 
 			      	<div className = 'flex justify-between mt-4 mb-4'>
-						<form onSubmit = {submitStepThree}>
-							{console.log(dropdownAmounts)}
+						<div onSubmit = {submitStepThree}>
 							{causeList.map((cause)=>(
-								<div>
-									<h1>{cause.name}</h1>
+								<div key = {cause.id}>
+									<h1 className="text-xl font-semibold leading-7 text-gray-900 sm:text-xl sm:truncate">Cause: {cause.name}</h1>
 
 									<select 
 										id = {cause.id + '_select'}
+										className="mt-2 mb-2 block w-full pl-3 pr-10 py-3 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
 										onChange = {
 											(e)=>{
 												let value = e.target.value;
@@ -461,7 +572,6 @@ export default function Home() {
 															} else {
 																userCauses[i].recurring = true;
 															}
-															console.log(userCauses)
 														}
 													}
 												}
@@ -470,27 +580,44 @@ export default function Home() {
 									>
 										<option>Select One</option>
 										{
-											dropdownAmounts.map((cause)=>(
-												<>
+											userCauses.map((causeVal)=>(
+												<>	
 													{
-														cause.options.options.map((option)=>(
-															<option value = {option.amount + '_' + option.interval}>${option.amount} {option.interval == 'one-time' ? 'one time' : 'per ' + option.interval} for {option.buys} </option>
-														))
+														causeVal.id == cause.id ?
+
+														<>
+															{causeVal.options.options.map((option)=>(
+																<option key = {option.amount}>${option.amount} {option.interval == 'one-time' ? ' once ' : ' per ' + option.interval} buys {option.buys}</option>
+															))}
+														</>
+
+														:
+
+														<></>
 													}
 												</>
 											))
 										}
 										<option value = 'custom'>Choose a custom amount (we will pool funds until we can provide one full donation)</option>
 									</select>
-									<input placeholder = 'Choose a custom amount to donate' id = {cause.id + '_custom'} className = 'hidden p-2 border border-gray-300'/>
+									<input 
+										placeholder = 'Choose a custom amount to donate' 
+										id = {cause.id + '_custom'} 
+									    type = 'text'
+										className="mt-2 mb-2 shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md py-3 hidden"
+									/>
 									
 								</div>
 							))}
-							<button type = 'submit'>Add to cart</button>
-						</form>
+							
+						</div>
 			      	</div>
+					  
 			      </div>
-
+				  <div className = 'p-4 flex justify-center'>
+						<button type = 'submit' className="inline-flex items-center px-6 py-4 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">{addToBasketButton}</button>
+					</div>
+				</form>
 		    	: step < 3 ?
 				
 				''
@@ -508,20 +635,81 @@ export default function Home() {
 			      	<div className = 'flex justify-between mt-4 mb-4'>
 						{console.log(dropdownAmounts)}
 						<form onSubmit = {submitStepThree}>
-							{dropdownAmounts.map((cause)=>(
-								<div>
-									<h1>{cause.id}</h1>
-									<input id = {cause.id} className = 'p-2 border border-gray-300'/>
-									<input type = 'checkbox'/><label>Recurring?</label>
-								</div>
-							))}
-							<button type = 'submit'>Added to cart</button>
+							<div className = 'p-4 flex justify-center'>
+								<button type = 'submit' className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Add to cart</button>
+							</div>
 						</form>
 			      	</div>
 			      </div>
 		    }
       	
+		  <Transition.Root show={open} as={Fragment}>
+				<Dialog as="div" className="fixed z-10 inset-0 overflow-y-auto" initialFocus={cancelButtonRef} onClose={setOpen}>
+					<div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+					<Transition.Child
+						as={Fragment}
+						enter="ease-out duration-300"
+						enterFrom="opacity-0"
+						enterTo="opacity-100"
+						leave="ease-in duration-200"
+						leaveFrom="opacity-100"
+						leaveTo="opacity-0"
+					>
+						<Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+					</Transition.Child>
 
+					{/* This element is to trick the browser into centering the modal contents. */}
+					<span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
+						&#8203;
+					</span>
+					<Transition.Child
+						as={Fragment}
+						enter="ease-out duration-300"
+						enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+						enterTo="opacity-100 translate-y-0 sm:scale-100"
+						leave="ease-in duration-200"
+						leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+						leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+					>
+						<div className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+						<div>
+							<div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
+							<CheckIcon className="h-6 w-6 text-green-600" aria-hidden="true" />
+							</div>
+							<div className="mt-3 text-center sm:mt-5">
+							<Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
+								Thanks for adding to your bag!
+							</Dialog.Title>
+							<div className="mt-2">
+								<p className="text-sm text-gray-500">
+								Thanks for adding your donation. You can go to your cart now if you&apos;d like, but make sure you are logged in to manage any recurring donations. You will receive tax receipts whether or not you are logged in.
+								</p>
+							</div>
+							</div>
+						</div>
+						<div className="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
+							<Link href = '/cart'>
+								<button
+								type="button"
+								className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-blue-500 sm:col-start-2 sm:text-sm"
+								>
+									Go to cart
+								</button>
+							</Link>
+							<button
+							type="button"
+							className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-blue-500 sm:mt-0 sm:col-start-1 sm:text-sm"
+							onClick={() => setOpen(false)}
+							ref={cancelButtonRef}
+							>
+							Close message
+							</button>
+						</div>
+						</div>
+					</Transition.Child>
+					</div>
+				</Dialog>
+				</Transition.Root>
       </div>
     </div>
   )

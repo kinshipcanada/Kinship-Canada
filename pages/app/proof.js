@@ -93,7 +93,7 @@ export default function AppIndex() {
 						        <h2 className="text-lg font-bold leading-7 text-gray-900 sm:text-xl sm:truncate">Available</h2>
 						      </div>
 						    </div>
-				            Proof of donation, {profile.first_name}
+				            {/* Proof of donation, {profile.first_name}
 								<div>
 									{proof.map((proofItem) => (
 							          <div>
@@ -116,7 +116,7 @@ export default function AppIndex() {
 							          	}
 							          </div>
 							        ))}
-								</div>
+								</div> */}
 
 
 
@@ -161,7 +161,7 @@ export default function AppIndex() {
 							                  <tr key={donation.created_at} className={donationIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
 							                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
 							                    	{donation.causes.causes.map((cause) => (
-							                    		<div>{cause.cause}: ${cause.amount}</div>
+							                    		<div key = {cause.id}>{cause.cause}: ${cause.amount}</div>
 							                    	))}
 							                    </td>
 							                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{new Date(donation.created_at).toLocaleString()}</td>
@@ -230,7 +230,7 @@ export default function AppIndex() {
 							                  <tr key={donation.created_at} className={donationIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
 							                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
 							                    	{donation.causes.causes.map((cause) => (
-							                    		<div>{cause.cause}: ${cause.amount}</div>
+							                    		<div key = {cause.id}>{cause.cause}: ${cause.amount}</div>
 							                    	))}
 							                    </td>
 							                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{new Date(donation.created_at).toLocaleString()}</td>

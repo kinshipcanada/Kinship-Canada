@@ -11,7 +11,7 @@ export default function Home() {
     <div>
       <Navbar/>
 
-
+        Khums donations
       <Footer />
     </div>
   )

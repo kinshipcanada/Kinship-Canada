@@ -92,7 +92,9 @@ export default function AppIndex() {
 						    </div>
 							<div>
 								{receipts.map((receipt) => (
-						          <DownloadCard receipt = {receipt} />
+									<div key = {receipt.id}>
+										<DownloadCard receipt = {receipt} />
+									</div>
 						        ))}
 							</div>
 				          </div>

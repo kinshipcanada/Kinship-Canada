@@ -1,7 +1,7 @@
 import Link from 'next/link'
-
+import { numItems, getCart } from '../../lib/functions'
 import { supabase } from '../../lib/supabaseClient.js'
-import { Fragment } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Popover, Transition } from '@headlessui/react'
 import {
   ChartBarIcon,
@@ -41,10 +41,41 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Navbar({cart}) {
+export default function Navbar() {
 	const user = supabase.auth.user()
+  const [numCart, setNumCart] = useState(0)
+  const [gottenNum, setGottenNum] = useState(false)
+  const [cart, setCart] = useState([])
+  const [gottenCart, setGottenCart] = useState(false)
 
-  	return (
+  const getNumberOfItemsInCart = () => {
+
+    if (gottenNum) {
+      let bruh = true;
+    } else {
+      let num = numItems(JSON.parse(localStorage.getItem('kinship_cart')))
+      setNumCart(num);
+      setGottenNum(true)
+    }
+    
+  }
+
+  const getCartDetails = () => {
+    if (gottenCart) {
+      let bruh = true;
+    } else {
+      let cart = getCart(JSON.parse(localStorage.getItem('kinship_cart')))
+      setCart(cart)
+      setGottenCart(true)
+    }
+  }
+
+  useEffect(()=>{
+    getNumberOfItemsInCart()
+    getCartDetails()
+  })
+
+  return (
     <Popover className="relative bg-white">
       <div className="flex justify-between items-center px-4 py-6 sm:px-6 md:justify-start md:space-x-10 border border-gray-300">
         <div>
@@ -52,7 +83,7 @@ export default function Navbar({cart}) {
             <span className="sr-only">Kinship Canada</span>
             <img
               className="h-8 w-auto sm:h-10"
-              src="https://tailwindui.com/img/logos/workflow-mark-blue-600.svg"
+              src="/logo.png"
               alt=""
             />
           </a>
@@ -71,15 +102,21 @@ export default function Navbar({cart}) {
 	            </a>
             </Link>
             
-            <Link href="#">
+            <Link href="/khums">
 	            <a className="text-base font-medium text-gray-500 hover:text-gray-900">
 	              Khums Donations
 	            </a>
             </Link>
 
-            <Link href="#">
+            <Link href="/support">
 	            <a className="text-base font-medium text-gray-500 hover:text-gray-900">
 	              Support
+	            </a>
+            </Link>
+            
+            <Link href="https://hobble.notion.site/Improvements-0c3c044ed21241dd8a124927b68c846e">
+	            <a className="text-base font-medium text-gray-500 hover:text-gray-900">
+	              Improvements
 	            </a>
             </Link>
             
@@ -91,7 +128,7 @@ export default function Navbar({cart}) {
                     className="flex-shrink-0 h-6 w-6 text-gray-400 group-hover:text-gray-500"
                     aria-hidden="true"
                   />
-                  <span className="ml-2 text-base font-medium text-gray-500">0</span>
+                  <span className="ml-2 text-base font-medium text-gray-500">{numCart}</span>
                   <span className="sr-only">items in cart, view bag</span>
                 </Popover.Button>
                 <Transition
@@ -103,12 +140,20 @@ export default function Navbar({cart}) {
                   leaveFrom="opacity-100"
                   leaveTo="opacity-0"
                 >
-                  <Popover.Panel className="absolute top-16 inset-x-0 mt-px pb-6 bg-white shadow-lg sm:px-2 lg:top-full lg:left-auto lg:right-0 lg:mt-3 lg:-mr-1.5 lg:w-80 lg:rounded-lg lg:ring-1 lg:ring-black lg:ring-opacity-5">
+                  <Popover.Panel className="absolute z-10  top-16 inset-x-0 mt-px pb-6 bg-white shadow-lg sm:px-2 lg:top-full lg:left-auto lg:right-0 lg:mt-3 lg:-mr-1.5 lg:w-80 lg:rounded-lg lg:ring-1 lg:ring-black lg:ring-opacity-5">
                     <h2 className="sr-only">Shopping Cart</h2>
 
                     <form className="max-w-2xl mx-auto px-4">
-                      <ul role="list" className="divide-y divide-gray-200">
-                        {products.map((product) => (
+                      {
+                        numCart == 0 ?
+
+                        <p className = 'mt-6'>Your cart is empty. Click <Link href = '/donate'><a className = 'font-semibold text-blue-600'>here</a></Link> to donate.</p>
+
+                        :
+                        
+                        <>
+                        <ul role="list" className="divide-y divide-gray-200">
+                        {cart.map((product) => (
                           <li key={product.id} className="py-6 flex items-center">
                             <img
                               src={product.imageSrc}
@@ -117,9 +162,9 @@ export default function Navbar({cart}) {
                             />
                             <div className="ml-4 flex-auto">
                               <h3 className="font-medium text-gray-900">
-                                <a href={product.href}>{product.name}</a>
+                                <p>{product.name}</p>
                               </h3>
-                              <p className="text-gray-500">{product.color}</p>
+                              <p className="text-gray-500">{product.amount} · {product.recurring && product.interval == 'year' ? 'Annual' : product.recurring && product.interval == 'month' ? 'Monthly' : 'One Time'} </p>
                             </div>
                           </li>
                         ))}
@@ -140,6 +185,8 @@ export default function Navbar({cart}) {
                           </a>
                         </Link>
                       </p>
+                      </>
+                      }
                     </form>
                   </Popover.Panel>
                 </Transition>
