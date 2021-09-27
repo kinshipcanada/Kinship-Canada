@@ -10,6 +10,7 @@ We store our information in both Postgres and MySQL databases, as well as AWS S3
 Internal APIs are not open source but if you would like to contribute send us an email at [here](info@kinshipcanada.com).
 
 ## Repository Structure
+```
 .
 ├── components              # Contains reusable components from across the site
 │   ├── Donations           # Currently empty
@@ -22,4 +23,4 @@ Internal APIs are not open source but if you would like to contribute send us an
     ├── api                 # Contains checkout api with Stripe
     ├── app                 # User dashboard
     └── receipts            # Used to display frontend receipts
-
+```
