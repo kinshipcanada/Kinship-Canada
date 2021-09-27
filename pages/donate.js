@@ -304,7 +304,7 @@ export default function Home() {
 									<p className="text-gray-500 text-sm">{cause.blurb}</p>
 									<p className = 'text-sm font-semibold mt-2'>Availiable in:{' '}
 										{cause.regions.map((region, regionIdx)=>(
-											<span className = 'font-normal'>{region.name} | </span>
+											<span key = {regionIdx} className = 'font-normal'>{region.name} | </span>
 										))}
 									</p>
 								</div>
