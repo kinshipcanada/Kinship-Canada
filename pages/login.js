@@ -35,8 +35,8 @@ export default function Register() {
 			<div className="sm:mx-auto sm:w-full sm:max-w-md">
 				<img
 					className="mx-auto h-12 w-auto"
-					src="https://tailwindui.com/img/logos/workflow-mark-blue-600.svg"
-					alt="Workflow"
+					src="/logo.png"
+					alt="Kinship Canada"
 				/>
 				<h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in to your account</h2>
 				<p className="mt-2 text-center text-sm text-gray-600">

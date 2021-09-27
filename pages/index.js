@@ -151,7 +151,7 @@ export default function Home() {
                 <div>
                   <a
                     href="#"
-                    className="inline-flex items-center text-gray-800 bg-white rounded-full p-1 pr-2 sm:text-base lg:text-sm xl:text-base hover:text-gray-900 border"
+                    className="inline-flex items-center text-gray-800 bg-white rounded-full p-1 pr-2 sm:text-base lg:text-sm xl:text-base hover:text-gray-900 border hover:border-gray-600 transition duration-200"
                   >
                     <span className="px-3 py-0.5 text-white text-xs font-semibold leading-5 uppercase tracking-wide bg-blue-600 rounded-full">
                       Campaign
