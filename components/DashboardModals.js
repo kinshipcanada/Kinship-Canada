@@ -13,9 +13,10 @@ export const TaxReceiptPackage = ({ user }) => {
           <div className="mt-5">
             <button
               type="button"
-              className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm"
+              disabled
+              className="cursor-not-allowed inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm"
             >
-              Download Package
+              Your Tax Package Is Coming Soon...
             </button>
           </div>
         </div>

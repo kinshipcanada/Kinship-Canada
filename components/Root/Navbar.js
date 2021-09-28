@@ -14,6 +14,7 @@ import {
   XIcon,
   ShoppingBagIcon,
 } from '@heroicons/react/outline'
+import { AcademicCapIcon, CheckIcon, UserGroupIcon, BriefcaseIcon, GlobeIcon, HeartIcon, HomeIcon, CashIcon, GiftIcon, BookOpenIcon, CurrencyDollarIcon } from '@heroicons/react/outline'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 
 const products = [
@@ -155,12 +156,12 @@ export default function Navbar() {
                         <ul role="list" className="divide-y divide-gray-200">
                         {cart.map((product) => (
                           <li key={product.id} className="py-6 flex items-center">
-                            <img
-                              src={product.imageSrc}
-                              alt={product.imageAlt}
-                              className="flex-none w-16 h-16 rounded-md border border-gray-200"
-                            />
-                            <div className="ml-4 flex-auto">
+                            <div className="flex items-center w-16 h-16 rounded-md ">
+                              <div className = 'bg-blue-100  border-blue-600 rounded-lg p-2 border-2 text-blue-600'>
+                                <CashIcon className = 'w-8 h-8' />
+                              </div>
+                            </div>
+                            <div className="ml-2 flex-auto">
                               <h3 className="font-medium text-gray-900">
                                 <p>{product.name}</p>
                               </h3>

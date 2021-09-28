@@ -129,6 +129,7 @@ export default function Home() {
 	const [addToBasketButton, setAddToBasketButton] = useState('Add to basket')
 
 	const [stepOneError, setStepOneError] = useState(null);
+	const [stepFourError, setStepFourError] = useState(null)
 	const [stepThreeError, setStepThreeError] = useState(null);
 
 	const [stateSample, setStateSample] = useState('hello');
@@ -264,13 +265,19 @@ export default function Home() {
 		for (let i = 0; i < userCauses.length; i++) {
 			console.log(userCauses[i]);
 			let amountToAdd = userCauses[i]['amount'];
-			let causeToAddID = userCauses[i]['id'];
-			let causeToAddName = userCauses[i]['name'];
-			let eligible = userCauses[i]['eligible'];
-			let recurring = userCauses[i]['recurring'];
-			let region = userCauses[i]['region'];
-			
-			addToCart(amountToAdd, causeToAddID, causeToAddName, eligible, recurring, region)
+
+			if (amount == 'null' || amount == undefined || amount == null) {
+				setStepFourError('Please choose an amount to donate')
+			} else {
+				let causeToAddID = userCauses[i]['id'];
+				let causeToAddName = userCauses[i]['name'];
+				let eligible = userCauses[i]['eligible'];
+				let recurring = userCauses[i]['recurring'];
+				let region = userCauses[i]['region'];
+				
+				addToCart(amountToAdd, causeToAddID, causeToAddName, eligible, recurring, region)
+			}
+
 		}
 
 		setAddToBasketButton('Added to basket succesfully!')
@@ -532,7 +539,7 @@ export default function Home() {
 											}
 										}
 									>
-										<option>Select One</option>
+										<option value = 'null'>Select One</option>
 										{
 											userCauses.map((causeVal)=>(
 												<>	
@@ -558,12 +565,28 @@ export default function Home() {
 										placeholder = 'Choose a custom amount to donate' 
 										id = {cause.id + '_custom'} 
 									    type = 'text'
+										onChange = {(e)=>{
+											for (let i = 0; i < userCauses.length; i++) {
+												if (userCauses[i]['id'] == cause.id) {
+													userCauses[i].amount = e.target.value;
+													userCauses[i].interval = 'one-time';
+												}
+											}
+										}}
 										className="mt-2 mb-2 shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md py-3 hidden"
 									/>
 									
 								</div>
 							))}
-							
+							{
+								stepFourError ? 
+
+								<p className = 'text-red-600 font-semibold'>{stepFourError}</p>
+
+								:
+
+								''
+							}
 						</div>
 			      	</div>
 					  
