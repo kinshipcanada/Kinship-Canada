@@ -7,6 +7,7 @@ import { supabase } from '../../lib/supabaseClient.js'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { ArrowRightIcon } from '@heroicons/react/outline'
+import Loader from '../../components/Root/Loader.js'
 
 export default function Welcome() {
 
@@ -155,7 +156,7 @@ export default function Welcome() {
 												type="submit"
 												className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
 											>
-												{updateLoading ? 'Setting up your profile...' : 'Continue To Dashboard'}
+												{updateLoading ? <Loader /> : 'Continue To Dashboard'}
 												<ArrowRightIcon className="ml-2 h-5 w-5" aria-hidden="true" />
 											</button>
 										</div>
