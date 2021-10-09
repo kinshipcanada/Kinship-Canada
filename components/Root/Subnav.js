@@ -1,5 +1,4 @@
 import Link from 'next/link'
-
 import { supabase } from '../../lib/supabaseClient.js'
 import { useRouter } from 'next/router'
 import { Fragment, useState } from 'react'
@@ -12,7 +11,10 @@ import {
   UserCircleIcon,
   LoginIcon,
   HomeIcon,
-  RefreshIcon
+  RefreshIcon,
+  DocumentReportIcon,
+  AdjustmentsIcon,
+  ChevronRightIcon
 } from '@heroicons/react/outline'
 
 
@@ -20,7 +22,14 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function SubNav() {
+const adminOptions = [
+	{ name: 'Home', href: '/app/admin' },
+	{ name: 'Reports', href: '/app/admin/reports' },
+	{ name: 'Campaigns', href: '/app/admin/campaigns' },
+	{ name: 'Settings', href: '#' },
+]
+
+export default function SubNav({partner}) {
 	const router = useRouter()
 	let pathname = router.pathname
 	let asPath = router.asPath
@@ -29,7 +38,7 @@ export default function SubNav() {
 	pathname.toLowerCase();
 	pathname = pathname.split("/")[2];
 
-	let home, receipts, proof, donations, recurring, account = false;
+	let home, receipts, proof, donations, recurring, account, partners, admin = false;
 
 	if (pathname == undefined) {
 
@@ -54,6 +63,14 @@ export default function SubNav() {
 	} else if (pathname == 'account') {
 
 		account = true;
+
+	} else if (pathname == 'partners') {
+
+		partners = true;
+
+	} else if (pathname == 'admin') {
+
+		admin = true
 
 	}
 
@@ -98,6 +115,84 @@ export default function SubNav() {
 	            </a>
             </Link>
           ))}
+          
+          <Link href = '/app/partners'>
+            <a
+              className={classNames(
+                partners
+                  ? 'text-blue-600 hover:text-blue-700'
+                  : 'text-gray-900 hover:text-gray-900 hover:bg-gray-50',
+                'group rounded-md px-3 py-2 hover:text-gray-900 hover:bg-gray-50 flex items-center text-sm font-medium'
+              )}
+              href = '#'
+            >
+              <DocumentReportIcon
+                className={classNames(
+                  partners ? 'text-orange-500' : 'text-gray-400 group-hover:text-gray-500',
+                  'flex-shrink-0 -ml-1 mr-3 h-6 w-6'
+                )}
+                aria-hidden="true"
+              />
+              <span className="truncate">Partners</span>
+            </a>
+          </Link>
+          <Disclosure as="div"  className="space-y-1">
+            {({ open }) => (
+              <>
+                <Disclosure.Button
+                  className={classNames(
+                    admin
+                      ? 'text-blue-600 hover:text-blue-700'
+                      : 'bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900',
+                    'group w-full flex items-center pl-2 pr-1 py-2 text-left text-sm font-medium rounded-md focus:outline-none'
+                  )}
+                >
+                  <Link href = '/app/admin'>
+                  	<>
+	                  <AdjustmentsIcon
+	                    className={classNames(
+		                    admin
+		                      ? 'text-blue-600 hover:text-blue-700'
+		                      : 'text-gray-900 hover:text-gray-900 hover:bg-gray-50',
+		                    'mr-3 flex-shrink-0 h-6 w-6 text-gray-400 '
+		                  )}
+	                    aria-hidden="true"
+	                  />
+	                  <span className="flex-1">Admin</span>
+	                  <div
+	                    className={classNames(
+	                      open ? 'text-gray-400 rotate-90' : 'text-gray-300',
+	                      'ml-3 flex-shrink-0 h-5 w-5 transform group-hover:text-gray-400 transition-colors ease-in-out duration-150'
+	                    )}
+	                    viewBox="0 0 20 20"
+	                    aria-hidden="true"
+	                  >
+	                    <ChevronRightIcon className = {classNames(
+		                    admin
+		                      ? 'text-blue-600 hover:text-blue-700'
+		                      : 'text-gray-900 hover:text-gray-900 hover:bg-gray-50',
+		                    'mr-3 flex-shrink-0 h-4 w-4 text-gray-400 '
+		                  )} />
+	                  </div>
+	                  </>
+                  </Link>
+                </Disclosure.Button>
+                <Disclosure.Panel className="space-y-1">
+                  {adminOptions.map((subItem) => (
+                    <Link href = {subItem.href}>
+                    	<a
+	                      key={subItem.name}
+	                      href={subItem.href}
+	                      className="group w-full flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50"
+	                    >
+	                      {subItem.name}
+	                    </a>
+                    </Link>
+                  ))}
+                </Disclosure.Panel>
+              </>
+            )}
+          </Disclosure>
           <a
 	          onClick={signOut}
 	          className='cursor-pointer text-gray-900 hover:text-gray-900 hover:bg-gray-50 group rounded-md px-3 py-2 flex items-center text-sm font-medium'
