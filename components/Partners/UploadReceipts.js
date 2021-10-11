@@ -25,7 +25,7 @@ export default function UploadReceipts({partner}) {
       	<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 mt-4">
 
       		{people.map((details)=>(
-      			<StatusCard details = {details}/>
+      			<StatusCard details = {details} key = {details.name}/>
       		))}
 
       	</div>

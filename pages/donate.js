@@ -2,7 +2,7 @@ import Navbar from '../components/Root/Navbar.js'
 import { supabase } from '../lib/supabaseClient'
 import { useState, useEffect, useRef, Fragment } from 'react'
 import { RadioGroup } from '@headlessui/react'
-import { AcademicCapIcon, CheckIcon, UserGroupIcon, BriefcaseIcon, GlobeIcon, HeartIcon, HomeIcon, CashIcon, GiftIcon, BookOpenIcon, CurrencyDollarIcon } from '@heroicons/react/outline'
+import { AcademicCapIcon, CheckIcon, UserGroupIcon, BriefcaseIcon, GlobeIcon, HeartIcon, HomeIcon, CashIcon, GiftIcon, BookOpenIcon, CurrencyDollarIcon, ArrowRightIcon } from '@heroicons/react/outline'
 import { DotsVerticalIcon } from '@heroicons/react/solid'
 import Image from 'next/image'
 import { Dialog, Transition } from '@headlessui/react'
@@ -12,6 +12,8 @@ import Link from 'next/link'
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
+
+// Note: This page is currently a bit of a mess and will be undergoing cleanup
 
 const causes = [
 	{
@@ -32,7 +34,18 @@ const causes = [
 			},
 			{
 			  "name": "India",
-			  "options": []
+			  "options": [
+				{
+					"amount": 1500,
+					"interval": "year",
+					"buys": "Housing support, education, and food for one year"
+				},
+				{
+					"amount": 125,
+					"interval": "month",
+					"buys": "Housing support, education, and food for one month"
+				}
+			  ]
 			},
 			{
 			  "name": "Al-Ayn",
@@ -46,7 +59,7 @@ const causes = [
 			}
 		],
 		eligible: true,
-		blurb: 'Cover housing, education, and food for an orphan'
+		blurb: 'Covers housing, education, and food for orphans'
 	},
 	{
 		id: "90c7ced8-db3b-49fd-83bf-2e9502b5089f",
@@ -74,12 +87,16 @@ const causes = [
 			  ]
 			},
 			{
-			  "name": "Al-Ayn",
-			  "options": []
+				"name": "Africa",
+				"options": []
+			},
+			{
+				"name": "Canada",
+				"options": []
 			}
 		  ],
 		eligible: true,
-		blurb: "Help cover a family's basic needs, including housing and food."
+		blurb: "Help cover a family or an area's basic needs such as water pumps, food banks, food rations, and more."
 	},
 	{
 		id: "cd610320-4978-4c63-a5dd-bd6bc26e5553",
@@ -91,7 +108,7 @@ const causes = [
 			  "name": "Iraq",
 			  "options": [
 				{
-				  "amount": 142,
+				  "amount": 150,
 				  "interval": "month",
 				  "buys": "schooling, books, and supplies for one child"
 				}
@@ -100,11 +117,11 @@ const causes = [
 			{
 			  "name": "India",
 			  "options": [
-			  {
-				"amount": 550,
-				"interval": "month",
-				"buys": "schooling, books, and supplies for one child"
-			  }
+				{
+					"amount": 550,
+					"interval": "year",
+					"buys": "schooling, books, and supplies for one child"
+				}
 			  ]
 			},
 			{
@@ -113,9 +130,136 @@ const causes = [
 			}
 		],
 		eligible: true,
-		blurb: "Educate the next generation. Covers a student's tuition, books, and stationary."
+		blurb: "Educate the next generation. Covers a student's tuition, books, and stationery."
 	},
-	
+	{
+		id: "5",
+		name: 'Widows',
+		icon: AcademicCapIcon,
+		bgColor: 'bg-yellow-600',
+		regions: [
+			{
+			  "name": "India",
+			  "options": [
+			  {
+				"amount": 150,
+				"interval": "month",
+				"buys": "housing support and food rations"
+			  }
+			  ]
+			},
+		],
+		eligible: true,
+		blurb: "Support for food and shelter for widows."
+	},
+	{
+		id: "6",
+		name: 'Medical Aid',
+		icon: AcademicCapIcon,
+		bgColor: 'bg-blue-600',
+		regions: [
+			{
+			  "name": "India",
+			  "options": [
+				{
+					"amount": 225,
+					"interval": "one-time",
+					"buys": "wheelchair"
+				}
+			  ]
+			},
+			{
+				"name": "Africa",
+				"options": []
+			},
+			{
+			"name": "Iraq",
+			"options": [
+				{
+					"amount": 150,
+					"interval": "one-time",
+					"buys": "wheelchair"
+				}
+			]
+			},
+		],
+		eligible: true,
+		blurb: "Contribute towards medical aid such as wheelchairs, surgeries, medication, etc."
+	},
+	{
+		id: "7",
+		name: 'Housing',
+		icon: AcademicCapIcon,
+		bgColor: 'bg-red-600',
+		regions: [
+			{
+			  "name": "India",
+			  "options": [
+				{
+					"amount": 5400,
+					"interval": "one-time",
+					"buys": "one bedroom home"
+				},
+				{
+					"amount": 6500,
+					"interval": "one-time",
+					"buys": "two bedroom home"
+				}
+			  ]
+			},
+			{
+			"name": "Iraq",
+				"options": []
+			},
+		],
+		eligible: true,
+		blurb: "Help build a basic home with one or two bedrooms, kitchen, and a bathroom"
+	},
+	{
+		id: "8",
+		name: 'Quran',
+		icon: BookOpenIcon,
+		bgColor: 'bg-green-600',
+		regions: [
+			{
+			  "name": "India",
+			  "options": [
+					{
+						"amount": 25,
+						"interval": "one-time",
+						"buys": "one quran read in the name of your marhum"
+					},
+			  ]
+			},
+		],
+		eligible: false,
+		blurb: "Recitation of the Holy Quran in the name of your marhum. Please keep the niyyat."
+	},
+	{
+		id: "9",
+		name: 'Qadha Salah and Fasting',
+		icon: BookOpenIcon,
+		bgColor: 'bg-yellow-600',
+		regions: [
+			{
+			  "name": "India",
+			  "options": [
+					{
+						"amount": 300,
+						"interval": "one-time",
+						"buys": "one year of missed prayers"
+					},
+					{
+						"amount": 200,
+						"interval": "one-time",
+						"buys": "one month of fasting"
+					},
+			  ]
+			},
+		],
+		eligible: false,
+		blurb: "A person in need will perform one year of salah and/or one month of fasting in the name of your marhum."
+	},
 
 ]
 
@@ -125,6 +269,7 @@ export default function Home() {
 	const [step, setStep] = useState(1);
 	const [cart, setCart] = useState([])
 	const [userCauses, setUserCauses] = useState([])
+	const [basketableCauses, setBasketableCauses] = useState([])
 	const [dropdownAmounts, setDropdownAmounts] = useState([])
 	const [addToBasketButton, setAddToBasketButton] = useState('Add to basket')
 
@@ -153,7 +298,7 @@ export default function Home() {
 		return false;
 	}
 
-	const addToCart = (amount, causeId, causeName, eligibleVal, recurringVal, regionVal) => {
+	const addToCart = (amount, causeId, causeName, eligibleVal, recurringVal, regionVal, intervalVal) => {
 
 		let amountToAdd = amount;
 		let causeToAddID = causeId;
@@ -161,14 +306,16 @@ export default function Home() {
 		let eligible = eligibleVal; 
 		let recurring = recurringVal;
 		let region = regionVal;
+		let interval = intervalVal
 
 		let newItem = {
 			id: causeToAddID,
 			name: causeToAddName,
-			amount: parseFloat(amountToAdd),
+			amount: parseFloat(amountToAdd).toFixed(2),
 			eligible: eligible,
 			recurring: recurring,
 			region: region,
+			interval: intervalVal
 		}
 
 		let state = checkForItem(cart, causeToAddID, recurring)
@@ -261,27 +408,36 @@ export default function Home() {
 	const submitStepThree = (event) => {
 		event.preventDefault();
 		
-
-		for (let i = 0; i < userCauses.length; i++) {
-			console.log(userCauses[i]);
-			let amountToAdd = userCauses[i]['amount'];
-
-			if (amount == 'null' || amount == undefined || amount == null) {
-				setStepFourError('Please choose an amount to donate')
-			} else {
-				let causeToAddID = userCauses[i]['id'];
-				let causeToAddName = userCauses[i]['name'];
-				let eligible = userCauses[i]['eligible'];
-				let recurring = userCauses[i]['recurring'];
-				let region = userCauses[i]['region'];
-				
-				addToCart(amountToAdd, causeToAddID, causeToAddName, eligible, recurring, region)
+		if (basketableCauses.length != userCauses.length) {
+			setStepFourError('Please choose an amount to donate')
+		} else {
+			for (let i = 0; i < basketableCauses.length; i++) {
+				let item = basketableCauses[i]
+				addToCart(item['amount'], item['id'], item['cause'], item['eligible'], item['recurring'], item['region'], item['interval'])
 			}
 
+			setAddToBasketButton('Added to basket succesfully!')
+			setOpen(true)
 		}
+		// for (let i = 0; i < userCauses.length; i++) {
+		// 	console.log(userCauses[i]);
+		// 	let amountToAdd = userCauses[i]['amount'];
 
-		setAddToBasketButton('Added to basket succesfully!')
-		setOpen(true)
+		// 	if (amountToAdd == 'null' || amountToAdd == undefined || amountToAdd == null) {
+		// 		setStepFourError('Please choose an amount to donate')
+		// 	} else {
+		// 		let causeToAddID = userCauses[i]['id'];
+		// 		let causeToAddName = userCauses[i]['name'];
+		// 		let eligible = userCauses[i]['eligible'];
+		// 		let recurring = userCauses[i]['recurring'];
+		// 		let region = userCauses[i]['region'];
+				
+		// 		addToCart(amountToAdd, causeToAddID, causeToAddName, eligible, recurring, region)
+		// 	}
+
+		// }
+
+		
 	}
 
   	return (
@@ -296,8 +452,8 @@ export default function Home() {
 			</div>
 			<div className="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
 				{causes.map((cause) => (
-					<div key = {cause.id} className="bg-white overflow-hidden shadow rounded-lg">
-						<div className="px-4 py-5 sm:px-6">
+					<div key = {cause.id} className="bg-white overflow-hidden shadow rounded-lg flex flex-col justify-items-stretch">
+						<div className="px-4 py-5 sm:px-6 ">
 							<div className = 'flex flex-col'>
 								<div className = 'flex'>
 									<div
@@ -346,6 +502,96 @@ export default function Home() {
 						</div>
 						</div>
 				))}
+				<div className="bg-white overflow-hidden shadow rounded-lg">
+					<div className="px-4 py-5 sm:px-6">
+						<div className = 'flex flex-col'>
+							<div className = 'flex'>
+								<div
+									className='bg-green-600 text-white p-3 rounded mb-3 w-auto h-auto'
+								>
+									<CashIcon className = 'w-6 h-6'/>
+								</div>
+							</div>
+							<div>
+								<label className="text-gray-900 font-medium hover:text-gray-600">Microfinancing</label>
+								<p className="text-gray-500 text-sm">Help finance a small business and lift a family out of poverty. Help a generation get off the ground and break the cycle.</p>
+								<p className = 'text-sm font-semibold mt-2'>Availiable anywhere
+								</p>
+							</div>
+						</div>
+					</div>
+					<div className="bg-gray-50">
+						<label className = 'w-full h-full flex items-center cursor-pointer px-4 py-5 sm:p-6'>
+							<Link href = '/campaigns/microfinancing'>
+								<p className = 'text-md font-medium flex items-center'>
+									View Microfinancing Campaign
+									<ArrowRightIcon className = 'w-4 h-4 ml-2' />
+								</p>
+							</Link>
+						</label>
+					</div>
+					</div>
+
+
+					<div className="bg-white overflow-hidden shadow rounded-lg">
+					<div className="px-4 py-5 sm:px-6">
+						<div className = 'flex flex-col'>
+							<div className = 'flex'>
+								<div
+									className='bg-yellow-600 text-white p-3 rounded mb-3 w-auto h-auto'
+								>
+									<CurrencyDollarIcon className = 'w-6 h-6'/>
+								</div>
+							</div>
+							<div>
+								<label className="text-gray-900 font-medium hover:text-gray-600">Khums</label>
+								<p className="text-gray-500 text-sm">Pay your Sehme Imam and Sehme Sadat khums through Kinship Canada.</p>
+								<p className = 'text-sm font-semibold mt-2'>Availiable anywhere
+								</p>
+							</div>
+						</div>
+					</div>
+					<div className="bg-gray-50">
+						<label className = 'w-full h-full flex items-center cursor-pointer px-4 py-5 sm:p-6'>
+							<Link href = '/khums'>
+								<p className = 'text-md font-medium flex items-center'>
+									View Khums Page
+									<ArrowRightIcon className = 'w-4 h-4 ml-2' />
+								</p>
+							</Link>
+						</label>
+					</div>
+					</div>
+				
+					<div className="bg-white overflow-hidden shadow rounded-lg">
+					<div className="px-4 py-5 sm:px-6">
+						<div className = 'flex flex-col'>
+							<div className = 'flex'>
+								<div
+									className='bg-blue-300 text-white p-3 rounded mb-3 w-auto h-auto'
+								>
+									<CurrencyDollarIcon className = 'w-6 h-6'/>
+								</div>
+							</div>
+							<div>
+								<label className="text-gray-900 font-medium hover:text-gray-600">Current Campaigns</label>
+								<p className="text-gray-500 text-sm">Kinship Canada helps partners in Africa, India, and Iraq run special campaigns to build up their communities</p>
+								<p className = 'text-sm font-semibold mt-2'>Availiable anywhere
+								</p>
+							</div>
+						</div>
+					</div>
+					<div className="bg-gray-50">
+						<label className = 'w-full h-full flex items-center cursor-pointer px-4 py-5 sm:p-6'>
+							<Link href = '/campaigns'>
+								<p className = 'text-md font-medium flex items-center'>
+									View Active Campaigns
+									<ArrowRightIcon className = 'w-4 h-4 ml-2' />
+								</p>
+							</Link>
+						</label>
+					</div>
+					</div>
 			</div>
 
 			<div className = 'p-4 flex justify-center'>
@@ -520,11 +766,37 @@ export default function Home() {
 
 													obj_select.classList.add('hidden');
 													obj_input.classList.remove('hidden');
+
 												} else {
-													let details = e.target.value.split('_');
+													let details = e.target.value.split('__');
 													
 													for (let i = 0; i < userCauses.length; i++) {
 														if (userCauses[i]['id'] == cause.id) {
+															let amount = parseFloat(details[0]).toFixed(2)
+															let interval = details[1]
+															let region = details[2]
+															let cause = userCauses[i]['name']
+															let eligible = userCauses[i]['eligible']
+															let id = userCauses[i]['id']
+															let recurring
+
+															if (interval == 'one-time') {
+																recurring = false 
+															} else {
+																recurring = true
+															}
+															
+															let causeDetails = {
+																amount: amount,
+																interval: interval,
+																region: region, 
+																cause: cause,
+																eligible: eligible,
+																id: id,
+																recurring: recurring
+															}
+
+															basketableCauses.push(causeDetails)
 															userCauses[i].amount = details[0];
 															userCauses[i].interval = details[1];
 
@@ -548,7 +820,7 @@ export default function Home() {
 
 														<>
 															{causeVal.options.options.map((option)=>(
-																<option key = {option.amount}>${option.amount} {option.interval == 'one-time' ? ' once ' : ' per ' + option.interval} buys {option.buys}</option>
+																<option key = {option.amount} value = {option.amount + '__' + option.interval + '__' + causeVal.region}>${option.amount} {option.interval == 'one-time' ? ' once ' : ' per ' + option.interval} buys {option.buys}</option>
 															))}
 														</>
 
@@ -570,6 +842,7 @@ export default function Home() {
 												if (userCauses[i]['id'] == cause.id) {
 													userCauses[i].amount = e.target.value;
 													userCauses[i].interval = 'one-time';
+													console.log(userCauses)
 												}
 											}
 										}}
@@ -610,7 +883,6 @@ export default function Home() {
 					    </div>
 
 			      	<div className = 'flex justify-between mt-4 mb-4'>
-						{console.log(dropdownAmounts)}
 						<form onSubmit = {submitStepThree}>
 							<div className = 'p-4 flex justify-center'>
 								<button type = 'submit' className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Add to cart</button>

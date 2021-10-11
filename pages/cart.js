@@ -1,14 +1,17 @@
 import Navbar from '../components/Root/Navbar.js'
 import { CheckIcon, ClockIcon, QuestionMarkCircleIcon, XIcon } from '@heroicons/react/solid'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Loader from '../components/Root/Loader'
 import Link from 'next/link'
 import ReactTooltip from 'react-tooltip';
+import getStripe from '../lib/getStripe.js'
+import { fetchPostJSON } from '../lib/apiHelpers';
 
 export default function Home() {
 
   const [cart, setCart] = useState([])
   const [loading, setLoading] = useState(true)
+  const [checkoutLoading, setCheckoutLoading] = useState(false)
   const [empty, setEmpty] = useState(null)
 
   const [subtotal, setSubtotal] = useState(0.00);
@@ -17,40 +20,84 @@ export default function Home() {
   const [oneTime, setOneTime] = useState(0.00)
   const [recurringAmt, setRecurringAmt] = useState(0.00)
 
-  useEffect(()=>{
-    if (JSON.parse(localStorage.getItem('kinship_cart')) != null) {
-      if (JSON.parse(localStorage.getItem('kinship_cart')).length == 0) {
-        setEmpty(true)
-        setLoading(false)
+  const calculateCart = (cart) => {
+
+    setRecurringAmt(0.00)
+    setOneTime(0.00)
+    setSubtotal(0.00)
+    setEligible(0.00)
+
+    let eligibleToAdd = 0.00
+    let oneTimeToAdd = 0.00
+    let recurringToAdd = 0.00
+    let subtotalToAdd = 0.00
+
+    for (let i = 0; i < cart.length; i++) {
+
+      let donation = cart[i]
+      let amount = parseFloat(donation['amount'])
+
+      if (cart[i]['recurring'] == true) {
+        recurringToAdd += amount
       } else {
-        setCart(JSON.parse(localStorage.getItem('kinship_cart')));
-        let obj = JSON.parse(localStorage.getItem('kinship_cart'));
-
-        for (let i = 0; i < obj.length; i++) {
-          let recurringVal = obj[i]['recurring'];
-          let amount = obj[i]['amount'];
-          let eligibleVal = obj[i]['eligible'];
-
-          if (eligibleVal) {
-            setEligible(eligible + amount);
-          }
-
-          if (recurringVal) {
-            setRecurringAmt(recurringAmt + amount)
-          } else {
-            setOneTime(oneTime + amount)
-          }
-
-          setSubtotal(subtotal + amount)
-        }
-        setLoading(false)
+        oneTimeToAdd += amount
       }
+
+      if (donation['eligible']) {
+        eligibleToAdd += amount
+        
+      }
+
+      subtotalToAdd += amount
+    }
+
+
+    setRecurringAmt(recurringToAdd)
+    setSubtotal(subtotalToAdd)
+    setOneTime(oneTimeToAdd)
+    setEligible(eligibleToAdd)
+
+  }
+  useEffect(()=>{
+    let cart = JSON.parse(localStorage.getItem('kinship_cart'))
+    
+    if (cart) {
+      calculateCart(cart)
+      setCart(cart)
+      setLoading(false)
     } else {
       setEmpty(true)
       setLoading(false)
     }
   },[])
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setCheckoutLoading(true);
+    // Create a Checkout Session.
+    const response = await fetchPostJSON('/api/checkout', {
+      amount: subtotal,
+    });
+
+    if (response.statusCode === 500) {
+      console.error(response.message);
+      return;
+    }
+
+    // Redirect to Checkout.
+    const stripe = await getStripe();
+    const { error } = await stripe.redirectToCheckout({
+      // Make the id field from the Checkout Session creation API response
+      // available to this file, so you can provide it as parameter here
+      // instead of the {{CHECKOUT_SESSION_ID}} placeholder.
+      sessionId: response.id,
+    });
+    // If `redirectToCheckout` fails due to a browser or network
+    // error, display the localized error message to your customer
+    // using `error.message`.
+    console.warn(error.message);
+    setCheckoutLoading(false);
+  };
 
   const checkout = async (event) => {
 
@@ -116,20 +163,13 @@ export default function Home() {
               <ul role="list" className="border-t border-b border-gray-200 divide-y divide-gray-200">
               {cart.map((cause, causeIdx) => (
                 <li key={cause.id} id = {cause.id + '_' + cause.recurring + '_' + cause.region} className="flex py-6 sm:py-10">
-                  <div className="flex-shrink-0">
-                    <img
-                      src={cause.imageSrc}
-                      alt={cause.imageAlt}
-                      className="w-24 h-24 rounded-md object-center object-cover sm:w-48 sm:h-48"
-                    />
-                  </div>
                   <div className="ml-4 flex-1 flex flex-col justify-between sm:ml-6">
                     <div className="relative pr-9 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:pr-0">
                       <div>
                         <div className="flex justify-between">
                           <h3 className="text-md">
                             <p className="font-medium text-gray-700 hover:text-gray-800">
-                              {cause.name} - {cause.region}
+                              {cause.name}{cause.region ? <> - {cause.region}</> : <></>}
                             </p>
                           </h3>
                         </div>
@@ -246,18 +286,18 @@ export default function Home() {
                 <dl className="mt-6 space-y-4">
                   <div className="flex items-center justify-between">
                     <dt className="text-sm text-gray-600">Subtotal</dt>
-                    <dd className="text-sm font-medium text-gray-900">${subtotal.toFixed(2)}</dd>
+                    <dd className="text-sm font-medium text-gray-900">${subtotal}</dd>
                   </div>
                   
                   <div className="border-t border-gray-200 pt-4">
                     <div className="flex items-center justify-between">
                       <dt className="text-sm text-gray-600">Eligible for tax receipt</dt>
-                      <dd className="text-sm font-medium text-gray-900">${eligible.toFixed(2)}</dd>
+                      <dd className="text-sm font-medium text-gray-900">${eligible}</dd>
                     </div>
                   </div>
 
-
-                  <div className="border-t border-gray-200 pt-4">
+                  {/* FEES COVERING SECTION TO BE ADDED LATER */}
+                  {/* <div className="border-t border-gray-200 pt-4">
                     <div className = 'flex items-center justify-between'>
                       <dt className="flex text-sm text-gray-600">
                         <span>Fees Covering</span>
@@ -329,7 +369,7 @@ export default function Home() {
                       />
                       <label className = 'text-sm text-gray-800 ml-2' htmlFor = 'fees_covering'>(Optional) Help Kinship Canada cover credit card processing fees</label>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="border-t border-gray-200 pt-4 flex items-center justify-between">
                     <dt className="text-base font-medium text-gray-900">Donation Total:</dt>
                     <dd className="text-base font-medium text-gray-900">
@@ -358,12 +398,12 @@ export default function Home() {
               </div>
               
             }
-            <div className="mt-6">
+            <div className="mt-6" onClick={handleSubmit}>
               <button
                 type = 'submit'
                 className="w-full bg-blue-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-blue-500"
               >
-                Checkout
+                {checkoutLoading ? <span className = 'flex w-full text-center justify-center'><Loader /></span> : 'Checkout'}
               </button>
             </div>
           </section>
@@ -373,3 +413,78 @@ export default function Home() {
     </div>
   )
 }
+
+
+
+// import CustomDonationInput from '../components/CustomDonationInput'
+// import StripeTestCards from '../components/StripeTestCards'
+
+// import { fetchPostJSON } from '../utils/api-helpers'
+// import { formatAmountForDisplay } from '../utils/stripe-helpers'
+// import * as config from '../config'
+
+// const CheckoutForm = () => {
+//   const [loading, setLoading] = useState(false)
+//   const [input, setInput] = useState({
+//     customDonation: Math.round(config.MAX_AMOUNT / config.AMOUNT_STEP),
+//   })
+
+//   const handleInputChange = (e) =>
+//     setInput({
+//       ...input,
+//       [e.currentTarget.name]: e.currentTarget.value,
+//     })
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault()
+//     setLoading(true)
+//     // Create a Checkout Session.
+//     const response = await fetchPostJSON('/api/checkout_sessions', {
+//       amount: input.customDonation,
+//     })
+
+//     if (response.statusCode === 500) {
+//       console.error(response.message)
+//       return
+//     }
+
+//     // Redirect to Checkout.
+//     const stripe = await getStripe()
+//     const { error } = await stripe.redirectToCheckout({
+//       // Make the id field from the Checkout Session creation API response
+//       // available to this file, so you can provide it as parameter here
+//       // instead of the {{CHECKOUT_SESSION_ID}} placeholder.
+//       sessionId: response.id,
+//     })
+//     // If `redirectToCheckout` fails due to a browser or network
+//     // error, display the localized error message to your customer
+//     // using `error.message`.
+//     console.warn(error.message)
+//     setLoading(false)
+//   }
+
+//   return (
+//     <form onSubmit={handleSubmit}>
+//       <CustomDonationInput
+//         className="checkout-style"
+//         name={'customDonation'}
+//         value={input.customDonation}
+//         min={config.MIN_AMOUNT}
+//         max={config.MAX_AMOUNT}
+//         step={config.AMOUNT_STEP}
+//         currency={config.CURRENCY}
+//         onChange={handleInputChange}
+//       />
+//       <StripeTestCards />
+//       <button
+//         className="checkout-style-background"
+//         type="submit"
+//         disabled={loading}
+//       >
+//         Donate {formatAmountForDisplay(input.customDonation, config.CURRENCY)}
+//       </button>
+//     </form>
+//   )
+// }
+
+// export default CheckoutForm

@@ -179,7 +179,7 @@ export default function SubNav({partner}) {
                 </Disclosure.Button>
                 <Disclosure.Panel className="space-y-1">
                   {adminOptions.map((subItem) => (
-                    <Link href = {subItem.href}>
+                    <Link href = {subItem.href} key = {subItem.href}>
                     	<a
 	                      key={subItem.name}
 	                      href={subItem.href}

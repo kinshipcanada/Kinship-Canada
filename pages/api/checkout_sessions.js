@@ -1,3 +1,5 @@
+import { NextApiRequest, NextApiResponse } from 'next';
+
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 export default async function handler(req, res) {
@@ -20,7 +22,6 @@ export default async function handler(req, res) {
         payment_method_types: [
           'card',
         ],
-        mode: 'subscription',
         success_url: `${req.headers.origin}/success/?success=true&session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${req.headers.origin}/canceled?canceled=true`,
       });
