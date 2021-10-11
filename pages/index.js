@@ -9,6 +9,8 @@ import { ChevronRightIcon, QuestionMarkCircleIcon } from '@heroicons/react/solid
 import ReactTooltip from 'react-tooltip';
 import Footer from '../components/Root/Footer'
 import Features from '../components/Site/Features'
+import { fetchPostJSON } from '../lib/apiHelpers';
+import getStripe from '../lib/getStripe'
 
 const incentives = [
   {
@@ -32,6 +34,29 @@ export default function Home() {
 
   const [cart, setCart] = useState([])
   const [loading, setLoading] = useState(false)
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    // Create a Checkout Session.
+    const response = await fetchPostJSON('/api/quickCheckout', {
+      amount: parseFloat(e.target.amount.value),
+    });
+
+    if (response.statusCode === 500) {
+      console.error(response.message);
+      return;
+    }
+
+    // Redirect to Checkout.
+    const stripe = await getStripe();
+    const { error } = await stripe.redirectToCheckout({
+      sessionId: response.id,
+    });
+
+    console.warn(error.message);
+    setLoading(false);
+  };
 
   useEffect(()=>{
     if (JSON.parse(localStorage.getItem('kinship_cart')) != null) {
@@ -192,7 +217,7 @@ export default function Home() {
                     </div>
 
                     <div className="mt-6">
-                      <form  onSubmit = {addToCart} className="space-y-6">
+                      <form  onSubmit = {handleSubmit} className="space-y-6">
                         <div>
                           <label htmlFor="name" className="sr-only">
                             Amount
