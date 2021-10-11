@@ -16,6 +16,9 @@ import {
 } from '@heroicons/react/outline'
 import { AcademicCapIcon, CheckIcon, UserGroupIcon, BriefcaseIcon, GlobeIcon, HeartIcon, HomeIcon, CashIcon, GiftIcon, BookOpenIcon, CurrencyDollarIcon } from '@heroicons/react/outline'
 import { ChevronDownIcon } from '@heroicons/react/solid'
+import getStripe from '../../lib/getStripe.js'
+import { fetchPostJSON } from '../../lib/apiHelpers';
+import Loader from './Loader'
 
 const products = [
   {
@@ -49,6 +52,108 @@ export default function Navbar() {
   const [cart, setCart] = useState([])
   const [gottenCart, setGottenCart] = useState(false)
 
+  const [loading, setLoading] = useState(true)
+  const [checkoutLoading, setCheckoutLoading] = useState(false)
+  const [empty, setEmpty] = useState(null)
+
+  const [subtotal, setSubtotal] = useState(0.00);
+  const [eligible, setEligible] = useState(0.00);
+  const [feesCovering, setFeesCovering] = useState(0.00)
+  const [oneTime, setOneTime] = useState(0.00)
+  const [recurringAmt, setRecurringAmt] = useState(0.00)
+
+  const calculateCart = (cart) => {
+
+    setRecurringAmt(0.00)
+    setOneTime(0.00)
+    setSubtotal(0.00)
+    setEligible(0.00)
+
+    let eligibleToAdd = 0.00
+    let oneTimeToAdd = 0.00
+    let recurringToAdd = 0.00
+    let subtotalToAdd = 0.00
+
+    for (let i = 0; i < cart.length; i++) {
+
+      let donation = cart[i]
+      let amount = parseFloat(donation['amount'])
+
+      if (cart[i]['recurring'] == true) {
+        recurringToAdd += amount
+      } else {
+        oneTimeToAdd += amount
+      }
+
+      if (donation['eligible']) {
+        eligibleToAdd += amount
+        
+      }
+
+      subtotalToAdd += amount
+    }
+
+
+    setRecurringAmt(recurringToAdd)
+    setSubtotal(subtotalToAdd)
+    setOneTime(oneTimeToAdd)
+    setEligible(eligibleToAdd)
+
+  }
+  useEffect(()=>{
+    let cart = JSON.parse(localStorage.getItem('kinship_cart'))
+    
+    if (cart) {
+      calculateCart(cart)
+      getNumberOfItemsInCart()
+      setCart(cart)
+      setLoading(false)
+    } else {
+      setEmpty(true)
+      getNumberOfItemsInCart()
+      setLoading(false)
+    }
+  },[])
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setCheckoutLoading(true);
+    // Create a Checkout Session.
+    const response = await fetchPostJSON('/api/checkout', {
+      amount: subtotal,
+    });
+
+    if (response.statusCode === 500) {
+      console.error(response.message);
+      return;
+    }
+
+    // Redirect to Checkout.
+    const stripe = await getStripe();
+    const { error } = await stripe.redirectToCheckout({
+      sessionId: response.id,
+    });
+
+    console.warn(error.message);
+    setCheckoutLoading(false);
+  };
+
+  const checkout = async (event) => {
+
+    const res = await fetch('/api/checkout_sessions', {
+      body: JSON.stringify({
+        name: subtotal,
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'POST'
+    })
+
+    console.log(res)
+
+  }
+
   const getNumberOfItemsInCart = () => {
 
     if (gottenNum) {
@@ -70,11 +175,6 @@ export default function Navbar() {
       setGottenCart(true)
     }
   }
-
-  useEffect(()=>{
-    getNumberOfItemsInCart()
-    getCartDetails()
-  })
 
   return (
     <Popover className="relative bg-white">
@@ -171,13 +271,12 @@ export default function Navbar() {
                         ))}
                       </ul>
 
-                      <Link href = '/cart'>
-                        <button
-                          className="w-full bg-blue-600 border border-transparent rounded-md shadow-sm py-2 px-4 text-sm font-medium text-white hover:bg-blue-700"
-                        >
-                          Checkout
-                        </button>
-                      </Link>
+                      <button
+                        className="w-full bg-blue-600 border border-transparent rounded-md shadow-sm py-2 px-4 text-sm font-medium text-white hover:bg-blue-700"
+                        onClick={handleSubmit}
+                      >
+                        {checkoutLoading ? <span className = 'flex text-center justify-center items-center'>Redirecting you to checkout<Loader /></span> : 'Checkout'}
+                      </button>
 
                       <p className="mt-4 text-center">
                         <Link href = '/cart'>
