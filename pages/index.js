@@ -11,6 +11,7 @@ import Footer from '../components/Root/Footer'
 import Features from '../components/Site/Features'
 import { fetchPostJSON } from '../lib/apiHelpers';
 import getStripe from '../lib/getStripe'
+import Loader from '../components/Root/Loader'
 
 const incentives = [
   {
@@ -278,7 +279,7 @@ export default function Home() {
                             type="submit"
                             className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                           >
-                            {loading ? 'Redirecting you to checkout...' : 'Give general donation'}
+                            {loading ? <span className = 'flex text-center justify-center items-center'><Loader />Redirecting you to checkout...</span> : 'Give general donation'}
                           </button>
                         </div>
                       </form>
