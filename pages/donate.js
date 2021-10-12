@@ -450,10 +450,10 @@ export default function Home() {
 				<h2 className={step == 1 ? "text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate" : "text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate opacity-50"}>Step One: Choose A Cause</h2>
 				</div>
 			</div>
-			<div className="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
+			<div className="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4 items-stretch">
 				{causes.map((cause) => (
-					<div key = {cause.id} className="bg-white overflow-hidden shadow rounded-lg flex flex-col justify-items-stretch">
-						<div className="px-4 py-5 sm:px-6 ">
+					<div key = {cause.id} className="bg-white overflow-hidden shadow rounded-lg flex flex-col self-stretch">
+						<div className="px-4 py-5 sm:px-6 flex self-stretch h-full">
 							<div className = 'flex flex-col'>
 								<div className = 'flex'>
 									<div

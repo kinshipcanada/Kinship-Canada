@@ -35,10 +35,13 @@ export default function Home() {
 
   const [cart, setCart] = useState([])
   const [loading, setLoading] = useState(false)
+  const user = supabase.auth.user()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    const valid = checkForRecurring()
+
     // Create a Checkout Session.
     const response = await fetchPostJSON('/api/quickCheckout', {
       amount: parseFloat(e.target.amount.value),
@@ -56,6 +59,7 @@ export default function Home() {
     });
 
     console.warn(error.message);
+
     setLoading(false);
   };
 
@@ -64,6 +68,21 @@ export default function Home() {
       setCart(JSON.parse(localStorage.getItem('kinship_cart')))
     } 
   },[])
+
+  const checkForRecurring = () => {
+    // Check if a user is logged in
+    const user = supabase.auth.user()
+
+    if (recurringAmt > 0.00) {
+      if (user) {
+        return true
+      } else {
+        false
+      }
+    } else {
+      return true
+    }
+  }
 
   const checkForItem = (a, obj, rec) => {
     for (var i = 0; i < a.length; i++) {
@@ -201,6 +220,14 @@ export default function Home() {
                       Make a donation <ArrowRightIcon className = 'ml-2 w-5 h-5' />
                     </button>
                   </Link>
+                  <Link href = '/about'>
+                    <button
+                      type="button"
+                      className="ml-2 inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    >
+                      About Kinship
+                    </button>
+                  </Link>
                 </div>
               </div>
               <div className="mt-16 sm:mt-24 lg:mt-0 lg:col-span-6">
@@ -248,31 +275,36 @@ export default function Home() {
                           hidden
                           value = 'General Donation'
                         />
-                        <div className="relative flex items-start">
-                          <div className="flex items-center h-5">
-                            <input
-                              id="recurring"
-                              type="checkbox"
-                              className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
-                            />
-                          </div>
-                          <div className="ml-3 text-sm">
-                            <label htmlFor="recurring" className="font-medium text-gray-700 flex">
-                              Make this a monthly donation{' '}
-                              <a href="#" className="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500"  data-tip="This donation will be made each month automatically. You can manage your recurring donations in your dashboard">
-                                <span className="sr-only">Learn more about how tax is calculated</span>
-                                <QuestionMarkCircleIcon className="h-5 w-5" aria-hidden="true" />
-                              </a>
-                              <ReactTooltip place="top" type="dark" effect="float"/>
-                            </label>
-                            <span id="" className="text-gray-500 flex flex-row">
-                              <span className="sr-only">Make this a monthly donation 
+                        { user ?
+                        
+                          <div className="relative flex items-start">
+                            <div className="flex items-center h-5">
+                              <input
+                                id="recurring"
+                                type="checkbox"
+                                className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
+                              />
+                            </div>
+                            <div className="ml-3 text-sm">
+                              <label htmlFor="recurring" className="font-medium text-gray-700 flex">
+                                Make this a monthly donation{' '}
+                                <a href="#" className="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500"  data-tip="This donation will be made each month automatically. You can manage your recurring donations in your dashboard">
+                                  <span className="sr-only">Learn more about how tax is calculated</span>
+                                  <QuestionMarkCircleIcon className="h-5 w-5" aria-hidden="true" />
+                                </a>
+                                <ReactTooltip place="top" type="dark" effect="float"/>
+                              </label>
+                              <span id="" className="text-gray-500 flex flex-row">
+                                <span className="sr-only">Make this a monthly donation 
+                                </span>
                               </span>
-                              
-                            </span>
-
+                            </div>
                           </div>
-                        </div>
+
+                          :
+
+                          <></>
+                        }
 
                         <div>
                           <button

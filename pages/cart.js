@@ -146,6 +146,8 @@ export default function Home() {
     setCart(cart)
     localStorage.setItem('kinship_cart', JSON.stringify(cart));
     item.classList.add('hidden')
+    calculateCart(cart)
+    setError(null)
     setLoading(false);
   }
 
@@ -225,7 +227,7 @@ export default function Home() {
                         {cause.recurring ?
                           <>
                           <ClockIcon className="flex-shrink-0 h-5 w-5 text-green-500" aria-hidden="true" />
-                            <span>Recurring Donation</span>
+                            <span>Recurring Donation - Renews Every {cause.interval == 'year' ? 'Year' : cause.interval == 'month' ? 'Month' : cause.interval}</span>
                           </>
 
                           :

@@ -160,7 +160,11 @@ export default function Navbar() {
       let bruh = true;
     } else {
       let cart = JSON.parse(localStorage.getItem('kinship_cart'))
-      setNumCart(cart.length);
+      if (cart) {
+        setNumCart(cart.length);
+      } else {
+        setNumCart(0)
+      }
       setGottenNum(true)
     }
     
@@ -203,9 +207,9 @@ export default function Navbar() {
 	            </a>
             </Link>
             
-            <Link href="/khums">
+            <Link href="/donate">
 	            <a className="text-base font-medium text-gray-500 hover:text-gray-900">
-	              Khums Donations
+	              Make A Donation
 	            </a>
             </Link>
 
