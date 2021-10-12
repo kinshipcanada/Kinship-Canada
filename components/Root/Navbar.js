@@ -159,8 +159,8 @@ export default function Navbar() {
     if (gottenNum) {
       let bruh = true;
     } else {
-      let num = numItems(JSON.parse(localStorage.getItem('kinship_cart')))
-      setNumCart(num);
+      let cart = JSON.parse(localStorage.getItem('kinship_cart'))
+      setNumCart(cart.length);
       setGottenNum(true)
     }
     

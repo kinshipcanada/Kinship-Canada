@@ -8,13 +8,15 @@ import { supabase } from '../../lib/supabaseClient.js'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 
-import { TaxReceiptPackage } from '../../components/DashboardModals.js'
+import { TaxReceiptPackage, ExistingCart } from '../../components/DashboardModals.js'
 
 export default function AppIndex() {
 
 	const [loading, setLoading] = useState(true)
 	const [user, setUser] = useState(null)
 	const [profile, setProfile] = useState([])
+	const [cart, setCart] = useState([])
+
 	const userLoggedIn = supabase.auth.user()
 
 	const fetchUser = async () => {
@@ -39,6 +41,8 @@ export default function AppIndex() {
 		}
 	}
 	useEffect(()=>{
+		let cart = JSON.parse(localStorage.getItem('kinship_cart'))
+		setCart(cart)
 		fetchUser()
 	},[])
 
@@ -86,7 +90,8 @@ export default function AppIndex() {
 								</Link>
 						      </div>
 						    </div>
-
+							{/* I could do the existing cart calc here directly but I'm seperating it for modularity */}
+							<ExistingCart cart = {cart} />
 							<TaxReceiptPackage />
 				          </div>
 				        </div>

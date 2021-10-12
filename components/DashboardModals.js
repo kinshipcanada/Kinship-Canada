@@ -1,6 +1,7 @@
 import { Fragment, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { ExclamationIcon } from '@heroicons/react/outline'
+import Link from 'next/link'
 
 export const TaxReceiptPackage = ({ user }) => {
     return (
@@ -24,7 +25,34 @@ export const TaxReceiptPackage = ({ user }) => {
     )
 }
 
+export const ExistingCart = ({ cart }) => {
 
+  const numberOfItems = cart.length
+
+  if (numberOfItems > 0) {
+    return (
+      <div className="bg-gray-50 sm:rounded-lg border">
+        <div className="px-4 py-5 sm:p-6 flex justify-between items-center">
+          <h3 className="text-lg leading-6 font-medium text-gray-900">Looks like you have some donations in your cart</h3>
+          <div className="">
+            <Link href = '/cart'>
+              <button
+                type="button"
+                className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm"
+              >
+                Go to cart &rarr;
+              </button>
+            </Link>
+          </div>
+        </div>
+      </div>
+    )
+  } else {
+    return (
+      <></>
+    )
+  }
+}
 
 export const ForgotModal = () => {
   const [open, setOpen] = useState(true)

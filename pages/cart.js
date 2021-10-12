@@ -6,13 +6,16 @@ import Link from 'next/link'
 import ReactTooltip from 'react-tooltip';
 import getStripe from '../lib/getStripe.js'
 import { fetchPostJSON } from '../lib/apiHelpers';
+import { supabase } from '../lib/supabaseClient';
 
+import { FingerPrintIcon } from '@heroicons/react/outline'
 export default function Home() {
 
   const [cart, setCart] = useState([])
   const [loading, setLoading] = useState(true)
   const [checkoutLoading, setCheckoutLoading] = useState(false)
   const [empty, setEmpty] = useState(null)
+  const [error, setError] = useState(null)
 
   const [subtotal, setSubtotal] = useState(0.00);
   const [eligible, setEligible] = useState(0.00);
@@ -71,31 +74,46 @@ export default function Home() {
     }
   },[])
 
+  const checkForRecurring = () => {
+    // Check if a user is logged in
+    const user = supabase.auth.user()
+
+    if (recurringAmt > 0.00) {
+      if (user) {
+        return true
+      } else {
+        false
+      }
+    } else {
+      return true
+    }
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
     setCheckoutLoading(true);
-    // Create a Checkout Session.
-    const response = await fetchPostJSON('/api/checkout', {
-      amount: subtotal,
-    });
 
-    if (response.statusCode === 500) {
-      console.error(response.message);
-      return;
+    const valid = checkForRecurring()
+
+    if (valid) {
+      const response = await fetchPostJSON('/api/checkout', {
+        amount: subtotal,
+      });
+  
+      if (response.statusCode === 500) {
+        console.error(response.message);
+        return;
+      }
+  
+      // Redirect to Checkout.
+      const stripe = await getStripe();
+      const { error } = await stripe.redirectToCheckout({
+        sessionId: response.id,
+      });
+  
+      console.warn(error.message);
+    } else {
+      setError('Please log in to make a recurring donation. This is so that you can manage and access this donation in the future.')
     }
-
-    // Redirect to Checkout.
-    const stripe = await getStripe();
-    const { error } = await stripe.redirectToCheckout({
-      // Make the id field from the Checkout Session creation API response
-      // available to this file, so you can provide it as parameter here
-      // instead of the {{CHECKOUT_SESSION_ID}} placeholder.
-      sessionId: response.id,
-    });
-    // If `redirectToCheckout` fails due to a browser or network
-    // error, display the localized error message to your customer
-    // using `error.message`.
-    console.warn(error.message);
     setCheckoutLoading(false);
   };
 
@@ -406,6 +424,13 @@ export default function Home() {
                 {checkoutLoading ? <span className = 'flex w-full text-center justify-center'><Loader /></span> : 'Checkout'}
               </button>
             </div>
+            {error ?
+              <p className = 'text-center mt-4 text-red-600 font-semibold'>{error}</p>
+
+              :
+
+              <></>
+            }
           </section>
         </form>
       </div>
