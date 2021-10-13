@@ -49,7 +49,7 @@ export default function Features() {
                         />
                       </div>
                     </div>
-                    <div className="text-base font-medium text-gray-700">Holy Qur'an, 2:274</div>
+                    <div className="text-base font-medium text-gray-700">Holy Qur&apos;an, 2:274</div>
                   </div>
                 </footer>
               </blockquote>
