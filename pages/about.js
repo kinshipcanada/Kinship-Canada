@@ -170,7 +170,7 @@ export default function About() {
                             />
                         </div>
                         <span className="relative ml-4 text-blue-300 font-semibold leading-6 sm:ml-24 sm:pl-1">
-                            <p className="text-white font-semibold sm:inline">The Holy Qur'an</p>{' '}
+                            <p className="text-white font-semibold sm:inline">The Holy Qur&apos;an</p>{' '}
                             <p className="sm:inline">2:274</p>
                         </span>
                         </cite>
