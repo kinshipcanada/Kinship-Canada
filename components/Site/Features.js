@@ -1,4 +1,4 @@
-import { InboxIcon, SparklesIcon } from '@heroicons/react/outline'
+import { BookOpenIcon, InboxIcon, SparklesIcon } from '@heroicons/react/outline'
 import Link from 'next/link'
 
 export default function Features() {
@@ -35,19 +35,21 @@ export default function Features() {
               <blockquote>
                 <div>
                   <p className="text-base text-gray-500">
-                    &ldquo;Quote coming...&rdquo;
+                    &ldquo;Those who give their wealth by night and day, secretly and openly, they shall have their reward near their Lord, and they will have no fear, nor will they grieve. &rdquo;
                   </p>
                 </div>
                 <footer className="mt-3">
                   <div className="flex items-center space-x-3">
                     <div className="flex-shrink-0">
-                      <img
-                        className="h-6 w-6 rounded-full"
-                        src="https://api.time.com/wp-content/uploads/2015/09/bashar-assad-syria.jpg"
-                        alt=""
-                      />
+                      <div className = 'bg-green-100 p-1.5 rounded-full'>
+                        <BookOpenIcon
+                          className="h-6 w-6 rounded-full text-green-600"
+                          src=""
+                          alt=""
+                        />
+                      </div>
                     </div>
-                    <div className="text-base font-medium text-gray-700">Quote</div>
+                    <div className="text-base font-medium text-gray-700">Holy Qur'an, 2:274</div>
                   </div>
                 </footer>
               </blockquote>

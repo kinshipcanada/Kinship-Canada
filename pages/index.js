@@ -40,7 +40,6 @@ export default function Home() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const valid = checkForRecurring()
 
     // Create a Checkout Session.
     const response = await fetchPostJSON('/api/quickCheckout', {
@@ -68,21 +67,6 @@ export default function Home() {
       setCart(JSON.parse(localStorage.getItem('kinship_cart')))
     } 
   },[])
-
-  const checkForRecurring = () => {
-    // Check if a user is logged in
-    const user = supabase.auth.user()
-
-    if (recurringAmt > 0.00) {
-      if (user) {
-        return true
-      } else {
-        false
-      }
-    } else {
-      return true
-    }
-  }
 
   const checkForItem = (a, obj, rec) => {
     for (var i = 0; i < a.length; i++) {
@@ -275,9 +259,12 @@ export default function Home() {
                           hidden
                           value = 'General Donation'
                         />
-                        { user ?
+                        <div className="relative items-start flex">
+
                         
-                          <div className="relative flex items-start">
+                        { user ?
+
+                          <>
                             <div className="flex items-center h-5">
                               <input
                                 id="recurring"
@@ -299,12 +286,13 @@ export default function Home() {
                                 </span>
                               </span>
                             </div>
-                          </div>
+                            </>
 
                           :
 
                           <></>
                         }
+                        </div>
 
                         <div>
                           <button
@@ -318,12 +306,23 @@ export default function Home() {
                     </div>
                   </div>
                   <div className="px-4 py-6 bg-gray-50 border-t-2 border-gray-200 sm:px-10">
-                    <p className="text-xs leading-5 text-gray-500">
-                      This form will take you directly to checkout. To be able to manage recurring donations, please{' '}
-                      <a href="#" className="font-medium text-gray-900 hover:underline">
-                        sign in
-                      </a>.
-                    </p>
+                    {user ?
+                    
+                      <p className="text-xs leading-5 text-gray-500">
+                        This form will take you directly to checkout.
+                      </p>
+
+                      :
+
+                      <p className="text-xs leading-5 text-gray-500">
+                        This form will take you directly to checkout. To be able to make recurring donations, please{' '}
+                        <Link href = '/login'>
+                          <a href="#" className="font-medium text-gray-900 hover:underline">
+                            sign in
+                          </a>
+                        </Link>.
+                      </p>
+                    }
                   </div>
                 </div>
               </div>

@@ -625,7 +625,6 @@ export default function Home() {
 					  	<form onSubmit = {submitStepTwo}>
 							{causeList.map((cause)=>(
 								<div key = {cause.id}>
-									{console.log(cause)}
 									<h3 className="text-xl font-semibold leading-7 text-gray-900 sm:text-xl sm:truncate">Cause: {cause.name}</h3>
 									<div key = {cause.id}>
 										<div className = 'grid grid-cols-4 gap-6 mt-4 mb-4'>
@@ -767,6 +766,8 @@ export default function Home() {
 													obj_select.classList.add('hidden');
 													obj_input.classList.remove('hidden');
 
+													let amount = obj_input.value
+													
 												} else {
 													let details = e.target.value.split('__');
 													
@@ -833,21 +834,100 @@ export default function Home() {
 										}
 										<option value = 'custom'>Choose a custom amount (we will pool funds until we can provide one full donation)</option>
 									</select>
-									<input 
-										placeholder = 'Choose a custom amount to donate' 
-										id = {cause.id + '_custom'} 
-									    type = 'text'
-										onChange = {(e)=>{
-											for (let i = 0; i < userCauses.length; i++) {
-												if (userCauses[i]['id'] == cause.id) {
-													userCauses[i].amount = e.target.value;
-													userCauses[i].interval = 'one-time';
-													console.log(userCauses)
+									
+									<div className="mt-1 relative rounded-md shadow-sm hidden" id = {cause.id + '_custom'} >
+										<div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+											<span className="text-gray-500 sm:text-sm">$</span>
+										</div>
+										<input
+											className="mb-2 focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 pr-12 py-3 sm:text-sm border-gray-300 rounded-md"
+											placeholder="0.00"
+											type = 'text'
+											onChange = {(e)=>{
+												for (let i = 0; i < userCauses.length; i++) {
+													if (userCauses[i]['id'] == cause.id) {
+														let amount = e.target.value;
+														let interval = 'one-time';
+														let recurring = false
+														let region = userCauses[i]['region']
+														let cause = userCauses[i]['name']
+														let eligible = userCauses[i]['eligible']
+														let id = userCauses[i]['id']
+														let z = 0;
+
+														let causeDetails = {
+															amount: amount,
+															interval: interval,
+															region: region, 
+															cause: cause,
+															eligible: eligible,
+															id: id,
+															recurring: recurring
+														}
+
+														for (let x = 0; x < basketableCauses.length; x++) {
+															if (basketableCauses[x]['id'] == id) {
+																basketableCauses[x] = causeDetails
+															} else {
+																z+=1
+															}
+														}
+
+														console.log(z)
+
+														if (z == basketableCauses.length) {
+															basketableCauses.push(causeDetails)
+														}
+
+													}
 												}
-											}
-										}}
-										className="mt-2 mb-2 shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md py-3 hidden"
-									/>
+
+											// 	for (let i = 0; i < userCauses.length; i++) {
+											// 		if (userCauses[i]['id'] == cause.id) {
+											// 			let amount = parseFloat(details[0]).toFixed(2)
+											// 			let interval = details[1]
+											// 			let region = details[2]
+											// 			let cause = userCauses[i]['name']
+											// 			let eligible = userCauses[i]['eligible']
+											// 			let id = userCauses[i]['id']
+											// 			let recurring
+
+											// 			if (interval == 'one-time') {
+											// 				recurring = false 
+											// 			} else {
+											// 				recurring = true
+											// 			}
+														
+														// let causeDetails = {
+														// 	amount: amount,
+														// 	interval: interval,
+														// 	region: region, 
+														// 	cause: cause,
+														// 	eligible: eligible,
+														// 	id: id,
+														// 	recurring: recurring
+														// }
+
+											// 			basketableCauses.push(causeDetails)
+											// 			userCauses[i].amount = details[0];
+											// 			userCauses[i].interval = details[1];
+
+											// 			if (details[1] == 'one-time') {
+											// 				userCauses[i].recurring = false;
+											// 			} else {
+											// 				userCauses[i].recurring = true;
+											// 			}
+											// 		}
+											// 	}
+											// }
+											}}
+										/>
+										<div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+											<span className="text-gray-500 sm:text-sm" id="price-currency">
+											CAD
+											</span>
+										</div>
+									</div>
 									
 								</div>
 							))}

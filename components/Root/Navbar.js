@@ -188,6 +188,7 @@ export default function Navbar() {
             <span className="sr-only">Kinship Canada</span>
             <img
               className="h-8 w-auto sm:h-10"
+              loading='eager'
               src="/logo.png"
               alt=""
             />
@@ -215,7 +216,7 @@ export default function Navbar() {
 
             <Link href="/support">
 	            <a className="text-base font-medium text-gray-500 hover:text-gray-900">
-	              Support
+	              Get Support
 	            </a>
             </Link>
             

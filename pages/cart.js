@@ -54,7 +54,6 @@ export default function Home() {
       subtotalToAdd += amount
     }
 
-
     setRecurringAmt(recurringToAdd)
     setSubtotal(subtotalToAdd)
     setOneTime(oneTimeToAdd)
@@ -112,7 +111,12 @@ export default function Home() {
   
       console.warn(error.message);
     } else {
-      setError('Please log in to make a recurring donation. This is so that you can manage and access this donation in the future.')
+      setError(<><p>Please log in to make a recurring donation. This is so that you can manage and access this donation in the future.</p><Link href = '/login'><button
+      type="button"
+      className="mt-4 w-full flex justify-center items-center text-center px-6 py-3 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+    >
+      Click here to log in
+    </button></Link></>)
     }
     setCheckoutLoading(false);
   };
