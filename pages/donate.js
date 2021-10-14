@@ -1,13 +1,14 @@
 import Navbar from '../components/Root/Navbar.js'
 import { supabase } from '../lib/supabaseClient'
 import { useState, useEffect, useRef, Fragment } from 'react'
-import { RadioGroup } from '@headlessui/react'
+import { FocusTrap, RadioGroup } from '@headlessui/react'
 import { AcademicCapIcon, CheckIcon, UserGroupIcon, BriefcaseIcon, GlobeIcon, HeartIcon, HomeIcon, CashIcon, GiftIcon, BookOpenIcon, CurrencyDollarIcon, ArrowRightIcon } from '@heroicons/react/outline'
 import { DotsVerticalIcon } from '@heroicons/react/solid'
 import Image from 'next/image'
 import { Dialog, Transition } from '@headlessui/react'
 import { useRouter } from 'next/dist/client/router'
 import Link from 'next/link'
+import Footer from '../components/Root/Footer'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -984,6 +985,7 @@ export default function Home() {
 				</Dialog>
 				</Transition.Root>
       </div>
+	  <Footer />
     </div>
   )
 }

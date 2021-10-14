@@ -1,9 +1,9 @@
-import Navbar from '../components/Root/Navbar.js'
+import Navbar from '../../components/Root/Navbar.js'
 import Link from 'next/link'
-import { supabase } from '../lib/supabaseClient'
+import { supabase } from '../../lib/supabaseClient'
 import { useEffect, useState } from 'react';
 import ReactTooltip from 'react-tooltip';
-import Footer from '../components/Root/Footer'
+import Footer from '../../components/Root/Footer'
 import { Switch } from '@headlessui/react'
 import Head from 'next/head'
 
@@ -56,8 +56,11 @@ export default function Home() {
     }
     return (
     <div>
+        <Head>
+            <title>Kinship Canada · Get Support</title>
+        </Head>
         <Navbar />
-      <div className="bg-white py-16 px-4 overflow-hidden sm:px-6 lg:px-8 lg:py-24">
+        <div className="bg-white py-16 px-4 overflow-hidden sm:px-6 lg:px-8 lg:py-24">
             <div className="relative max-w-xl mx-auto">
                 <svg
                 className="absolute left-full transform translate-x-1/2"

@@ -11,8 +11,7 @@ export default function Home() {
   return (
     <div>
       <Navbar/>
-
-        Khums donations
+        Khums donations Coming Soon
       <Footer />
     </div>
   )
