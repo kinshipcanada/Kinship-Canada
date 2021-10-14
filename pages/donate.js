@@ -258,7 +258,7 @@ const causes = [
 			},
 		],
 		eligible: false,
-		blurb: "A person in need will perform one year of salah and/or one month of fasting in the name of your marhum."
+		blurb: "A person in need will perform one year of salah or fasting in the name of your marhum"
 	},
 
 ]
@@ -419,24 +419,6 @@ export default function Home() {
 			setAddToBasketButton('Added to basket succesfully!')
 			setOpen(true)
 		}
-		// for (let i = 0; i < userCauses.length; i++) {
-		// 	console.log(userCauses[i]);
-		// 	let amountToAdd = userCauses[i]['amount'];
-
-		// 	if (amountToAdd == 'null' || amountToAdd == undefined || amountToAdd == null) {
-		// 		setStepFourError('Please choose an amount to donate')
-		// 	} else {
-		// 		let causeToAddID = userCauses[i]['id'];
-		// 		let causeToAddName = userCauses[i]['name'];
-		// 		let eligible = userCauses[i]['eligible'];
-		// 		let recurring = userCauses[i]['recurring'];
-		// 		let region = userCauses[i]['region'];
-				
-		// 		addToCart(amountToAdd, causeToAddID, causeToAddName, eligible, recurring, region)
-		// 	}
-
-		// }
-
 		
 	}
 
@@ -447,7 +429,7 @@ export default function Home() {
 	  	<form  onSubmit = {submitStepOne} className = {step == 1 ? '' : 'opacity-50'}>
 		  	<div className="md:flex md:items-center md:justify-between">
 				<div className="flex-1 min-w-0">
-				<h2 className={step == 1 ? "text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate" : "text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate opacity-50"}>Step One: Choose A Cause</h2>
+				<h2 className={step == 1 ? "text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate" : "text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate opacity-50"}>Step One: Choose Your Causes</h2>
 				</div>
 			</div>
 			<div className="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4 items-stretch">
@@ -882,44 +864,6 @@ export default function Home() {
 													}
 												}
 
-											// 	for (let i = 0; i < userCauses.length; i++) {
-											// 		if (userCauses[i]['id'] == cause.id) {
-											// 			let amount = parseFloat(details[0]).toFixed(2)
-											// 			let interval = details[1]
-											// 			let region = details[2]
-											// 			let cause = userCauses[i]['name']
-											// 			let eligible = userCauses[i]['eligible']
-											// 			let id = userCauses[i]['id']
-											// 			let recurring
-
-											// 			if (interval == 'one-time') {
-											// 				recurring = false 
-											// 			} else {
-											// 				recurring = true
-											// 			}
-														
-														// let causeDetails = {
-														// 	amount: amount,
-														// 	interval: interval,
-														// 	region: region, 
-														// 	cause: cause,
-														// 	eligible: eligible,
-														// 	id: id,
-														// 	recurring: recurring
-														// }
-
-											// 			basketableCauses.push(causeDetails)
-											// 			userCauses[i].amount = details[0];
-											// 			userCauses[i].interval = details[1];
-
-											// 			if (details[1] == 'one-time') {
-											// 				userCauses[i].recurring = false;
-											// 			} else {
-											// 				userCauses[i].recurring = true;
-											// 			}
-											// 		}
-											// 	}
-											// }
 											}}
 										/>
 										<div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
