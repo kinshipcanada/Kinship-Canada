@@ -2,8 +2,19 @@ import Navbar from '../components/Root/Navbar.js'
 import Link from 'next/link'
 import { ExternalLinkIcon } from '@heroicons/react/solid'
 import { DownloadIcon } from '@heroicons/react/outline'
+import Head from 'next/head'
+import { useEffect } from 'react'
 
 export default function Home() {
+
+  const emptyCart = () => {
+    localStorage.setItem('kinship_cart', JSON.stringify([]));
+  }
+  
+  useEffect(()=>{
+    emptyCart()
+  })
+
   return (
     <div>
       <Navbar />

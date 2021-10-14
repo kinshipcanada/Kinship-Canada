@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import ReactTooltip from 'react-tooltip';
 import Footer from '../components/Root/Footer'
 import { Switch } from '@headlessui/react'
+import Head from 'next/head'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')

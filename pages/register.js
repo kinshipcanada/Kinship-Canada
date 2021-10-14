@@ -2,6 +2,7 @@ import { supabase } from '../lib/supabaseClient'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import Head from 'next/head'
 
 export default function Register() {
 
@@ -27,7 +28,7 @@ export default function Register() {
 			const { data, error } = await supabase
 			  .from('profiles')
 			  .insert([
-			    { id: user.id, }
+			    { id: user.id, admin: false, set_up: false, partner: false }
 			])
 			router.push('/app/welcome')
 		}

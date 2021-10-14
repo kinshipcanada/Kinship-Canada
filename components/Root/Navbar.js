@@ -19,6 +19,7 @@ import { ChevronDownIcon } from '@heroicons/react/solid'
 import getStripe from '../../lib/getStripe.js'
 import { fetchPostJSON } from '../../lib/apiHelpers';
 import Loader from './Loader'
+import { useRouter } from 'next/router'
 
 const products = [
   {
@@ -46,7 +47,13 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
+
+  const router = useRouter()
 	const user = supabase.auth.user()
+
+  const path = router.pathname
+  console.log(path)
+
   const [numCart, setNumCart] = useState(0)
   const [gottenNum, setGottenNum] = useState(false)
   const [cart, setCart] = useState([])
@@ -100,6 +107,7 @@ export default function Navbar() {
     setEligible(eligibleToAdd)
 
   }
+
   useEffect(()=>{
     let cart = JSON.parse(localStorage.getItem('kinship_cart'))
     
@@ -161,7 +169,12 @@ export default function Navbar() {
     } else {
       let cart = JSON.parse(localStorage.getItem('kinship_cart'))
       if (cart) {
-        setNumCart(cart.length);
+        if (path == '/success') {
+          setCart([])
+          setNumCart(0)
+        } else {
+          setNumCart(cart.length)
+        }
       } else {
         setNumCart(0)
       }

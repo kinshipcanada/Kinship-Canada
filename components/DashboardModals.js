@@ -27,7 +27,11 @@ export const TaxReceiptPackage = ({ user }) => {
 
 export const ExistingCart = ({ cart }) => {
 
-  const numberOfItems = cart.length
+  let numberOfItems = 0;
+
+  if (cart) {
+    numberOfItems = cart.length
+  }
 
   if (numberOfItems > 0) {
     return (

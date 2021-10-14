@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 
 import { TaxReceiptPackage, ExistingCart } from '../../components/DashboardModals.js'
+import SetupRequired from '../../components/Auth/SetupRequired.js'
 
 export default function AppIndex() {
 
@@ -71,6 +72,7 @@ export default function AppIndex() {
 				<div>
 					<Navbar />
 					<div className="relative min-h-screen">
+						<SetupRequired profile = {profile} />
 				      <main className="max-w-7xl mx-auto pb-10 pl-8 pr-8 pt-10">
 				        <div className="lg:grid lg:grid-cols-12 lg:gap-x-5">
 				          <Subnav />

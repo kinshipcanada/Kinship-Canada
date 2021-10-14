@@ -12,6 +12,7 @@ import Features from '../components/Site/Features'
 import { fetchPostJSON } from '../lib/apiHelpers';
 import getStripe from '../lib/getStripe'
 import Loader from '../components/Root/Loader'
+import Head from 'next/head'
 
 const incentives = [
   {
@@ -32,6 +33,8 @@ const incentives = [
 ]
 
 export default function Home() {
+  const base = 'Kinship Canada'
+  const page = ''
 
   const [cart, setCart] = useState([])
   const [loading, setLoading] = useState(false)
@@ -143,6 +146,10 @@ export default function Home() {
   }
   return (
     <div>
+      <Head>
+        <title>{base}{page}</title>
+      </Head>
+      
       <Navbar/>
 
 

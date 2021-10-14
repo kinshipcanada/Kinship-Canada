@@ -38,7 +38,7 @@ export default function Welcome() {
 		setUpdateLoading(true)
 		const { data, error } = await supabase
 		  .from('profiles')
-		  .update({ first_name: firstName, 'last_name': lastName, 'address': address, 'postal_code': postalCode, 'state': state, 'city': city, 'country': country })
+		  .update({ first_name: firstName, 'last_name': lastName, 'address': address, 'postal_code': postalCode, 'state': state, 'city': city, 'country': country, 'set_up': true })
 		  .match({ id: user.id })
 
 		if (error) {
@@ -77,7 +77,7 @@ export default function Welcome() {
 												<label className="block text-sm font-medium text-gray-700 mb-1">First Name</label>
 												<input
 													type='text'
-													placeholder='Tiger'
+													placeholder='First Name'
 													className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
 													onChange={(e)=>{setFirstName(e.target.value)}}
 													required
@@ -87,7 +87,7 @@ export default function Welcome() {
 												<label className="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
 												<input
 													type='text'
-													placeholder='Woods'
+													placeholder='Last Name'
 													className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
 													onChange={(e)=>{setLastName(e.target.value)}}
 													required
@@ -99,7 +99,7 @@ export default function Welcome() {
 												<label className="block text-sm font-medium text-gray-700 mb-1">Address</label>
 												<input
 													type='text'
-													placeholder='123 Main Street'
+													placeholder='Address'
 													className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
 													onChange={(e)=>{setAddress(e.target.value)}}
 													required
@@ -111,7 +111,7 @@ export default function Welcome() {
 												<label className="block text-sm font-medium text-gray-700 mb-1">Postal Code</label>
 												<input
 													type='text'
-													placeholder='A1B2C3'
+													placeholder='Postal Code'
 													className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
 													onChange={(e)=>{setPostalCode(e.target.value)}}
 													required
@@ -121,7 +121,7 @@ export default function Welcome() {
 												<label className="block text-sm font-medium text-gray-700 mb-1">City</label>
 												<input
 													type='text'
-													placeholder='Richmond Hill'
+													placeholder='City'
 													className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
 													onChange={(e)=>{setCity(e.target.value)}}
 													required
@@ -131,7 +131,7 @@ export default function Welcome() {
 												<label className="block text-sm font-medium text-gray-700 mb-1">State</label>
 												<input
 													type='text'
-													placeholder='Ontario'
+													placeholder='State or Province'
 													className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
 													onChange={(e)=>{setState(e.target.value)}}
 													required

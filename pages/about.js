@@ -18,10 +18,18 @@ import {
 } from '@heroicons/react/outline'
 import Link from 'next/link'
 import ReactTooltip from 'react-tooltip';
+import Head from 'next/head'
 
 export default function About() {
+
+    const base = 'Kinship Canada | '
+    const page = 'About Us'
+
     return (
         <div>
+            <Head>
+                <title>{base}{page}</title>
+            </Head>
             <Navbar />
 
             <div className="bg-white">

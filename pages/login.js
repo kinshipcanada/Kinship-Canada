@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { Dialog, Transition } from '@headlessui/react'
 import { ExclamationIcon, QuestionMarkCircleIcon } from '@heroicons/react/outline'
+import Head from 'next/head'
 
 export default function Register() {
 

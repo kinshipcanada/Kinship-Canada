@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabaseClient'
 import { useEffect, useState } from 'react';
 import ReactTooltip from 'react-tooltip';
 import Footer from '../components/Root/Footer'
+import Head from 'next/head'
 
 export default function Home() {
 
