@@ -1,10 +1,10 @@
 import Link from 'next/link'
 
 export default function DownloadCard({receipt}) {
-	console.log(receipt)
+
 	return (
 		<section>
-	        <div className="border border-gray-300 sm:rounded-md sm:overflow-hidden">
+	        <div className="border border-gray-300 sm:rounded-md sm:overflow-hidden mb-4">
 	          <div className="bg-white py-6 px-4 sm:p-6">
 	            <div className = 'flex justify-between'>
 	            	<div>
@@ -102,12 +102,14 @@ export default function DownloadCard({receipt}) {
 			    >
 			      Proof Of Donation
 			    </button>
-	            <button
-	              type="download"
-	              className="ml-2 inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
-	            >
-	              Download
-	            </button>
+	            <Link href = {"https://receipts.kinshipcanada.com/" + receipt.id} >
+					<a
+						target="_blank"
+						className="ml-2 inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
+					>
+						View And Download &rarr;
+					</a>
+				</Link>
 	          </div>
 	        </div>
 	    </section>

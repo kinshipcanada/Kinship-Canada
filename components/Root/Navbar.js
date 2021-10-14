@@ -52,7 +52,6 @@ export default function Navbar() {
 	const user = supabase.auth.user()
 
   const path = router.pathname
-  console.log(path)
 
   const [numCart, setNumCart] = useState(0)
   const [gottenNum, setGottenNum] = useState(false)

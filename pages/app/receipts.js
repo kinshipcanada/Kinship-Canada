@@ -36,12 +36,19 @@ export default function AppIndex() {
 	const fetchReceipts = async () => {
 		const userLoggedIn = supabase.auth.user()
 
-		const data = await supabase
-		  .from('receipts')
-		  .select()
-
-		setReceipts(data.data)
-		setLoading(false)
+		const { data, error } = await supabase
+			.from('receipts')
+			.select()
+		
+		if (error) {
+			console.log(error)
+			setReceipts([])
+		} else {
+			console.log(data)
+			setReceipts(data)
+			setLoading(false)
+		}
+		
 	}
 
 	useEffect(()=>{
