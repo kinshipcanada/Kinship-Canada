@@ -440,7 +440,7 @@ const solutions = [
   }
 ]
 const callsToAction = [
-  { name: 'Watch Demo', href: '#', icon: PlayIcon },
+  { name: 'Demo Coming Soon...', href: '#', icon: PlayIcon },
   { name: 'Email Kinship', href: 'mailto:info@kinshipcanada.com', icon: MailIcon },
 ]
 
@@ -483,7 +483,12 @@ export function Campaigns() {
                     >
                       <item.icon className="flex-shrink-0 h-6 w-6 text-blue-600" aria-hidden="true" />
                       <div className="ml-4">
-                        <p className="text-base font-medium text-gray-900">{item.name}</p>
+                        <p className="text-base font-medium text-gray-900">
+                          {item.name}
+                          <span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                            Coming Soon...
+                          </span>
+                        </p>
                         <p className="mt-1 text-sm text-gray-500">{item.description}</p>
                       </div>
                     </a>
