@@ -7,13 +7,14 @@ import { supabase } from '../../lib/supabaseClient.js'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { QuestionMarkCircleIcon, DownloadIcon } from '@heroicons/react/solid'
+import Head from 'next/head'
 
 export default function AppIndex() {
 
 	const [loading, setLoading] = useState(true)
 	const [user, setUser] = useState(null)
 	const [profile, setProfile] = useState(null)
-	const [proof, setProof] = useState(null)
+	const [proof, setProof] = useState([])
 	const userLoggedIn = supabase.auth.user()
 
 	const fetchUser = async () => {
@@ -48,6 +49,9 @@ export default function AppIndex() {
 	if (loading) {
 		return (
 			<div>
+				<Head>
+					<title>Kinship Canada · Proof Of Donation</title>
+				</Head>
 				<Navbar />
 				<div className="relative min-h-screen">
 			      <main className="max-w-7xl mx-auto pb-10 pl-8 pr-8 pt-10">
@@ -68,6 +72,9 @@ export default function AppIndex() {
 		if (user) {
 			return (
 				<div>
+					<Head>
+						<title>Kinship Canada · Proof Of Donation</title>
+					</Head>
 					<Navbar />
 					<div className="relative min-h-screen">
 				      <main className="max-w-7xl mx-auto pb-10 pl-8 pr-8 pt-10">
@@ -259,6 +266,9 @@ export default function AppIndex() {
 		} else {
 			return (
 				<div>
+					<Head>
+						<title>Kinship Canada · Proof Of Donation</title>
+					</Head>
 					<Navbar />
 					<div className="relative min-h-screen">
 				      <main className="max-w-7xl mx-auto pb-10 pl-8 pr-8 pt-10">

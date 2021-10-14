@@ -8,6 +8,7 @@ import Link from 'next/link'
 import { supabase } from '../../lib/supabaseClient.js'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
+import Head from 'next/head'
 
 export default function AppIndex() {
 
@@ -39,6 +40,7 @@ export default function AppIndex() {
 		const { data, error } = await supabase
 			.from('receipts')
 			.select()
+			.eq('user_id', userLoggedIn.id)
 		
 		if (error) {
 			console.log(error)
@@ -58,6 +60,9 @@ export default function AppIndex() {
 	if (loading) {
 		return (
 			<div>
+				<Head>
+					<title>Kinship Canada · Tax Receipts</title>
+				</Head>
 				<Navbar />
 				<div className="relative min-h-screen">
 			      <main className="max-w-7xl mx-auto pb-10 pl-8 pr-8 pt-10">
@@ -77,6 +82,9 @@ export default function AppIndex() {
 		if (user) {
 			return (
 				<div>
+					<Head>
+						<title>Kinship Canada · Tax Receipts</title>
+					</Head>
 					<Navbar />
 					<div className="relative min-h-screen">
 				      <main className="max-w-7xl mx-auto pb-10 pl-8 pr-8 pt-10">
@@ -115,6 +123,9 @@ export default function AppIndex() {
 		} else {
 			return (
 				<div>
+					<Head>
+						<title>Kinship Canada · Tax Receipts</title>
+					</Head>
 					<Navbar />
 					<div className="relative min-h-screen">
 				      <main className="max-w-7xl mx-auto pb-10 pl-8 pr-8 pt-10">

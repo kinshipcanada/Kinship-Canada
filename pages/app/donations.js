@@ -1,12 +1,14 @@
 import Navbar from '../../components/Root/Navbar.js'
 import Subnav from '../../components/Root/Subnav.js'
-import FullPageLoad from '../../components/Root/FullPageLoad.js'
+import Loader from '../../components/Root/Loader.js'
 import LoginRequired from '../../components/Root/LoginRequired.js'
 import Link from 'next/link'
 import { supabase } from '../../lib/supabaseClient.js'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { QuestionMarkCircleIcon, DownloadIcon } from '@heroicons/react/solid'
+import ReactTooltip from 'react-tooltip';
+import Head from 'next/head'
 
 export default function AppIndex() {
 
@@ -15,11 +17,6 @@ export default function AppIndex() {
 	const [profile, setProfile] = useState(null)
 	const [donations, setDonations] = useState(null)
 	const userLoggedIn = supabase.auth.user()
-
-	const people = [
-	  { name: 'Jane Cooper', title: 'Regional Paradigm Technician', role: 'Admin', email: 'jane.cooper@example.com' },
-	  { name: 'Cody Fisher', title: 'Product Directives Officer', role: 'Owner', email: 'cody.fisher@example.com' },
-	]
 
 	const fetchUser = async () => {
 		const userLoggedIn = supabase.auth.user()
@@ -43,6 +40,7 @@ export default function AppIndex() {
 		const data = await supabase
 		  .from('donations')
 		  .select()
+		  .eq('user_id', userLoggedIn.id)
 
 		setDonations(data.data)
 		setLoading(false)
@@ -55,13 +53,19 @@ export default function AppIndex() {
 	if (loading) {
 		return (
 			<div>
+				<Head>
+					<title>Kinship Canada · Donation History</title>
+				</Head>
 				<Navbar />
 				<div className="relative min-h-screen">
 			      <main className="max-w-7xl mx-auto pb-10 pl-8 pr-8 pt-10">
 			        <div className="lg:grid lg:grid-cols-12 lg:gap-x-5">
 			          <Subnav />
+
 			          <div className="space-y-6 sm:px-6 lg:px-0 lg:col-span-9">
-			            <FullPageLoad />
+			            <div className = 'flex items-center justify-center'>
+			            	<Loader />
+			            </div>
 			          </div>
 			        </div>
 			      </main>
@@ -72,6 +76,9 @@ export default function AppIndex() {
 		if (user) {
 			return (
 				<div>
+					<Head>
+						<title>Kinship Canada · Donation History</title>
+					</Head>
 					<Navbar />
 					<div className="relative min-h-screen">
 				      <main className="max-w-7xl mx-auto pb-10 pl-8 pr-8 pt-10">
@@ -129,9 +136,12 @@ export default function AppIndex() {
 						                    scope="col"
 						                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
 						                  >
-						                  	<div className = 'flex'>
+						                  	<div className = 'flex items-center'>
 							                    Receipt
-							                    <QuestionMarkCircleIcon className = 'ml-1 w-4 h-4' />
+												<a className = 'normal-case' data-tip="This is the Stripe (payment) receipt, not your CRA eligible tax receipt.">
+							                    	<QuestionMarkCircleIcon className = 'ml-1 w-5 h-5' />
+													<ReactTooltip place="top" type="dark" effect="float"/>
+												</a>
 						                    </div>
 						                  </th>
 						                </tr>
@@ -141,24 +151,34 @@ export default function AppIndex() {
 						                  <tr key={donation.donationIdx} className={donationIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
 						                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
 						                    	{donation.causes.causes.map((cause) => (
-						                    		<div key = {cause.id}>{cause.cause}: ${cause.amount}</div>
+						                    		<div key = {cause.id}>{cause.cause}</div>
 						                    	))}
 						                    </td>
-						                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{donation.created_at}</td>
+						                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{donation.date}</td>
 						                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${parseFloat(donation.amount).toFixed(2)}</td>
 						                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-						                    	<span className="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800">
-											        {donation.status}
+						                    	<span className={donation.proof_available ? "inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800" : "inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800"}>
+											        {donation.proof_available ? 'Available' : 'In Transit'}
 											    </span>
 						                    </td>
 						                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-						                      <button
-										        type="button"
-										        className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-										      >
-										      	<DownloadIcon className="-ml-0.5 mr-2 h-4 w-4" aria-hidden="true" />
-										        Download Receipt
-										      </button>
+						                      {
+												donation.direct ?
+
+												<button
+													type="button"
+													className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+												>
+													<DownloadIcon className="-ml-0.5 mr-2 h-4 w-4" aria-hidden="true" />
+													Download Receipt
+												</button>
+
+												:
+
+												<div className = 'flex items-center'>
+													<p className = ''>Ineligible</p>
+												</div>
+											  }
 						                    </td>
 						                  </tr>
 						                ))}
@@ -179,6 +199,9 @@ export default function AppIndex() {
 		} else {
 			return (
 				<div>
+					<Head>
+						<title>Kinship Canada · Donation History</title>
+					</Head>
 					<Navbar />
 					<div className="relative min-h-screen">
 				      <main className="max-w-7xl mx-auto pb-10 pl-8 pr-8 pt-10">

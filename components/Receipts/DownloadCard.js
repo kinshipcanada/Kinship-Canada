@@ -1,6 +1,7 @@
 import Link from 'next/link'
 
 export default function DownloadCard({receipt}) {
+	console.log(receipt)
 
 	return (
 		<section>
@@ -21,7 +22,7 @@ export default function DownloadCard({receipt}) {
 					    </span>*/}
 
 					    {
-					    	receipt.status == 'Proof Available' ? 
+					    	receipt.proof_available ? 
 
 					    	<Link href = '/app/proof'>
 						    	<a
@@ -76,7 +77,7 @@ export default function DownloadCard({receipt}) {
 	                  Date Donated
 	                </label>
 	                <p className="block text-md font-medium text-black">
-	                  {receipt.created_at}
+	                  {receipt.date}
 	                </p>
 	              </div>
 
@@ -85,23 +86,29 @@ export default function DownloadCard({receipt}) {
 	                  Donation Details
 	                </label>
 	               	<p className="text-md font-medium text-black">
-	                  <ul>
-	                  	<li>Cause A: $500, $300 eligible</li>
-	                  	<li>Cause B: $500, $300 eligible</li>
-	                  	<li>Cause C: $500, $300 eligible</li>
-	                  </ul>
+	                  Issued to {receipt.name} at {receipt.address}, {receipt.city}, {receipt.postal_code}
 	                </p>
 	              </div>
 
 	            </div>
 	          </div>
 	          <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
-	          	<button
-			        type="button"
-			        className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-			    >
-			      Proof Of Donation
-			    </button>
+	          	{
+					receipt.proof_available ?
+
+					<Link href = {"/app/proof#" + receipt.id}>
+						<button
+							type="button"
+							className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+						>
+						Proof Of Donation
+						</button>
+					</Link>
+
+					:
+
+					<></>
+				}
 	            <Link href = {"https://receipts.kinshipcanada.com/" + receipt.id} >
 					<a
 						target="_blank"
