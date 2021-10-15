@@ -435,13 +435,13 @@ const campaigns = [
 const solutions = [
   {
     name: 'Send A Support Ticket',
-    description: 'Get a better understanding of where your traffic is coming from.',
+    description: 'Get support from the Kinship team. We try to respond within 24 hours',
     href: '/support',
     icon: TicketIcon,
   },
   {
     name: 'Frequently Asked Questions',
-    description: 'Speak directly to your customers in a more meaningful way.',
+    description: 'Questions we frequently get. If you have other questions, please send us a support ticket',
     href: '/support/faq',
     icon: SupportIcon,
   }
