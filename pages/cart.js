@@ -96,7 +96,7 @@ export default function Cart() {
 
     if (valid) {
       const response = await fetchPostJSON('/api/checkout', {
-        amount: subtotal,
+        details: cart,
       });
   
       if (response.statusCode === 500) {

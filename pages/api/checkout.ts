@@ -15,20 +15,27 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === 'POST') {
-    const amount: number = req.body.amount;
+    const amount: number = req.body.details[0].amount;
+    const cart: any[] = req.body.details
+    const lineItems: any = []
+
+    for (let i = 0; i < 2; i++) {
+      let arr: object = {
+        name: cart[i]['name'],
+        amount: formatAmountForStripe(cart[i]['amount'], CURRENCY),
+        currency: CURRENCY,
+        quantity: 1,
+      }
+
+      lineItems.push(arr)
+    }
+
     try {
       // Create Checkout Sessions from body params.
       const params: Stripe.Checkout.SessionCreateParams = {
         submit_type: 'donate',
         payment_method_types: ['card'],
-        line_items: [
-          {
-            name: 'Custom amount donation',
-            amount: formatAmountForStripe(amount, CURRENCY),
-            currency: CURRENCY,
-            quantity: 1,
-          },
-        ],
+        line_items: lineItems,
         success_url: `${req.headers.origin}/success`,
         cancel_url: `${req.headers.origin}/canceled`,
       };

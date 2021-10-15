@@ -316,19 +316,19 @@ export default function Home() {
 			eligible: eligible,
 			recurring: recurring,
 			region: region,
-			interval: intervalVal
+			interval: intervalVal,
 		}
 
 		let state = checkForItem(cart, causeToAddID, recurring)
 
 		if (state == false) {
-		cart.push(newItem);
+			cart.push(newItem);
 		} else {
-		for (var i = 0; i < cart.length; i++) {
-			if (cart[i]['id'] === newItem['id']) {
-			cart[i]['amount'] = (parseFloat(cart[i]['amount']) + parseFloat(amountToAdd));
+			for (var i = 0; i < cart.length; i++) {
+				if (cart[i]['id'] === newItem['id']) {
+				cart[i]['amount'] = (parseFloat(cart[i]['amount']) + parseFloat(amountToAdd));
+				}
 			}
-		}
 		}
 
 		setCart(cart)
@@ -430,7 +430,7 @@ export default function Home() {
 	  	<form  onSubmit = {submitStepOne} className = {step == 1 ? '' : 'opacity-50'}>
 		  	<div className="md:flex md:items-center md:justify-between">
 				<div className="flex-1 min-w-0">
-				<h2 className={step == 1 ? "text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate" : "text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate opacity-50"}>Step One: Choose Your Causes</h2>
+				<h2 className={step == 1 ? "text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate" : "text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate opacity-50"}>Step One: Choose Your Causes{' '}{/* <a>How does this work?</a> */}</h2>
 				</div>
 			</div>
 			<div className="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4 items-stretch">
@@ -485,8 +485,8 @@ export default function Home() {
 						</div>
 						</div>
 				))}
-				<div className="bg-white overflow-hidden shadow rounded-lg">
-					<div className="px-4 py-5 sm:px-6">
+				<div className="bg-white overflow-hidden shadow rounded-lg flex flex-col self-stretch">
+					<div className="px-4 py-5 sm:px-6 flex self-stretch h-full">
 						<div className = 'flex flex-col'>
 							<div className = 'flex'>
 								<div
@@ -516,65 +516,77 @@ export default function Home() {
 					</div>
 
 
-					<div className="bg-white overflow-hidden shadow rounded-lg">
-					<div className="px-4 py-5 sm:px-6">
-						<div className = 'flex flex-col'>
-							<div className = 'flex'>
-								<div
-									className='bg-yellow-600 text-white p-3 rounded mb-3 w-auto h-auto'
-								>
-									<CurrencyDollarIcon className = 'w-6 h-6'/>
+					<div className="bg-white overflow-hidden shadow rounded-lg flex flex-col self-stretch">
+						<div className="px-4 py-5 sm:px-6 flex self-stretch h-full">
+							<div className = 'flex flex-col'>
+								<div className = 'flex'>
+									<div
+										className='bg-yellow-600 text-white p-3 rounded mb-3 w-auto h-auto'
+									>
+										<CurrencyDollarIcon className = 'w-6 h-6'/>
+									</div>
+								</div>
+								<div>
+									<label className="text-gray-900 font-medium hover:text-gray-600 items-center mb-2">
+										Khums
+										<span className="ml-2 border border-yellow-800 inline-flex items-center px-2 py-0.25 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+											Coming Soon...
+										</span>
+									</label>
+									<p className="text-gray-500 text-sm">Pay your Sehme Imam and Sehme Sadat khums through Kinship Canada. Coming soon...</p>
+									<p className = 'text-sm font-semibold mt-2'>Availiable anywhere
+									</p>
 								</div>
 							</div>
-							<div>
-								<label className="text-gray-900 font-medium hover:text-gray-600">Khums</label>
-								<p className="text-gray-500 text-sm">Pay your Sehme Imam and Sehme Sadat khums through Kinship Canada.</p>
-								<p className = 'text-sm font-semibold mt-2'>Availiable anywhere
-								</p>
-							</div>
+						</div>
+						<div className="bg-gray-50">
+							<label className = 'w-full h-full flex items-center cursor-pointer px-4 py-5 sm:p-6'>
+								<Link href = '#'>
+									<p className = 'text-md font-medium flex items-center cursor-not-allowed'>
+										Khums Page Coming Soon
+										{/* <ArrowRightIcon className = 'w-4 h-4 ml-2' /> */}
+									</p>
+								</Link>
+							</label>
 						</div>
 					</div>
-					<div className="bg-gray-50">
-						<label className = 'w-full h-full flex items-center cursor-pointer px-4 py-5 sm:p-6'>
-							<Link href = '/khums'>
-								<p className = 'text-md font-medium flex items-center'>
-									View Khums Page
-									<ArrowRightIcon className = 'w-4 h-4 ml-2' />
-								</p>
-							</Link>
-						</label>
-					</div>
+
+					<div className="bg-white overflow-hidden shadow rounded-lg flex flex-col self-stretch">
+						<div className="px-4 py-5 sm:px-6 flex self-stretch h-full">
+							<div className = 'flex flex-col'>
+								<div className = 'flex'>
+									<div
+										className='bg-blue-600 text-white p-3 rounded mb-3 w-auto h-auto'
+									>
+										<CurrencyDollarIcon className = 'w-6 h-6'/>
+									</div>
+								</div>
+								<div>
+									<label className="text-gray-900 font-medium hover:text-gray-600 items-center mb-2">
+										Sadaqah
+										<span className="ml-2 border border-yellow-800 inline-flex items-center px-2 py-0.25 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+											Coming Soon...
+										</span>
+									</label>
+									<p className="text-gray-500 text-sm">Pay your full Sadaqah obligations with Kinship Canada. Choose among a variety of causes. Coming soon...</p>
+									<p className = 'text-sm font-semibold mt-2'>Availiable anywhere
+									</p>
+								</div>
+							</div>
+						</div>
+						<div className="bg-gray-50">
+							<label className = 'w-full h-full flex items-center cursor-pointer px-4 py-5 sm:p-6'>
+								<Link href = '#'>
+									<p className = 'text-md font-medium flex items-center cursor-not-allowed'>
+										Khums Page Coming Soon
+										{/* <ArrowRightIcon className = 'w-4 h-4 ml-2' /> */}
+									</p>
+								</Link>
+							</label>
+						</div>
 					</div>
 				
-					<div className="bg-white overflow-hidden shadow rounded-lg">
-					<div className="px-4 py-5 sm:px-6">
-						<div className = 'flex flex-col'>
-							<div className = 'flex'>
-								<div
-									className='bg-blue-300 text-white p-3 rounded mb-3 w-auto h-auto'
-								>
-									<CurrencyDollarIcon className = 'w-6 h-6'/>
-								</div>
-							</div>
-							<div>
-								<label className="text-gray-900 font-medium hover:text-gray-600">Current Campaigns</label>
-								<p className="text-gray-500 text-sm">Kinship Canada helps partners in Africa, India, and Iraq run special campaigns to build up their communities</p>
-								<p className = 'text-sm font-semibold mt-2'>Availiable anywhere
-								</p>
-							</div>
-						</div>
-					</div>
-					<div className="bg-gray-50">
-						<label className = 'w-full h-full flex items-center cursor-pointer px-4 py-5 sm:p-6'>
-							<Link href = '/campaigns'>
-								<p className = 'text-md font-medium flex items-center'>
-									View Active Campaigns
-									<ArrowRightIcon className = 'w-4 h-4 ml-2' />
-								</p>
-							</Link>
-						</label>
-					</div>
-					</div>
+					
 			</div>
 
 			<div className = 'p-4 flex justify-center'>
