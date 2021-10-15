@@ -39,7 +39,7 @@ export default function Welcome() {
 		setUpdateLoading(true)
 		const { data, error } = await supabase
 		  .from('profiles')
-		  .update({ first_name: firstName, 'last_name': lastName, 'address': address, 'postal_code': postalCode, 'state': state, 'city': city, 'country': country, 'set_up': true })
+		  .update({ first_name: firstName, 'last_name': lastName, 'address': address, 'postal_code': postalCode, 'state': state, 'city': city, 'country': country })
 		  .match({ id: user.id })
 
 		if (error) {
@@ -75,8 +75,19 @@ export default function Welcome() {
 				setUpdateLoading(false)
 				return;
 			} else {
-				console.log(response)
-				setUpdateLoading(false)
+				const userLoggedIn = supabase.auth.user();
+
+				const { data, error } = await supabase
+					.from('profiles')
+					.update({ 'stripe_donor_id': response.message.id, 'set_up': true })
+					.match({ id: userLoggedIn.id })
+				
+				if (error) {
+					setError(error.message)
+				} else {
+					setUpdateLoading(false)
+					router.push('/app')
+				}
 			}
 			// router.push('/app')
 		}
