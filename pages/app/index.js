@@ -7,7 +7,7 @@ import Link from 'next/link'
 import { supabase } from '../../lib/supabaseClient.js'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-
+import Head from 'next/head'
 import { TaxReceiptPackage, ExistingCart } from '../../components/DashboardModals.js'
 import SetupRequired from '../../components/Auth/SetupRequired.js'
 
@@ -70,9 +70,12 @@ export default function AppIndex() {
 		if (user) {
 			return (
 				<div>
+					<Head>
+						<title>Kinship Canada · Dashboard</title>
+					</Head>
 					<Navbar />
 					<div className="relative min-h-screen">
-						<SetupRequired profile = {profile} />
+					<SetupRequired profile = {profile} />
 				      <main className="max-w-7xl mx-auto pb-10 pl-8 pr-8 pt-10">
 				        <div className="lg:grid lg:grid-cols-12 lg:gap-x-5">
 				          <Subnav />

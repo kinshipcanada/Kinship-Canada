@@ -7,7 +7,7 @@ import Link from 'next/link'
 import { supabase } from '../../lib/supabaseClient.js'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-
+import Head from 'next/head'
 import { TaxReceiptPackage } from '../../components/DashboardModals.js'
 
 export default function AppIndex() {
@@ -53,6 +53,9 @@ export default function AppIndex() {
 	if (loading) {
 		return (
 			<div>
+				<Head>
+					<title>Kinship Canada · Account</title>
+				</Head>
 				<Navbar />
 				<div className="relative min-h-screen">
 			      <main className="max-w-7xl mx-auto pb-10 pl-8 pr-8 pt-10">
@@ -73,6 +76,9 @@ export default function AppIndex() {
 		if (user) {
 			return (
 				<div>
+					<Head>
+						<title>Kinship Canada · Account</title>
+					</Head>
 					<Navbar />
 					<div className="relative min-h-screen">
 				      <main className="max-w-7xl mx-auto pb-10 pl-8 pr-8 pt-10">
@@ -323,6 +329,9 @@ export default function AppIndex() {
 		} else {
 			return (
 				<div>
+					<Head>
+						<title>Kinship Canada · Login Required</title>
+					</Head>
 					<Navbar />
 					<div className="relative min-h-screen">
 				      <main className="max-w-7xl mx-auto pb-10 pl-8 pr-8 pt-10">
