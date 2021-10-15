@@ -351,15 +351,15 @@ export default function Navbar() {
         leaveFrom="opacity-100 scale-100"
         leaveTo="opacity-0 scale-95"
       >
-        <Popover.Panel className="absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden">
+        <Popover.Panel className="absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden z-10">
           <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y-2 divide-gray-50">
             <div className="pt-5 pb-6 px-5">
               <div className="flex items-center justify-between">
                 <div>
                   <img
                     className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/workflow-mark-blue-600.svg"
-                    alt="Workflow"
+                    src="/logo.png"
+                    alt="Kinship Canada"
                   />
                 </div>
                 <div className="-mr-2">
@@ -376,31 +376,49 @@ export default function Navbar() {
             </div>
             <div className="py-6 px-5">
               <div className="grid grid-cols-2 gap-4">
-                <a href="#" className="text-base font-medium text-gray-900 hover:text-gray-700">
-                  Pricing
-                </a>
+                <Link href = '/support'>
+                  <a href="#" className="text-base font-medium text-gray-900 hover:text-gray-700">
+                    Support
+                  </a>
+                </Link>
 
-                <a href="#" className="text-base font-medium text-gray-900 hover:text-gray-700">
-                  Docs
-                </a>
+                <Link href = '/donate'>
+                  <a href="#" className="text-base font-medium text-gray-900 hover:text-gray-700">
+                    Make Donation
+                  </a>
+                </Link>
 
-                <a href="#" className="text-base font-medium text-gray-900 hover:text-gray-700">
-                  Enterprise
-                </a>
+                <Link href = '/app'>
+                  <a href="#" className="text-base font-medium text-gray-900 hover:text-gray-700">
+                    Donor Dashboard
+                  </a>
+                </Link>
+
+                {/* CAMPAIGN HOME PAGE COMING SOON */}
+                <Link href = '#'>
+                  <a href="#" className="text-base font-medium text-gray-900 hover:text-gray-700">
+                    Campaigns (Coming soon..)
+                  </a>
+                </Link>
+                
                 
               </div>
               <div className="mt-6">
-                <a
-                  href="#"
-                  className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-blue-600 hover:bg-blue-700"
-                >
-                  Sign up
-                </a>
-                <p className="mt-6 text-center text-base font-medium text-gray-500">
-                  Existing customer?{' '}
-                  <a href="#" className="text-blue-600 hover:text-blue-500">
-                    Sign in
+                <Link href = '/donate'>
+                  <a
+                    href="#"
+                    className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-blue-600 hover:bg-blue-700"
+                  >
+                    Donate
                   </a>
+                </Link>
+                <p className="mt-6 text-center text-base font-medium text-gray-500">
+                  Existing donor?{' '}
+                  <Link href = '/login'>
+                    <a href="#" className="text-blue-600 hover:text-blue-500">
+                      Sign in
+                    </a>
+                  </Link>
                 </p>
               </div>
             </div>
