@@ -8,6 +8,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { ArrowRightIcon } from '@heroicons/react/outline'
 import Loader from '../../components/Root/Loader.js'
+import { fetchPostJSON } from '../../lib/apiHelpers';
 
 export default function Welcome() {
 
@@ -45,7 +46,39 @@ export default function Welcome() {
 			setError(error.message)
 			setUpdateLoading(false)
 		} else {
-			router.push('/app')
+
+			const userLoggedIn = supabase.auth.user();
+
+			const name = firstName + ' ' + lastName
+
+			const user = {
+				first_name: firstName,
+				last_name: lastName,
+				name: name,
+				email: userLoggedIn.email,
+				user_id: userLoggedIn.id,
+				address: {
+					city: city,
+					country: country,
+					line1: address,
+					postal_code: postalCode,
+					state: state,
+				}
+			}
+
+			const response = await fetchPostJSON('/api/setup', {
+				user: user,
+			});
+		
+			if (response.statusCode === 500) {
+				setError(error.message);
+				setUpdateLoading(false)
+				return;
+			} else {
+				console.log(response)
+				setUpdateLoading(false)
+			}
+			// router.push('/app')
 		}
 	}
 
@@ -156,8 +189,8 @@ export default function Welcome() {
 												type="submit"
 												className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
 											>
-												{updateLoading ? <Loader /> : 'Continue To Dashboard'}
-												<ArrowRightIcon className="ml-2 h-5 w-5" aria-hidden="true" />
+												{updateLoading ? 'Getting everything set up...' : 'Continue To Dashboard'}
+												{updateLoading ? <Loader /> : <ArrowRightIcon className="ml-2 h-5 w-5" aria-hidden="true" />}
 											</button>
 										</div>
 										{error ? <p className='text-md font-semibold text-red-600'>{error}</p> : ''}
