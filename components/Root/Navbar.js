@@ -313,21 +313,28 @@ export default function Navbar() {
         				user ?
 
           				<Link href='/app'>
-          					<a className="text-base font-medium text-gray-500 hover:text-gray-900">
-    		              Dashboard
-    		            </a>
+          					<button
+                      type="button"
+                      className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    >
+                      Dashboard
+                    </button>
                 	</Link>
 
         				:
 
         				<Link href='/login'>
-        					<a className="text-base font-medium text-gray-500 hover:text-gray-900">
-  		              Login
-  		            </a>
+        					<button
+                    type="button"
+                    className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  >
+                    Login
+                  </button>
               	</Link>
         			}
+              
         			<Link href='/donate'>
-        				<a className="ml-8 inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-blue-600 hover:bg-blue-700">
+        				<a className="ml-2 inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-blue-600 hover:bg-blue-700">
   	              Donate
   	            </a>
         	    </Link>
