@@ -211,14 +211,14 @@ export default function Home() {
                       Make a donation <ArrowRightIcon className = 'ml-2 w-5 h-5' />
                     </button>
                   </Link>
-                  <Link href = '/about'>
+                  {/* <Link href = '/about'>
                     <button
                       type="button"
                       className="ml-2 inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
                       About Kinship
                     </button>
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
               <div className="mt-16 sm:mt-24 lg:mt-0 lg:col-span-6">
