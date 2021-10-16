@@ -437,16 +437,18 @@ import {
 
 const campaigns = [
   {
-    name: 'Africa Campaign',
+    name: 'Africa Tuition Campaign',
     description: 'Help deserving students in Africa cover their tuition.',
-    href: '#',
+    href: '/campaigns/tuition',
     icon: GlobeIcon,
+    ready: true
   },
   {
     name: 'Microfinancing Campaign',
     description: 'Break the cycle of poverty with microloans to get businesses off the ground.',
     href: '#',
     icon: CashIcon,
+    ready: false
   },
 ]
 
@@ -501,22 +503,32 @@ export function Campaigns() {
               <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
                 <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
                   {campaigns.map((item) => (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      className="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50 transition ease-in-out duration-150"
-                    >
-                      <item.icon className="flex-shrink-0 h-6 w-6 text-blue-600" aria-hidden="true" />
-                      <div className="ml-4">
-                        <p className="text-base font-medium text-gray-900">
-                          {item.name}
-                          <span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                            Coming Soon...
-                          </span>
-                        </p>
-                        <p className="mt-1 text-sm text-gray-500">{item.description}</p>
-                      </div>
-                    </a>
+                    <Link href = {item.href}>
+                      <a
+                        key={item.name}
+                        href={item.href}
+                        className="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50 transition ease-in-out duration-150"
+                      >
+                        <item.icon className="flex-shrink-0 h-6 w-6 text-blue-600" aria-hidden="true" />
+                        <div className="ml-4">
+                          <p className="text-base font-medium text-gray-900">
+                            {item.name}
+                            {
+                              item.ready ?
+
+                              <></>
+
+                              :
+
+                              <span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                Coming Soon...
+                              </span>
+                            }
+                          </p>
+                          <p className="mt-1 text-sm text-gray-500">{item.description}</p>
+                        </div>
+                      </a>
+                    </Link>
                   ))}
                 </div>
               </div>

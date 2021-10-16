@@ -10,9 +10,12 @@ import {
   CashIcon,
   ClockIcon,
   ReceiptRefundIcon,
+  UserIcon,
   UsersIcon,
 } from '@heroicons/react/outline'
-import { ChevronRightIcon, StarIcon } from '@heroicons/react/solid'
+import { CheckCircleIcon, ChevronRightIcon, StarIcon } from '@heroicons/react/solid'
+import Loader from '../../components/Root/Loader'
+import toast from 'react-hot-toast';
 
 const stats = [
   { label: 'Businesses Founded', value: '20' },
@@ -20,74 +23,90 @@ const stats = [
   { label: 'IDK some stat', value: '521' },
   { label: 'Raised', value: '$25M' },
 ]
-const logos = [
-  { name: 'Desk And Chair Foundation', url: '/campaigns/partner-logos/desk-and-chair-foundation.png' },
-  { name: 'Al Ayn Social Care Foundation', url: '/campaigns/partner-logos/al-ayn-social-care-foundation.png' },
-  { name: 'Kinship Canada', url: '/campaigns/partner-logos/kinship-canada.png' },
-  { name: 'Laravel', url: 'https://tailwindui.com/img/logos/laravel-logo-gray-400.svg' },
-  { name: 'StaticKit', url: 'https://tailwindui.com/img/logos/statickit-logo-gray-400.svg' },
-  { name: 'Workcation', url: 'https://tailwindui.com/img/logos/workcation-logo-gray-400.svg' },
-]
 
 const causes = [
   {
-    name: 'Hi'
+    id: 1,
+    name: 'Anuary',
+    age: 20,
+    degree: "Communication Technology",
+    college: "College of Business Education",
+    city: "Mwanza",
+    amount: 1800,
+    blurb: "Anuary is a partially disabled 20 year old from Mwanza. He is currently helping his mother sell vegetables, but worked hard to gain acceptance to a diploma in Communication Technology at the College of Business Education in Mwanza.",
+    looking_for: "Anuary is looking for a sponsorship for his 3-year diploma. A donation of $1800 would cover one year of tuition, hostel, and food.",
+    covers: ["Tuition", "Hostel", "Food"]
   },
-  {
-    name: 'Hi'
-  },
-  {
-    name: 'Hi'
-  },
-  {
-    name: 'Hi'
-  },
-  {
-    name: 'Hi'
-  },
-]
 
 
-const actions = [
-  {
-    title: 'Tea Stall',
-    href: '#',
-    icon: ClockIcon,
-    iconForeground: 'text-teal-700',
-    iconBackground: 'bg-teal-50',
-  },
-  {
-    title: 'Benefits',
-    href: '#',
-    icon: BadgeCheckIcon,
-    iconForeground: 'text-purple-700',
-    iconBackground: 'bg-purple-50',
-  },
-  {
-    title: 'Schedule a one-on-one',
-    href: '#',
-    icon: UsersIcon,
-    iconForeground: 'text-sky-700',
-    iconBackground: 'bg-sky-50',
-  },
-  { title: 'Payroll', href: '#', icon: CashIcon, iconForeground: 'text-yellow-700', iconBackground: 'bg-yellow-50' },
-  {
-    title: 'Submit an expense',
-    href: '#',
-    icon: ReceiptRefundIcon,
-    iconForeground: 'text-rose-700',
-    iconBackground: 'bg-rose-50',
-  },
-  {
-    title: 'Training',
-    href: '#',
-    icon: AcademicCapIcon,
-    iconForeground: 'text-blue-700',
-    iconBackground: 'bg-blue-50',
-  },
 ]
 
 export default function Home() {
+    
+    // Initialize cart variable
+    const [cart, setCart] = useState([])
+    const [loading, setLoading] = useState(false)
+
+    // Fetch and fill cart
+    useEffect(()=>{
+		if (JSON.parse(localStorage.getItem('kinship_cart')) != null) {
+		setCart(JSON.parse(localStorage.getItem('kinship_cart')))
+		} 
+	},[])
+
+    const addToCart = (amount, causeId, causeName, eligibleVal, recurringVal, regionVal, intervalVal) => {
+
+		try {
+            let amountToAdd = amount;
+            let causeToAddID = causeId;
+            let causeToAddName = causeName;
+            let eligible = eligibleVal; 
+            let recurring = recurringVal;
+            let region = regionVal;
+            let interval = intervalVal
+
+            let newItem = {
+                id: causeToAddID,
+                name: causeToAddName,
+                amount: parseFloat(amountToAdd).toFixed(2),
+                eligible: eligible,
+                recurring: recurring,
+                region: region,
+                interval: intervalVal,
+            }
+
+            let state = checkForItem(cart, causeToAddID, recurring)
+
+            if (state == false) {
+                cart.push(newItem);
+            } else {
+                for (var i = 0; i < cart.length; i++) {
+                    if (cart[i]['id'] === newItem['id']) {
+                    cart[i]['amount'] = (parseFloat(cart[i]['amount']) + parseFloat(amountToAdd));
+                    }
+                }
+            }
+
+            setCart(cart)
+            localStorage.setItem('kinship_cart', JSON.stringify(cart));
+
+            return true
+        } catch(e) {
+            console.log(e)
+            return false
+        }
+	}
+
+    const checkForItem = (a, obj, rec) => {
+		for (var i = 0; i < a.length; i++) {
+		if (a[i]['id'] === obj) {
+			if (a[i]['recurring'] == rec) {
+				return true;
+			}
+		}
+		}
+		return false;
+	}
 
   return (
     <div>
@@ -120,10 +139,10 @@ export default function Home() {
                 </div>
                 <div className="mt-6 sm:max-w-xl">
                   <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight sm:text-5xl">
-                    Kinship Microfinancing Campaign
+                    Kinship Africa Tuition Campaign
                   </h1>
                   <p className="mt-6 text-xl text-gray-500">
-                    Provide loans to help people get on their feet. Help break the cycle of poverty.
+                    Help deserving students cover their tuition and get their degrees.
                   </p>
                 </div>
                 <form action="#" className="mt-12 sm:max-w-lg sm:w-full sm:flex">
@@ -147,21 +166,6 @@ export default function Home() {
                     </button>
                   </div>
                 </form>
-                {/* <div className="mt-6">
-                  <div className="inline-flex items-center divide-x divide-gray-300">
-                    <div className="flex-shrink-0 flex pr-5">
-                      <StarIcon className="h-5 w-5 text-yellow-400" aria-hidden="true" />
-                      <StarIcon className="h-5 w-5 text-yellow-400" aria-hidden="true" />
-                      <StarIcon className="h-5 w-5 text-yellow-400" aria-hidden="true" />
-                      <StarIcon className="h-5 w-5 text-yellow-400" aria-hidden="true" />
-                      <StarIcon className="h-5 w-5 text-yellow-400" aria-hidden="true" />
-                    </div>
-                    <div className="min-w-0 flex-1 pl-5 py-1 text-sm text-gray-500 sm:py-3">
-                      <span className="font-medium text-gray-900">Rated 5 stars</span> by over{' '}
-                      <span className="font-medium text-blue-600">500 beta users</span>
-                    </div>
-                  </div>
-                </div> */}
               </div>
             </div>
           </div>
@@ -323,11 +327,7 @@ export default function Home() {
                 </div>
               </div>
               <div className="mt-12 grid grid-cols-2 gap-0.5 md:grid-cols-3 lg:mt-0 lg:grid-cols-2">
-                {logos.map((logo) => (
-                  <div key={logo.name} className="col-span-1 flex justify-center py-8 px-8 bg-gray-50">
-                    <img className="max-h-12" src={logo.url} alt={logo.name} />
-                  </div>
-                ))}
+                LOGOS
               </div>
             </div>
           </div>
@@ -341,12 +341,74 @@ export default function Home() {
                 causes.map((cause)=>(
                   <div className="bg-white overflow-hidden border rounded-lg divide-y divide-gray-200 mb-4">
                     <div className="px-4 py-5 sm:px-6">
-                      {cause.name} needs ${cause.amount} for {cause.business_name}
+                        <h2 className = "text-xl font-bold leading-7 text-gray-900 sm:text-2xl sm:truncate">{cause.name} needs ${cause.amount} for a diploma in {cause.degree}</h2>
                     </div>
-                    <div className="px-4 py-5 sm:p-6">{/* Content goes here */}</div>
+                    <div className="px-4 py-5 sm:p-6">
+                        <h3 className = 'text-lg font-medium flex items-center mb-1'>
+                            <UserIcon className = 'w-5 h-5 text-blue-600 mr-2' />
+                            About {cause.name}
+                        </h3>
+                        <p className = 'text-base'>{cause.blurb}</p>
+                        <h3 className = 'text-lg font-medium mt-2 flex items-center mb-1'>
+                            <AcademicCapIcon className = 'w-6 h-6 text-blue-600 mr-2' />
+                            What {cause.name} is looking for
+                        </h3>
+                        {cause.looking_for}
+                        <h3 className = 'text-lg font-medium mt-2'>What your donation will cover</h3>
+                        <div className = ''>
+                            {cause.covers.map((covered)=>(
+                                <div className = 'flex items-center mt-1 mb-1'>
+                                    <CheckCircleIcon className = 'w-5 h-5 text-green-600' />
+                                    <span className = 'ml-2 text-base font-semibold'>{covered}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
                     <div className="px-4 py-4 sm:px-6">
-                      {/* Content goes here */}
-                      {/* We use less vertical padding on card footers at all sizes than on headers or body sections */}
+                        <form action="#" className="sm:w-full sm:flex" onSubmit = {(e)=>{
+                            e.preventDefault()
+                            setLoading(true)
+
+                            const name = "$" + e.target.amount.value + " to help " + cause.name + " pay for their education"
+                            const status = addToCart(e.target.amount.value, cause.id, name, e.target.amount.value, false, null, null)
+
+                            if (status == true) {
+                                setLoading(false)
+                                toast.success('Successfully added to cart', {position: 'top-right'})
+                            } else {
+                                toast.error("Something went wrong. We're on it", {position: 'top-right'})
+                                setLoading(false)
+                            }
+                        }}>
+                            <div className="min-w-0 flex-1">
+                                <div className="relative rounded-md shadow-sm w-full">
+                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <span className="text-gray-500 sm:text-sm">$</span>
+                                    </div>
+                                    <input
+                                        type="text"
+                                        id="amount"
+                                        required
+                                        className="focus:ring-blue-500 focus:border-blue-500 block w-full pl-7 px-5 py-3 border sm:text-sm border-gray-300 rounded-md"
+                                        placeholder="0.00"
+                                        aria-describedby="price-currency"
+                                    />
+                                    <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                        <span className="text-gray-500 sm:text-sm" id="price-currency">
+                                            CAD
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="mt-4 sm:mt-0 sm:ml-3">
+                                <button
+                                type="submit"
+                                className="block w-full rounded-md border border-transparent px-5 py-2.5 bg-blue-600 text-base font-medium text-white shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 sm:px-10"
+                                >
+                                    {loading ? <Loader /> : <>Add To Basket &rarr;</>}
+                                </button>
+                            </div>
+                        </form>
                     </div>
                   </div>
                 ))
