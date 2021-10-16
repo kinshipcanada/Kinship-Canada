@@ -23,38 +23,6 @@ export default function Home() {
     const [email, setEmail] = useState(null)
     const [buttonMessage, setButtonMessage] = useState('Send support ticket')
 
-    const sendTicket = async (event) => {
-        event.preventDefault()
-
-        if (user) {
-            const { data, error } = await supabase
-                .from('tickets')
-                .insert([
-                    { user: user.id, email: user.email, message: message, phone: phoneNumber, first_name: firstName, last_name: lastName }
-                ])
-            
-            if (error) {
-                setButtonMessage("Something went wrong. Please try again later.")
-            } else {
-                setButtonMessage("Thanks! We'll get back to you shortly")
-            }
-
-        } else {
-            const { data, error } = await supabase
-                .from('tickets')
-                .insert([
-                    { email: email, message: message, phone: phoneNumber, first_name: firstName, last_name: lastName }
-                ])
-
-            if (error) {
-                setButtonMessage("Something went wrong. Please try again later.")
-            } else {
-                setButtonMessage("Thanks! We'll get back to you shortly")
-            }
-            
-        }
-        
-    }
 
     const submitTicket = async (e) => {
         e.preventDefault();
