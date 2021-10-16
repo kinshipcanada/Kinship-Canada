@@ -277,18 +277,18 @@ export default function Home() {
                   Break the cycle of poverty
                 </h2>
                 <div className="mt-6 text-gray-500 space-y-6">
-                  <p className="text-lg">
-                    Kinship Canada&apos;s Africa tuition aims to support deserving students enrolled in higher education programs
-                    cover their tuition, food, and housing needs. 
-                  </p>
-                  <p className="text-lg">
-                    We believe that the best way to break the cycle of poverty is to help provide those in need with the opportunities
-                    needed to sustain themselves and their community.
-                  </p>
-                  <p className="text-lg">
-                    These are students that have worked hard to be accepted into programs, and just need a bit of help to pay for the 
-                    costs of attending.
-                  </p>
+                    <p className="text-lg">
+                        Kinship Canada&apos;s Africa tuition aims to support deserving students enrolled in higher education programs
+                        cover their tuition, food, and housing needs. 
+                    </p>
+                    <p className="text-lg">
+                        We believe that the best way to break the cycle of poverty is to help provide those in need with the opportunities
+                        needed to sustain themselves and their community.
+                    </p>
+                    <p className="text-lg">
+                        These are students that have worked hard to be accepted into programs, and just need a bit of help to pay for the 
+                        costs of attending.
+                    </p>
                 </div>
               </div>
 
