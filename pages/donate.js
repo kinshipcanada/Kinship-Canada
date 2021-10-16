@@ -29,7 +29,12 @@ const causes = [
 				{
 				  "amount": 500,
 				  "interval": "year",
-				  "buys": "Education for one orphan for one year"
+				  "buys": "Basic needs for one orphan for one year - provided by Al Anwar Iraq"
+				},
+				{
+					"amount": 150,
+					"interval": "month",
+					"buys": "Complete care for one orphan for one month - provided by Al Ayn Iraq"
 				}
 			  ]
 			},
@@ -48,19 +53,10 @@ const causes = [
 				}
 			  ]
 			},
-			{
-			  "name": "Al-Ayn",
-			  "options": [
-				{
-				  "amount": 150,
-				  "interval": "month",
-				  "buys": "Complete care for one orphan for one month"
-				}
-			  ]
-			}
+			
 		],
 		eligible: true,
-		blurb: 'Covers housing, education, and food for orphans'
+		blurb: 'Covers basic housing, education, and food for orphans'
 	},
 	{
 		id: "90c7ced8-db3b-49fd-83bf-2e9502b5089f",
@@ -218,7 +214,7 @@ const causes = [
 	},
 	{
 		id: "8",
-		name: 'Quran',
+		name: "Qur'an",
 		icon: BookOpenIcon,
 		bgColor: 'bg-green-600',
 		regions: [
@@ -234,7 +230,7 @@ const causes = [
 			},
 		],
 		eligible: false,
-		blurb: "Recitation of the Holy Quran in the name of your marhum. Please keep the niyyat."
+		blurb: "Recitation of the Holy Quran in the name of your marhum."
 	},
 	{
 		id: "9",
@@ -430,7 +426,7 @@ export default function Home() {
 	  	<form  onSubmit = {submitStepOne} className = {step == 1 ? '' : 'opacity-50'}>
 		  	<div className="md:flex md:items-center md:justify-between">
 				<div className="flex-1 min-w-0">
-				<h2 className={step == 1 ? "text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate" : "text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate opacity-50"}>Step One: Choose Your Causes{' '}{/* <a>How does this work?</a> */}</h2>
+				<h2 className={step == 1 ? "text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate" : "text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate opacity-50"}>Step One: Choose Which Causes You Would Like To Contribute To{' '}{/* <a>How does this work?</a> */}</h2>
 				</div>
 			</div>
 			<div className="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4 items-stretch">
