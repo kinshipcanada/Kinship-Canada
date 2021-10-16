@@ -12,6 +12,7 @@
     "@headlessui/react": "^1.4.1",
     "@heroicons/react": "^1.0.4",
     "@popperjs/core": "^2.10.1",
+    "@sendgrid/mail": "^7.4.7",
     "@stripe/react-stripe-js": "^1.6.0",
     "@stripe/stripe-js": "^1.19.1",
     "@supabase/supabase-js": "^1.22.3",

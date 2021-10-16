@@ -89,6 +89,7 @@ export default function Cart() {
       return true
     }
   }
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setCheckoutLoading(true);

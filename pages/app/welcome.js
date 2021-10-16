@@ -31,6 +31,11 @@ export default function Welcome() {
 	useEffect(()=>{
 		const userLoggedIn = supabase.auth.user();
 		setUser(userLoggedIn);
+		const { data, error } = await supabase
+			.from('profiles')
+			.insert([
+			{ id: userLoggedIn.id, admin: false, set_up: false, partner: false }
+		])
 		setLoading(false);
 	}, [])
 

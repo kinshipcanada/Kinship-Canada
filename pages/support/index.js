@@ -6,6 +6,7 @@ import ReactTooltip from 'react-tooltip';
 import Footer from '../../components/Root/Footer'
 import { Switch } from '@headlessui/react'
 import Head from 'next/head'
+import { fetchPostJSON } from '../../lib/apiHelpers';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -54,6 +55,61 @@ export default function Home() {
         }
         
     }
+
+    const submitTicket = async (e) => {
+        e.preventDefault();
+        
+        const details = {
+            email: email,
+            phone: phoneNumber,
+            message: message,
+            first_name: firstName,
+            last_name: lastName
+        }
+
+        const response = await fetchPostJSON('/api/support', {
+            details: details,
+        });
+    
+        if (response.statusCode === 500) {
+            setButtonMessage('Something went wrong. Please try again later')
+            console.error(response.message);
+            return;
+        }
+    
+        if (response.statusCode == 200) {
+            setButtonMessage('Sent, thanks!')
+
+            if (user) {
+                const { data, error } = await supabase
+                    .from('tickets')
+                    .insert([
+                        { user: user.id, email: user.email, message: message, phone: phoneNumber, first_name: firstName, last_name: lastName }
+                    ])
+                
+                if (error) {
+                    setButtonMessage("Something went wrong. Please try again later.")
+                } else {
+                    setButtonMessage("Thanks! We'll get back to you shortly")
+                }
+    
+            } else {
+                const { data, error } = await supabase
+                    .from('tickets')
+                    .insert([
+                        { email: email, message: message, phone: phoneNumber, first_name: firstName, last_name: lastName }
+                    ])
+    
+                if (error) {
+                    setButtonMessage("Something went wrong. Please try again later.")
+                } else {
+                    setButtonMessage("Thanks! We'll get back to you shortly")
+                }
+                
+            }
+        }
+    };
+
     return (
     <div>
         <Head>
@@ -113,7 +169,7 @@ export default function Home() {
                 </p>
                 </div>
                 <div className="mt-12">
-                <form onSubmit = {sendTicket} className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8">
+                <form onSubmit = {submitTicket} className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8">
                     <div>
                     <label htmlFor="first-name" className="block text-sm font-medium text-gray-700">
                         First name
