@@ -278,7 +278,7 @@ export default function Home() {
                 </h2>
                 <div className="mt-6 text-gray-500 space-y-6">
                     <p className="text-lg">
-                        Kinship Canada&apos;s Africa tuition aims to support deserving students enrolled in higher education programs
+                        Kinship Canada&apos;s Africa tuition campaign aims to support deserving students enrolled in higher education programs
                         cover their tuition, food, and housing needs. 
                     </p>
                     <p className="text-lg">

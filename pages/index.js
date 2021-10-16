@@ -17,7 +17,7 @@ import Head from 'next/head'
 const incentives = [
   {
     name: '100% of your donation goes to those who need it',
-    description: "Kinship pays for any processing or bank fees out of pocket",
+    description: "Kinship pays for any processing or bank fees out of pocket, unless you opt to contribute it",
     imageSrc: 'https://tailwindui.com/img/ecommerce/icons/icon-delivery-light.svg',
   },
   {
@@ -26,8 +26,8 @@ const incentives = [
     imageSrc: 'https://tailwindui.com/img/ecommerce/icons/icon-chat-light.svg',
   },
   {
-    name: 'Receive proof of donation ony our dashboard',
-    description: "You will receive proof (including pictures) of all donations you make",
+    name: 'Receive proof of donation on your dashboard',
+    description: "You will receive proof of all donations you make",
     imageSrc: 'https://tailwindui.com/img/ecommerce/icons/icon-fast-checkout-light.svg',
   },
 ]
@@ -226,7 +226,7 @@ export default function Home() {
                   <div className="px-4 py-8 sm:px-10">
                     <div>
                       <h2 className="text-lg font-medium text-gray-700">Quick General Donation</h2>
-                      <p className = 'text-sm font-medium mt-3'>Use this form to make a quick general donation. If you have a specific cause you&apos;d like to contribute to, click <Link href = '/donate'>here</Link>.</p>
+                      <p className = 'text-sm font-medium mt-3'>Use this form to make a quick general donation. If you have a specific cause you&apos;d like to contribute to, click <Link href = '/donate'><a className = 'text-blue-600'>here</a></Link>.</p>
                     </div>
 
                     <div className="mt-6 mb-6 relative">

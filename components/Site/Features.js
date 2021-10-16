@@ -18,7 +18,7 @@ export default function Features() {
                   Receive Proof Of Where Your Donation Goes
                 </h2>
                 <p className="mt-4 text-lg text-gray-500">
-                  Kinship sends you proof of what your donation has built, including pictures and reciepts. Directly see the impact that your donation makes.
+                  Kinship sends you proof of what your donation has built, including pictures where possible. Directly see the impact that your donation makes.
                 </p>
                 <div className="mt-6">
                     <Link href = '/donate'>
