@@ -339,7 +339,7 @@ export default function Home() {
             <div className = 'grid grid-cols-1'>
               {
                 causes.map((cause)=>(
-                  <div className="bg-white overflow-hidden border rounded-lg divide-y divide-gray-200 mb-4">
+                  <div key = {cause.id} className="bg-white overflow-hidden border rounded-lg divide-y divide-gray-200 mb-4">
                     <div className="px-4 py-5 sm:px-6">
                         <h2 className = "text-xl font-bold leading-7 text-gray-900 sm:text-2xl sm:truncate">{cause.name} needs ${cause.amount} for a diploma in {cause.degree}</h2>
                     </div>
@@ -357,7 +357,7 @@ export default function Home() {
                         <h3 className = 'text-lg font-medium mt-2'>What your donation will cover</h3>
                         <div className = ''>
                             {cause.covers.map((covered)=>(
-                                <div className = 'flex items-center mt-1 mb-1'>
+                                <div key = {covered} className = 'flex items-center mt-1 mb-1'>
                                     <CheckCircleIcon className = 'w-5 h-5 text-green-600' />
                                     <span className = 'ml-2 text-base font-semibold'>{covered}</span>
                                 </div>

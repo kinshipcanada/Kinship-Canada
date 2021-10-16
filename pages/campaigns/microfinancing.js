@@ -339,7 +339,7 @@ export default function Home() {
             <div className = 'grid grid-cols-1'>
               {
                 causes.map((cause)=>(
-                  <div className="bg-white overflow-hidden border rounded-lg divide-y divide-gray-200 mb-4">
+                  <div key = {cause.name} className="bg-white overflow-hidden border rounded-lg divide-y divide-gray-200 mb-4">
                     <div className="px-4 py-5 sm:px-6">
                       {cause.name} needs ${cause.amount} for {cause.business_name}
                     </div>
