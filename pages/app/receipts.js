@@ -113,6 +113,15 @@ export default function AppIndex() {
 										<DownloadCard receipt = {receipt} />
 									</div>
 						        ))}
+								{
+									receipts.length == 0 ?
+
+									<NoReceipts profile = {profile}/>
+
+									:
+
+									<></>
+								}
 							</div>
 				          </div>
 				        </div>
@@ -142,4 +151,38 @@ export default function AppIndex() {
 			)
 		}
 	}
+}
+
+export const NoReceipts = ({profile}) => {
+
+	const country = profile.country
+
+	return (
+		<div className="bg-gray-50 sm:rounded-lg border">
+			<div className="px-4 py-5 sm:p-6">
+				<h3 className="text-lg leading-6 font-medium text-gray-900">No Tax Receipts</h3>
+				<div className="mt-2 text-sm text-gray-500">
+					{
+						country == 'Canada' ?
+
+						<p>It looks like you have no tax receipts available yet. If you just made a donation, please give up to 5 minutes for the receipt to appear here. If the issue persists, please <Link href = 'mailto:info@kinshipcanada.com'><a className = 'font-semibold text-gray-800'>contact us</a></Link>.</p>
+
+						:
+
+						<p>It looks like you have no tax receipts available. This is because your country is not set to Canada, and Kinship can only issue tax receipts to Canadians. If you need to change your region, do so <Link href = '/app/account'><a className = 'font-semibold text-gray-800'>here</a></Link>.</p>
+					}
+				</div>
+				<div className="mt-5">
+					<Link href='/donate'>
+						<button
+							type="button"
+							className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm"
+						>
+							Make a donation
+						</button>
+					</Link>
+				</div>
+			</div>
+		</div>
+	)
 }

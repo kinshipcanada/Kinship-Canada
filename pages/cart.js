@@ -9,6 +9,7 @@ import { fetchPostJSON } from '../lib/apiHelpers';
 import { supabase } from '../lib/supabaseClient';
 import Footer from '../components/Root/Footer'
 import { FingerPrintIcon } from '@heroicons/react/outline'
+import toast from 'react-hot-toast'
 
 export default function Cart() {
 
@@ -219,9 +220,12 @@ export default function Cart() {
                           <button onClick = {()=>{
                             let id = cause.id + '_' + cause.recurring + '_' + cause.region;
                             removeFromCart(cause.id, cause.recurring, id)
-                          }} type="button" className="-m-2 p-2 inline-flex text-gray-400 hover:text-gray-500">
-                            <span className="sr-only">Remove</span>
-                            <XIcon className="h-5 w-5" aria-hidden="true" />
+                            toast.success("Removed donation for " + cause.name + " from cart", {position: 'top-right'})
+                          }} type="button" className="inline-flex text-gray-400 hover:text-gray-500 flex items-center">
+                            <span className="">Remove</span>
+                            <span className = 'ml-2 p-1 bg-gray-50 rounded'>
+                              <XIcon className="h-5 w-5" aria-hidden="true" />
+                            </span>
                           </button>
                         </div>
                       </div>
@@ -231,8 +235,14 @@ export default function Cart() {
                       <p className="mt-4 flex text-sm text-gray-700 space-x-2">
                         {cause.recurring ?
                           <>
-                          <ClockIcon className="flex-shrink-0 h-5 w-5 text-green-500" aria-hidden="true" />
-                            <span>Recurring Donation - Renews Every {cause.interval == 'year' ? 'Year' : cause.interval == 'month' ? 'Month' : cause.interval}</span>
+                            <>
+                              <ClockIcon className="flex-shrink-0 h-5 w-5 text-green-500" aria-hidden="true" />
+                              <span>Recurring Donation - Renews Every {cause.interval == 'year' ? 'Year' : cause.interval == 'month' ? 'Month' : cause.interval}</span>
+                            </>
+                            <span data-tip="Experimental feature" className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                              Beta
+                            </span>
+                            <ReactTooltip place="top" type="dark" effect="float"/>
                           </>
 
                           :

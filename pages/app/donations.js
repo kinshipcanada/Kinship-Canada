@@ -104,48 +104,56 @@ export default function AppIndex() {
 							<div className="flex flex-col">
 						      <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
 						        <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-						          <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+						          <div className="overflow-hidden border-b border-gray-200 sm:rounded-lg">
 						            <table className="min-w-full divide-y divide-gray-200">
-						              <thead className="bg-gray-50">
-						                <tr>
-						                  <th
-						                    scope="col"
-						                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-						                  >
-						                    Causes
-						                  </th>
-						                  <th
-						                    scope="col"
-						                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-						                  >
-						                    Date
-						                  </th>
-						                  <th
-						                    scope="col"
-						                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-						                  >
-						                    Amount
-						                  </th>
-						                  <th
-						                    scope="col"
-						                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-						                  >
-						                    Status
-						                  </th>
-						                  <th
-						                    scope="col"
-						                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-						                  >
-						                  	<div className = 'flex items-center'>
-							                    Receipt
-												<a className = 'normal-case' data-tip="This is the Stripe (payment) receipt, not your CRA eligible tax receipt.">
-							                    	<QuestionMarkCircleIcon className = 'ml-1 w-5 h-5' />
-													<ReactTooltip place="top" type="dark" effect="float"/>
-												</a>
-						                    </div>
-						                  </th>
-						                </tr>
-						              </thead>
+						              {
+										  donations.length == 0 ?
+
+										  <NoDonations />
+
+										  :
+
+										  <thead className="bg-gray-50">
+											<tr>
+											<th
+												scope="col"
+												className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+											>
+												Causes
+											</th>
+											<th
+												scope="col"
+												className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+											>
+												Date
+											</th>
+											<th
+												scope="col"
+												className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+											>
+												Amount
+											</th>
+											<th
+												scope="col"
+												className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+											>
+												Status
+											</th>
+											<th
+												scope="col"
+												className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+											>
+												<div className = 'flex items-center'>
+													Receipt
+													<a className = 'normal-case' data-tip="This is the Stripe (payment) receipt, not your CRA eligible tax receipt.">
+														<QuestionMarkCircleIcon className = 'ml-1 w-5 h-5' />
+														<ReactTooltip place="top" type="dark" effect="float"/>
+													</a>
+												</div>
+											</th>
+											</tr>
+										</thead>
+									  }
 						              <tbody>
 						                {donations.map((donation, donationIdx) => (
 						                  <tr key={donation.donationIdx} className={donationIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
@@ -217,4 +225,28 @@ export default function AppIndex() {
 			)
 		}
 	}
+}
+
+export const NoDonations = () => {
+
+	return (
+		<div className="bg-gray-50 sm:rounded-lg border">
+			<div className="px-4 py-5 sm:p-6">
+				<h3 className="text-lg leading-6 font-medium text-gray-900">No Donations</h3>
+				<div className="mt-2 text-sm text-gray-500">
+					<p>It looks like you have no tax receipts available yet. If you just made a donation, please give up to 5 minutes for the details to appear here. If the issue persists, please <Link href = 'mailto:info@kinshipcanada.com'><a className = 'font-semibold text-gray-800'>contact us</a></Link>.</p>
+				</div>
+				<div className="mt-5">
+					<Link href='/donate'>
+						<button
+							type="button"
+							className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm"
+						>
+							Make a donation
+						</button>
+					</Link>
+				</div>
+			</div>
+		</div>
+	)
 }
