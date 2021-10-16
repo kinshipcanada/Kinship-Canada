@@ -329,8 +329,11 @@ export default function Home() {
                   </a>
                 </div>
               </div>
-              <div className="mt-12 grid grid-cols-2 gap-0.5 md:grid-cols-3 lg:mt-0 lg:grid-cols-2">
-                LOGOS
+              <div className="mt-12 lg:mt-0 flex justify-center items-center">
+                <img
+                    src = '/campaigns/tuition/partner-logos.png'
+                    className = 'w-4/5 h-4/5'
+                />
               </div>
             </div>
           </div>
