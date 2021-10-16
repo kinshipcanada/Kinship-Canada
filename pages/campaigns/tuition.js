@@ -19,7 +19,7 @@ import toast from 'react-hot-toast';
 
 const stats = [
   { label: 'Businesses Founded', value: '20' },
-  { label: 'Employees', value: '5' },
+  { label: 'Students', value: '6' },
   { label: 'IDK some stat', value: '521' },
   { label: 'Raised', value: '$25M' },
 ]
@@ -240,16 +240,16 @@ export default function Home() {
                 <div className="relative pt-64 pb-10 rounded-2xl shadow-xl overflow-hidden">
                   <img
                     className="absolute inset-0 h-full w-full object-cover"
-                    src="/campaigns/microfinancing/sewing-machine.jpeg"
+                    src="/campaigns/tuition/math.jpeg"
                     alt=""
                   />
                   {/* <div className="absolute inset-0 bg-blue-600 mix-blend-multiply" />
                   <div className="absolute inset-0 bg-gradient-to-t from-blue-600 via-blue-600 opacity-90" /> */}
                   <div className="relative px-8">
                     <blockquote className="mt-8">
-                      <div className="relative text-lg font-medium text-white md:flex-grow">
+                      <div className="relative text-lg font-medium text-gray-800 md:flex-grow">
                         <svg
-                          className="absolute top-0 left-0 transform -translate-x-3 -translate-y-2 h-8 w-8 text-gray-50"
+                          className="absolute top-0 left-0 transform -translate-x-3 -translate-y-2 h-8 w-8 text-gray-800"
                           fill="currentColor"
                           viewBox="0 0 32 32"
                           aria-hidden="true"
@@ -262,7 +262,7 @@ export default function Home() {
                       </div>
 
                       <footer className="mt-4">
-                        <p className="text-base font-semibold text-blue-200">Holy Qur&apos;an, 2:274</p>
+                        <p className="text-base font-semibold  text-gray-800">Holy Qur&apos;an, 2:274</p>
                       </footer>
                     </blockquote>
                   </div>
@@ -278,13 +278,16 @@ export default function Home() {
                 </h2>
                 <div className="mt-6 text-gray-500 space-y-6">
                   <p className="text-lg">
-                    Kinship Canada&apos;s microfinancing campaign aims to break the cycle of poverty by providing loans 
-                    and mentorship to help those in need get businesses off the ground. When they are living comfortably, 
-                    they will pay back the loan which will then be used to help others in the same position start businesses.
+                    Kinship Canada&apos;s Africa tuition aims to support deserving students enrolled in higher education programs
+                    cover their tuition, food, and housing needs. 
                   </p>
                   <p className="text-lg">
-                    The loans come with both enough money to start the business, as well as guidance from established business 
-                    owners and entrepreneurs, who help the donee as they take control of their life.
+                    We believe that the best way to break the cycle of poverty is to help provide those in need with the opportunities
+                    needed to sustain themselves and their community.
+                  </p>
+                  <p className="text-lg">
+                    These are students that have worked hard to be accepted into programs, and just need a bit of help to pay for the 
+                    costs of attending.
                   </p>
                 </div>
               </div>
