@@ -294,16 +294,16 @@ export default function Home() {
 
               {/* Stats section */}
               <div className="mt-10">
-                <dl className="grid grid-cols-2 gap-x-4 gap-y-8">
+                {/* <dl className="grid grid-cols-2 gap-x-4 gap-y-8">
                   {stats.map((stat) => (
                     <div key={stat.label} className="border-t-2 border-gray-100 pt-6">
                       <dt className="text-base font-medium text-gray-500">{stat.label}</dt>
                       <dd className="text-3xl font-extrabold tracking-tight text-gray-900">{stat.value}</dd>
                     </div>
                   ))}
-                </dl>
+                </dl> */}
                 <div className="mt-10">
-                  <a href="#" className="text-base font-medium text-blue-600">
+                  <a href="#causes" className="text-base font-medium text-blue-600">
                     Make a donation &rarr;
                   </a>
                 </div>
@@ -324,7 +324,7 @@ export default function Home() {
                   Kinship works with partners on the ground to make sure your donation gets to those who need it most. Our partners find those in need on the ground and help them with your contribution - your donation has real impact on the ground breaking the cycle of poverty.
                 </p>
                 <div className="mt-6">
-                  <a href="#" className="text-base font-medium text-blue-600">
+                  <a href="#causes" className="text-base font-medium text-blue-600">
                     Make a donation &rarr;
                   </a>
                 </div>
@@ -342,7 +342,7 @@ export default function Home() {
         {/* CTA section */}
         <div className="relative mt-12 sm:py-16">
           <div className="mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:max-w-7xl lg:px-8">
-            <div className = 'grid grid-cols-1'>
+            <div className = 'grid grid-cols-1' id = 'causes'>
               {
                 causes.map((cause)=>(
                   <div key = {cause.id} className="bg-white overflow-hidden border rounded-lg divide-y divide-gray-200 mb-4">

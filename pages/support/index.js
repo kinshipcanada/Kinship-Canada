@@ -35,9 +35,12 @@ export default function Home() {
             last_name: lastName
         }
 
-        const response = await fetchPostJSON('/api/support', {
-            details: details,
-        });
+        response = 500;
+
+        // THIS NEEDS TO BE FIXED
+        // const response = await fetchPostJSON('/api/support', {
+        //     details: details,
+        // });
     
         if (response.statusCode === 500) {
             setButtonMessage('Something went wrong. Please try again later')
