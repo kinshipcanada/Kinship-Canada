@@ -6,6 +6,7 @@ import ReactTooltip from 'react-tooltip';
 import Footer from '../../components/Root/Footer'
 import {
   AcademicCapIcon,
+  ArrowCircleDownIcon,
   BadgeCheckIcon,
   CashIcon,
   ClockIcon,
@@ -145,27 +146,20 @@ export default function Home() {
                     Help deserving students cover their tuition and get their degrees.
                   </p>
                 </div>
-                <form action="#" className="mt-12 sm:max-w-lg sm:w-full sm:flex">
-                  <div className="min-w-0 flex-1">
-                    <label htmlFor="hero-email" className="sr-only">
-                      Email address
-                    </label>
-                    <input
-                      id="hero-email"
-                      type="text"
-                      className="block w-full border border-gray-300 rounded-md px-5 py-3 text-base text-gray-900 placeholder-gray-500 shadow-sm focus:border-blue-600 focus:ring-blue-600"
-                      placeholder="Choose an amount"
-                    />
-                  </div>
-                  <div className="mt-4 sm:mt-0 sm:ml-3">
+                <div className="mt-12 sm:max-w-lg sm:w-full sm:flex">
+                  <a href='#causes'>
                     <button
+                      
                       type="submit"
                       className="block w-full rounded-md border border-transparent px-5 py-3 bg-blue-600 text-base font-medium text-white shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 sm:px-10"
                     >
-                      Donate
+                      <span className = 'flex justify-center items-center w-full'>
+                        View Available Students
+                        <ArrowCircleDownIcon className = 'ml-2 w-6 h-6'/>
+                      </span>
                     </button>
-                  </div>
-                </form>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -239,7 +233,7 @@ export default function Home() {
                 {/* Testimonial card*/}
                 <div className="relative pt-64 pb-10 rounded-2xl shadow-xl overflow-hidden">
                   <img
-                    className="absolute inset-0 h-full w-full object-cover"
+                    className="absolute inset-0 h-full w-full object-cover opacity-50"
                     src="/campaigns/tuition/math.jpeg"
                     alt=""
                   />
