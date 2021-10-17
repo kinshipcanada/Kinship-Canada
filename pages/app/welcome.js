@@ -28,7 +28,7 @@ export default function Welcome() {
 
 	const router = useRouter()
 
-	useEffect(()=>{
+	useEffect(async ()=>{
 		const userLoggedIn = supabase.auth.user();
 		setUser(userLoggedIn);
 		const { data, error } = await supabase
