@@ -288,19 +288,21 @@ export default function Navbar() {
                         ))}
                       </ul>
 
-                      <button
-                        className="w-full bg-blue-600 border border-transparent rounded-md shadow-sm py-2 px-4 text-sm font-medium text-white hover:bg-blue-700"
-                        onClick={handleSubmit}
-                      >
-                        {checkoutLoading ? <span className = 'flex text-center justify-center items-center'>Redirecting you to checkout<Loader /></span> : 'Checkout'}
-                      </button>
+                      <Link href = '/cart'>
+                        <button
+                          className="w-full bg-blue-600 border border-transparent rounded-md shadow-sm py-2 px-4 text-sm font-medium text-white hover:bg-blue-700"
+                        >
+                          View Donation Bag
+                        </button>
+                      </Link>
 
                       <p className="mt-4 text-center">
-                        <Link href = '/cart'>
-                          <a className="text-sm font-medium text-blue-600 hover:text-blue-500">
-                            View Donation Bag
-                          </a>
-                        </Link>
+                        <button
+                          className="text-sm font-medium text-blue-600 hover:text-blue-500"
+                          onClick={handleSubmit}
+                        >
+                          {checkoutLoading ? <span className = 'flex text-center justify-center items-center'>Redirecting you to checkout<Loader /></span> : 'Checkout'}
+                        </button>
                       </p>
                       </>
                       }

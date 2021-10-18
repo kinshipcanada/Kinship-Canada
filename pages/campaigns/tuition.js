@@ -17,6 +17,7 @@ import {
 import { CheckCircleIcon, ChevronRightIcon, StarIcon } from '@heroicons/react/solid'
 import Loader from '../../components/Root/Loader'
 import toast from 'react-hot-toast';
+import Image from 'next/image'
 
 const stats = [
   { label: 'Businesses Founded', value: '20' },
@@ -191,11 +192,15 @@ export default function Home() {
                 </svg>
               </div>
               <div className="relative pl-4 -mr-40 sm:mx-auto sm:max-w-3xl sm:px-0 lg:max-w-none lg:h-full lg:pl-12">
-                <img
-                  className="ring-opacity-5 lg:w-auto lg:max-w-none h-96 -mt-20"
-                  src="/campaigns/india-globe.png"
-                  alt=""
-                />
+                <div className="ring-opacity-5 lg:w-auto lg:max-w-none h-96 -mt-20">
+                  <Image
+                    src="/campaigns/india-globe.png"
+                    priority='true'
+                    alt="globe centered on africa"
+                    layout='fill'
+                    loading='eager'
+                  />
+                </div>
               </div>
             </div>
           </div>

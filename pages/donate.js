@@ -431,7 +431,7 @@ export default function Home() {
 			</div>
 			<div className="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4 items-stretch">
 				{causes.map((cause) => (
-					<div key = {cause.id} className="bg-white overflow-hidden shadow rounded-lg flex flex-col self-stretch">
+					<label htmlFor = {cause.id} key = {cause.id} className="bg-white overflow-hidden shadow rounded-lg flex flex-col self-stretch">
 						<div className="px-4 py-5 sm:px-6 flex self-stretch h-full">
 							<div className = 'flex flex-col'>
 								<div className = 'flex'>
@@ -479,7 +479,7 @@ export default function Home() {
 							<p className = 'text-md font-medium'>Select {cause.name}</p>
 							</label>
 						</div>
-						</div>
+					</label>
 				))}
 				<div className="bg-white overflow-hidden shadow rounded-lg flex flex-col self-stretch">
 					<div className="px-4 py-5 sm:px-6 flex self-stretch h-full">

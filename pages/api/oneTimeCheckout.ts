@@ -19,21 +19,29 @@ export default async function handler(
     const cart: any[] = req.body.details
     const lineItems: any = []
 
-    for (let i = 0; i < 2; i++) {
-      let arr: object = {
-        name: cart[i]['name'],
-        amount: formatAmountForStripe(cart[i]['amount'], CURRENCY),
-        currency: CURRENCY,
-        quantity: 1,
-      }
+    for (let i = 0; i < cart.length; i++) {
 
-      lineItems.push(arr)
+        let arr: object;
+
+        arr = {
+            quantity: 1,
+            price_data: {
+            product_data: {
+                name: cart[i]['name'],
+            },
+            unit_amount: formatAmountForStripe(cart[i]['amount'], CURRENCY),
+            currency: CURRENCY,
+            }
+        }
+
+        lineItems.push(arr)
     }
 
     try {
       // Create Checkout Sessions from body params.
       const params: Stripe.Checkout.SessionCreateParams = {
         submit_type: 'donate',
+        mode: 'payment',
         payment_method_types: ['card'],
         line_items: lineItems,
         success_url: `${req.headers.origin}/success`,

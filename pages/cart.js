@@ -97,22 +97,45 @@ export default function Cart() {
     const valid = checkForRecurring()
 
     if (valid) {
-      const response = await fetchPostJSON('/api/checkout', {
-        details: cart,
-      });
-  
-      if (response.statusCode === 500) {
-        console.error(response.message);
-        return;
+      if (recurringAmt == 0) {
+        const response = await fetchPostJSON('/api/oneTimeCheckout', {
+          details: cart,
+        });
+
+        if (response.statusCode === 500) {
+          console.error(response.message);
+          return;
+        }
+    
+        // Redirect to Checkout.
+        const stripe = await getStripe();
+        const { error } = await stripe.redirectToCheckout({
+          sessionId: response.id,
+        });
+    
+        console.warn(error.message);
+
+        
+      } else {
+        const response = await fetchPostJSON('/api/recurringCheckout', {
+          details: cart,
+        });
+
+        if (response.statusCode === 500) {
+          console.error(response.message);
+          return;
+        }
+    
+        // Redirect to Checkout.
+        const stripe = await getStripe();
+        const { error } = await stripe.redirectToCheckout({
+          sessionId: response.id,
+        });
+    
+        console.warn(error.message);
       }
-  
-      // Redirect to Checkout.
-      const stripe = await getStripe();
-      const { error } = await stripe.redirectToCheckout({
-        sessionId: response.id,
-      });
-  
-      console.warn(error.message);
+
+      
     } else {
       setError(<><p>Please log in to make a recurring donation. This is so that you can manage and access this donation in the future.</p><Link href = '/login'><button
       type="button"
@@ -163,6 +186,7 @@ export default function Cart() {
 
   return (
     <div>
+      {console.log(cart)}
       <Navbar />
       <div className="bg-white">
       <div className="max-w-2xl mx-auto pt-16 pb-24 px-4 sm:px-6 lg:max-w-7xl lg:px-8">

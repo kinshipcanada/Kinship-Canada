@@ -1,4 +1,4 @@
-import { BookOpenIcon, InboxIcon, SparklesIcon } from '@heroicons/react/outline'
+import { BookOpenIcon, CameraIcon, DocumentDownloadIcon, InboxIcon, SparklesIcon } from '@heroicons/react/outline'
 import Link from 'next/link'
 
 export default function Features() {
@@ -10,7 +10,7 @@ export default function Features() {
             <div>
               <div>
                 <span className="h-12 w-12 rounded-md flex items-center justify-center bg-blue-600">
-                  <InboxIcon className="h-6 w-6 text-white" aria-hidden="true" />
+                  <CameraIcon className="h-6 w-6 text-white" aria-hidden="true" />
                 </span>
               </div>
               <div className="mt-6">
@@ -25,7 +25,7 @@ export default function Features() {
                         <a
                         className="inline-flex px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700"
                         >
-                            Donate
+                            Donate &rarr;
                         </a>
                     </Link>
                 </div>
@@ -72,7 +72,7 @@ export default function Features() {
             <div>
               <div>
                 <span className="h-12 w-12 rounded-md flex items-center justify-center bg-blue-600">
-                  <SparklesIcon className="h-6 w-6 text-white" aria-hidden="true" />
+                  <DocumentDownloadIcon className="h-6 w-6 text-white" aria-hidden="true" />
                 </span>
               </div>
               <div className="mt-6">
@@ -87,7 +87,7 @@ export default function Features() {
                         <a
                         className="inline-flex px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700"
                         >
-                            Donate
+                            Donate &rarr;
                         </a>
                     </Link>
                 </div>

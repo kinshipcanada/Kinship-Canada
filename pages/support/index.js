@@ -37,7 +37,6 @@ export default function Home() {
 
         response = 500;
 
-        // THIS NEEDS TO BE FIXED
         const response = await fetchPostJSON('/api/support', {
             details: details,
         });
