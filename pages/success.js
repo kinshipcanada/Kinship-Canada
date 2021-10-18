@@ -1,9 +1,11 @@
 import Navbar from '../components/Root/Navbar.js'
+import Footer from '../components/Root/Footer.js'
 import Link from 'next/link'
 import { ExternalLinkIcon } from '@heroicons/react/solid'
-import { DownloadIcon } from '@heroicons/react/outline'
+import { CameraIcon, CashIcon, DocumentDownloadIcon, DocumentIcon, DownloadIcon,ChevronDownIcon } from '@heroicons/react/outline'
 import Head from 'next/head'
 import { useEffect } from 'react'
+import { Disclosure } from '@headlessui/react'
 
 export default function Home() {
 
@@ -17,6 +19,9 @@ export default function Home() {
 
   return (
     <div>
+      <Head>
+        <title>Kinship Canada · Thank You!</title>
+      </Head>
       <Navbar />
       <div className="relative mt-16">
         <div className="absolute inset-x-0 bottom-0 h-1/2" />
@@ -25,36 +30,19 @@ export default function Home() {
             <div className="absolute inset-0">
               <img
                 className="h-full w-full object-cover"
-                src="https://images.unsplash.com/photo-1521737852567-6949f3f9f2b5?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2830&q=80&sat=-100"
-                alt="People working on laptops"
+                src="/frontend/success.jpg"
+                alt="Success"
               />
-              <div className="absolute inset-0 bg-indigo-700 mix-blend-multiply" />
+              <div className="absolute inset-0 bg-green-100 mix-blend-multiply" />
             </div>
             <div className="relative px-4 py-16 sm:px-6 sm:py-24 lg:py-32 lg:px-8">
               <h1 className="text-center text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
                 <span className="block text-white">Your Donation Succeeded.</span>
-                <span className="block text-blue-200">Here&apos;s what you can expect next.</span>
+                <span className="block text-white">Here&apos;s what you can expect next.</span>
               </h1>
-              <p className="mt-6 max-w-lg mx-auto text-center text-xl text-indigo-200 sm:max-w-3xl">
+              <p className="mt-6 max-w-lg mx-auto text-center text-xl text-white sm:max-w-3xl">
                 Kinship is putting together a package for you to receive proof and make getting a tax refund as easy as possible.
               </p>
-              <div className="mt-10 max-w-sm mx-auto sm:max-w-none sm:flex sm:justify-center">
-                <div className="space-y-4 sm:space-y-0 sm:mx-auto sm:inline-grid sm:grid-cols-2 sm:gap-5">
-                  <a
-                    href="#"
-                    className="flex items-center justify-center px-6 py-3 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 sm:px-8"
-                  >
-                    <DownloadIcon className = 'w-5 h-5 mr-2' />
-                    Download Tax Receipt
-                  </a>
-                  <a
-                    href="#"
-                    className="flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-500 bg-opacity-60 hover:bg-opacity-70 sm:px-8"
-                  >
-                    Go to dashboard &rarr;
-                  </a>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -65,11 +53,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto py-24 sm:py-32 sm:px-2 lg:px-4">
           <div className="max-w-2xl mx-auto px-4 lg:max-w-none">
             <div className="max-w-3xl">
-              <h2 className="font-semibold text-gray-500">Drawstring Canister</h2>
-              <p className="mt-2 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">Use it your way</p>
+              <h2 className="font-semibold text-gray-500">What comes next</h2>
+              <p className="mt-2 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">You&apos;ve made a donation, now what?</p>
               <p className="mt-4 text-gray-500">
-                The Drawstring Canister comes with multiple strap and handle options to adapt throughout your day.
-                Shoulder sling it, backpack it, or handy carry it.
+                First of all, we would like to thank you for taking this step towards making the world a better place. Every penny counts, and your donation is going to create a real improvement in someone&apos;s life.
               </p>
             </div>
 
@@ -80,8 +67,11 @@ export default function Home() {
                   className="flex flex-col-reverse lg:grid lg:grid-cols-12 lg:gap-x-8 lg:items-center"
                 >
                   <div className="mt-6 lg:mt-0 lg:col-span-5 xl:col-span-4">
-                    <h3 className="text-lg font-medium text-gray-900">{feature.name}</h3>
-                    <p className="mt-2 text-sm text-gray-500">{feature.description}</p>
+                    <span className="h-10 w-10 rounded-md flex items-center justify-center bg-blue-600 mb-4">
+                      <feature.icon className="h-6 w-6 text-white" aria-hidden="true" />
+                    </span>
+                    <h3 className="text-xl font-medium text-gray-900">{feature.position}. {feature.name}</h3>
+                    <p className="mt-4 text-md text-gray-500">{feature.description}</p>
                   </div>
                   <div className="flex-auto lg:col-span-7 xl:col-span-8">
                     <div className="aspect-w-5 aspect-h-2 rounded-lg bg-gray-100 overflow-hidden">
@@ -92,49 +82,69 @@ export default function Home() {
               ))}
             </div>
           </div>
+          <div className = 'mt-8'>
+            <Disclosure as="div" className="pt-6">
+              {({ open }) => (
+              <>
+                  <dt className="text-lg">
+                  <Disclosure.Button className="text-left w-full flex justify-between items-start text-gray-400">
+                      <span className="font-medium text-gray-900">Didn&apos;t log in before your donation? Click here.</span>
+                      <span className="ml-6 h-7 flex items-center">
+                      <ChevronDownIcon
+                          className={classNames(open ? '-rotate-180' : 'rotate-0', 'h-6 w-6 transform')}
+                          aria-hidden="true"
+                      />
+                      </span>
+                  </Disclosure.Button>
+                  </dt>
+                  <Disclosure.Panel as="dd" className="mt-2 pr-12">
+                  <p className="text-base text-gray-500">If you didn&apos;t log in before making your donation, it will not be accessible through your dashboard. However, you will still be emailed both a payment receipt and tax receipt (where applicable). If you would like to also access the donation in your dashboard, please <Link href = '/support'><a className = 'text-blue-600 font-semibold'>reach out to us</a></Link> and we will be happy to help.</p>
+                  </Disclosure.Panel>
+              </>
+              )}
+            </Disclosure>
+          </div>
         </div>
+        
       </div>
+      <Footer />
     </div>
   )
 }
 
-/*
-  This example requires Tailwind CSS v2.0+ 
-  
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/aspect-ratio'),
-    ],
-  }
-  ```
-*/
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(' ')
+}
+
+
 const features = [
   {
-    name: 'Adventure-ready',
+    name: 'Receive your receipt',
+    position: 1,
+    icon: DocumentDownloadIcon,
     description:
-      'The Drawstring Canister is water and tear resistant with durable canvas construction. This bag holds up to the demands of daily use while keeping your snacks secure.',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-feature-04-detail-03.jpg',
-    imageAlt: 'Printed photo of bag being tossed into the sky on top of grass.',
+      <>You&apos;ll receive an email soon with your tax receipt, some handy tips, and more. The email will come from noreply@kinshipcanada.com, but if you have any questions you can reach out to us at <Link href = 'mailto:support@kinshipcanada.com'><a className = 'text-blue-600 font-semibold'>support@kinshipcanada.com</a></Link></>,
+    imageSrc: '/frontend/success-receipts.webp',
+    imageAlt: 'Accounting image.',
   },
   {
-    name: 'Minimal and clean',
+    name: 'Money is sent',
+    position: 2,
+    icon: CashIcon,
     description:
-      "Everything you need, nothing you don't. This bag has the simple, contemporary design that enables you to tell everyone you know about how essentialism is the only rational way to live life.",
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-feature-04-detail-01.jpg',
-    imageAlt: 'Double stitched black canvas hook loop.',
+      <>At this point, Kinship Canada will collect and send the funds to the person you are helping. If you made a custom donation that is less than the amount needed (for example, contributing $1000 toward a $5400 house), we will pool funds until we can send the full amount.</>,
+    imageSrc: '/frontend/success-money.jpg',
+    imageAlt: 'Money changing hands image.',
   },
   {
-    name: 'Organized',
+    name: 'Receive proof of your donation',
+    position: 3,
+    icon: CameraIcon,
     description:
-      'Never lose your snacks again with our patent-pending snack stash pocket system. With dedicated pouches for each of your snacking needs, the Drawstring Canister unlocks new levels of efficiency and convenience.',
+      <>Lastly, when your donation has successfully been built or received, you&apos;ll receive proof of your donation, including pictures and receipts where applicable. You will receive proof by email, and can also view it in your <Link href = '/app/proof'><a className = 'text-blue-600 font-semibold'>dashboard</a></Link> if you logged in before making a donation.</>,
     imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-feature-04-detail-02.jpg',
-    imageAlt: 'Black canvas body with chrome zipper and key ring.',
+    imageAlt: 'Proof of donation image.',
   },
 ]
 
