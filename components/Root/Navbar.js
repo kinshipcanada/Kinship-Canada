@@ -209,7 +209,7 @@ export default function Navbar() {
             />
             <Link href = 'https://hobble.notion.site/Kinship-Canada-Alpha-6bb80cea62754c62a8c87e34b13347db'>
               <span className="ml-3 inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-blue-100 text-blue-800 border hover:bg-blue-200 border-blue-600 transition-200">
-                Beta V0.0.1
+                Beta V0.0.6
               </span>
             </Link>
           </a>
