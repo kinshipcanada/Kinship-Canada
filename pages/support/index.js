@@ -27,15 +27,25 @@ export default function Home() {
     const submitTicket = async (e) => {
         e.preventDefault();
         
-        const details = {
-            email: email,
-            phone: phoneNumber,
-            message: message,
-            first_name: firstName,
-            last_name: lastName
-        }
+        let details
 
-        response = 500;
+        if (user) {
+            details = {
+                email: user.email,
+                phone: phoneNumber,
+                message: message,
+                first_name: firstName,
+                last_name: lastName
+            }
+        } else {
+            details = {
+                email: email,
+                phone: phoneNumber,
+                message: message,
+                first_name: firstName,
+                last_name: lastName
+            }
+        }
 
         const response = await fetchPostJSON('/api/support', {
             details: details,
