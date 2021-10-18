@@ -270,19 +270,29 @@ export default function Home() {
 	const [dropdownAmounts, setDropdownAmounts] = useState([])
 	const [addToBasketButton, setAddToBasketButton] = useState('Add to basket')
 
+	const [stepOneComplete, setStepOneComplete] = useState(false)
+	const [stepTwoComplete, setStepTwoComplete] = useState(false)
+	const [stepThreeComplete, setStepThreeComplete] = useState(false)
+
 	const [stepOneError, setStepOneError] = useState(null);
 	const [stepFourError, setStepFourError] = useState(null)
 	const [stepThreeError, setStepThreeError] = useState(null);
 
-	const [stateSample, setStateSample] = useState('hello');
 	const [open, setOpen] = useState(false)
 
 	const cancelButtonRef = useRef(null)
+
 	useEffect(()=>{
 		if (JSON.parse(localStorage.getItem('kinship_cart')) != null) {
 		setCart(JSON.parse(localStorage.getItem('kinship_cart')))
 		} 
 	},[])
+
+	const steps = [
+		{ id: 'Step 1', name: 'Choose your causes', href: '#StepOne', status: stepOneComplete },
+		{ id: 'Step 2', name: 'Choose regions to donate to', href: '#StepTwo', status: stepTwoComplete },
+		{ id: 'Step 3', name: 'Choose an amount', href: '#StepThree', status: stepThreeComplete },
+	] 
 
 	const checkForItem = (a, obj, rec) => {
 		for (var i = 0; i < a.length; i++) {
@@ -351,6 +361,7 @@ export default function Home() {
 			setStepOneError('Please select at least one cause')
 		} else {
 			setStep(2);
+			setStepOneComplete(true)
 		}
 	}
 
@@ -397,6 +408,7 @@ export default function Home() {
 				}
 
 				setStep(3);
+				setStepTwoComplete(true)
 
 			}
 		}
@@ -414,6 +426,7 @@ export default function Home() {
 			}
 
 			setAddToBasketButton('Added to basket succesfully!')
+			setStepThreeComplete(true)
 			setOpen(true)
 		}
 		
@@ -423,7 +436,38 @@ export default function Home() {
     <div>
       <Navbar />
       <div className = 'p-10'>
-	  	<form  onSubmit = {submitStepOne} className = {step == 1 ? '' : 'opacity-50'}>
+		{/* Progress bar */}
+		<nav aria-label="Progress" className = {step == 1 ? 'mb-8 sticky top-0 bg-white pb-4 opacity-100 z-10' : 'mb-8 sticky top-0 bg-white pb-4 opacity-100 z-10'}>
+			<ol role="list" className="space-y-4 md:flex md:space-y-0 md:space-x-8">
+			{steps.map((step) => (
+				<li key={step.name} className="md:flex-1">
+				{step.status == true ? (
+					<a
+					href={step.href}
+					className="group pl-4 py-2 flex flex-col border-l-4 border-blue-600 hover:border-blue-800 md:pl-0 md:pt-4 md:pb-0 md:border-l-0 md:border-t-8"
+					>
+					<span className="text-xs text-blue-600 font-semibold tracking-wide uppercase group-hover:text-blue-800">
+						{step.id}
+					</span>
+					<span className="text-sm font-medium">{step.name}</span>
+					</a>
+				) : (
+					<a
+					href={step.href}
+					className="group pl-4 py-2 flex flex-col border-l-4 border-gray-200 hover:border-gray-300 md:pl-0 md:pt-4 md:pb-0 md:border-l-0 md:border-t-8"
+					>
+					<span className="text-xs text-gray-500 font-semibold tracking-wide uppercase group-hover:text-gray-700">
+						{step.id}
+					</span>
+					<span className="text-sm font-medium">{step.name}</span>
+					</a>
+				)}
+				</li>
+			))}
+			</ol>
+		</nav>
+		<>
+	  	<form  onSubmit = {submitStepOne} id = 'StepOne' className = {step == 1 ? '' : 'opacity-50'}>
 		  	<div className="md:flex md:items-center md:justify-between">
 				<div className="flex-1 min-w-0">
 				<h2 className={step == 1 ? "text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate" : "text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate opacity-50"}>Step One: Choose Which Causes You Would Like To Contribute To{' '}{/* <a>How does this work?</a> */}</h2>
@@ -599,6 +643,7 @@ export default function Home() {
 				''
 			}
 		</form>
+		</>
 
       	
       		{
@@ -613,7 +658,7 @@ export default function Home() {
 					    </div>
 
 			      	<div className = {step == 2 ? 'mt-4 mb-4' : 'mt-4 mb-4 opacity-50'}>
-					  	<form onSubmit = {submitStepTwo}>
+					  	<form onSubmit = {submitStepTwo} id = 'StepTwo'>
 							{causeList.map((cause)=>(
 								<div key = {cause.id}>
 									<h3 className="text-xl font-semibold leading-7 text-gray-900 sm:text-xl sm:truncate">Cause: {cause.name}</h3>
@@ -727,7 +772,7 @@ export default function Home() {
 			{
 		    	step == 3 ?
 				
-				<form className="md:flex md:items-center md:justify-between" onSubmit = {submitStepThree}>
+				<form className="md:flex md:items-center md:justify-between" onSubmit = {submitStepThree} id = 'StepThree'>
 
 		    		<div>
 
@@ -981,10 +1026,26 @@ export default function Home() {
 							<button
 							type="button"
 							className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-blue-500 sm:mt-0 sm:col-start-1 sm:text-sm"
-							onClick={() => setOpen(false)}
+							onClick={() => {
+								setCauseList([])
+								setStep(1);
+								setUserCauses([])
+								setBasketableCauses([])
+								setDropdownAmounts([])
+								setAddToBasketButton('Add to basket')
+							
+								setStepOneComplete(false)
+								setStepTwoComplete(false)
+								setStepThreeComplete(false)
+								
+								setStepOneError(null);
+								setStepFourError(null)
+								setStepThreeError(null);
+								setOpen(false);
+							}}
 							ref={cancelButtonRef}
 							>
-							Close message
+								Donate More
 							</button>
 						</div>
 						</div>
