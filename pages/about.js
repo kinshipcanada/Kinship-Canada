@@ -19,6 +19,7 @@ import {
 import Link from 'next/link'
 import ReactTooltip from 'react-tooltip';
 import Head from 'next/head'
+import { QuestionMarkCircleIcon } from '@heroicons/react/solid';
 
 export default function About() {
 
@@ -78,37 +79,18 @@ export default function About() {
                     What makes us different
                     </p>
                 </div>
-                <div className="relative z-10 text-base max-w-prose mx-auto lg:max-w-5xl lg:mx-0 lg:pr-72">
-                    <p className="text-lg text-gray-500">
-                    Sagittis scelerisque nulla cursus in enim consectetur quam. Dictum urna sed consectetur neque tristique
-                    pellentesque. Blandit amet, sed aenean erat arcu morbi. Cursus faucibus nunc nisl netus morbi vel porttitor
-                    vitae ut. Amet vitae fames senectus vitae.
-                    </p>
-                </div>
                 <div className="lg:grid lg:grid-cols-2 lg:gap-8 lg:items-start">
                     <div className="relative z-10">
-                    <div className="prose prose-blue text-gray-500 mx-auto lg:max-w-none">
-                        <p>
-                        Sollicitudin tristique eros erat odio sed vitae, consequat turpis elementum. Lorem nibh vel, eget
-                        pretium arcu vitae. Eros eu viverra donec ut volutpat donec laoreet quam urna.
-                        </p>
-                        <ul role="list">
-                        <li>Quis elit egestas venenatis mattis dignissim.</li>
-                        <li>Cras cras lobortis vitae vivamus ultricies facilisis tempus.</li>
-                        <li>Orci in sit morbi dignissim metus diam arcu pretium.</li>
-                        </ul>
-                        <p>
-                        Rhoncus nisl, libero egestas diam fermentum dui. At quis tincidunt vel ultricies. Vulputate aliquet
-                        velit faucibus semper. Pellentesque in venenatis vestibulum consectetur nibh id. In id ut tempus
-                        egestas. Enim sit aliquam nec, a. Morbi enim fermentum lacus in. Viverra.
-                        </p>
-                        <h3>We’re here to help</h3>
-                        <p>
-                        Tincidunt integer commodo, cursus etiam aliquam neque, et. Consectetur pretium in volutpat, diam.
-                        Montes, magna cursus nulla feugiat dignissim id lobortis amet. Laoreet sem est phasellus eu proin massa,
-                        lectus. Diam rutrum posuere donec ultricies non morbi. Mi a platea auctor mi.
-                        </p>
-                    </div>
+                    <p className="text-lg text-gray-500">
+                        Kinship prides itself on a few things that we do differently to help make as much impact as possible. We believe that every penny of your donation should go to the people you donated to - 
+                        as such, we cover any and all costs involved in getting your donation to those who need it, out of pocket.
+                    </p>
+                    <p className="text-lg text-gray-500 mt-2">
+                        Unless you opt to cover it, we will pay for credit card processing fees, exchange fees, wire fees, and everything in between. None of your donations goes towards our flights, hotels, or meals.
+                    </p>
+                    <p className="text-lg text-gray-500 mt-2">
+                        We also believe that giving charity should be a pleasant and easy experience. We are proud to offer a dashboard from which you can download your tax receipts, receive proof of donation, and more.
+                    </p>
                     <div className="mt-10 flex text-base max-w-prose mx-auto lg:max-w-none">
                         <Link href = '/donate'>
                             <button
@@ -163,9 +145,7 @@ export default function About() {
                             <path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z" />
                             </svg>
                             <p className="relative">
-                            Tincidunt integer commodo, cursus etiam aliquam neque, et. Consectetur pretium in volutpat, diam.
-                            Montes, magna cursus nulla feugiat dignissim id lobortis amet. Laoreet sem est phasellus eu proin
-                            massa, lectus.
+                                If you disclose your charities, that is well, but if you hide them and give them to the poor, that is better for you, and it will atone for some of your misdeeds, and Allah is well aware of what you do.
                             </p>
                         </div>
                         </div>
@@ -173,7 +153,7 @@ export default function About() {
                         <div className="relative rounded-full border-2 border-white sm:absolute sm:top-0 sm:transform sm:-translate-y-1/2">
                             <img
                             className="w-12 h-12 sm:w-20 sm:h-20 rounded-full bg-blue-300"
-                            src="https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2.5&w=160&h=160&q=80"
+                            src="/quran.jpeg"
                             alt=""
                             />
                         </div>
@@ -191,10 +171,10 @@ export default function About() {
             <div className="bg-white">
                 <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:py-24 lg:px-8 lg:grid lg:grid-cols-3 lg:gap-x-8">
                     <div>
-                    <h2 className="text-base font-semibold text-blue-600 uppercase tracking-wide">Everything you need</h2>
-                    <p className="mt-2 text-3xl font-extrabold text-gray-900">All-in-one platform</p>
+                    <h2 className="text-base font-semibold text-blue-600 uppercase tracking-wide">Seamless donations</h2>
+                    <p className="mt-2 text-3xl font-extrabold text-gray-900">A Charity Designed With You In Mind</p>
                     <p className="mt-4 text-lg text-gray-500">
-                        Ac euismod vel sit maecenas id pellentesque eu sed consectetur. Malesuada adipiscing sagittis vel nulla nec.
+                        We believe giving charity should be an easy and pleasant experience. We work toward this, providing tax receipt packages, guides, and more.
                     </p>
                     </div>
                     <div className="mt-12 lg:mt-0 lg:col-span-2">
@@ -244,18 +224,17 @@ const principles = [
 
 const features = [
   {
-    name: 'Download Tax Receipts',
-    description: 'You can manage phone, email and chat conversations all from a single mailbox.',
+    name: <p className = 'flex items-center' >Download Tax Receipts<span><QuestionMarkCircleIcon className = 'ml-2 w-5 h-5' data-tip="We are considering adding support for US tax receipts. If this is something you are interested in, please let us know."/></span><ReactTooltip place="top" type="dark" effect="float"/></p>,
+    description: <>Download CRA-Eligible tax receipts in our dashboard.</>,
   },
-  { name: 'Proof Of Donation', description: 'You can manage phone, email and chat conversations all from a single mailbox.' },
+  { name: 'Proof Of Donation', description: <>Kinship aims to provide proof of your donations where possible, including through pictures and receipts.</> },
   {
-    name: 'Keyboard shortcuts',
-    description: 'You can manage phone, email and chat conversations all from a single mailbox.',
+    name: 'Recurring Donations',
+    description: <>With Kinship, you can make recurring donations and manage them from your dashboard.</>,
   },
-  { name: 'Calendars', description: 'You can manage phone, email and chat conversations all from a single mailbox.' },
-  { name: 'Email Notifications', description: 'Find what you need with advanced filters, bulk actions, and quick views.' },
+  { name: 'Campaigns', description: <>Kinship offers special campaigns, such as our <Link href = '/campaigns/tuition'><a className = 'text-blue-600 font-semibold'>Africa tuition campaign</a></Link>, that helps you find donees with a chance to break the cycle of poverty.</> },
+  { name: 'Email Notifications', description: <>Get tax receipts, proof of donation, and more. Customize what you are notified for on your dashboard.</> },
   { name: 'All Proceeds Go To Those Who Need It', description: 'Find what you need with advanced filters, bulk actions, and quick views.' },
-  { name: 'Reporting', description: 'Find what you need with advanced filters, bulk actions, and quick views.' },
-  { name: 'Mobile app', description: 'Find what you need with advanced filters, bulk actions, and quick views.' },
+  { name: 'Email Support', description: <>Need help? We're here for you. Send a ticket on our support page and we&apos;ll get back to you as soon as possible.</> },
 ]
 
