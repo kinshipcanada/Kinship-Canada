@@ -234,7 +234,7 @@ const features = [
   },
   { name: 'Campaigns', description: <>Kinship offers special campaigns, such as our <Link href = '/campaigns/tuition'><a className = 'text-blue-600 font-semibold'>Africa tuition campaign</a></Link>, that helps you find donees with a chance to break the cycle of poverty.</> },
   { name: 'Email Notifications', description: <>Get tax receipts, proof of donation, and more. Customize what you are notified for on your dashboard.</> },
-  { name: 'All Proceeds Go To Those Who Need It', description: 'Find what you need with advanced filters, bulk actions, and quick views.' },
-  { name: 'Email Support', description: <>Need help? We're here for you. Send a ticket on our support page and we&apos;ll get back to you as soon as possible.</> },
+  { name: 'All Proceeds Go To Those Who Need It', description: <>Kinship covers all processing, exchange, and wire fees unless you opt to cover it. We also pay volunteer expenses out of pocket.</> },
+  { name: 'Email Support', description: <>Need help? We&apos;re here for you. Send a ticket on our support page and we&apos;ll get back to you as soon as possible.</> },
 ]
 
