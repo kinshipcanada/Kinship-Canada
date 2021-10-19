@@ -74,7 +74,7 @@ export default async function handler(
         customer: stripe_donor_id,
         success_url: `${req.headers.origin}/success`,
         cancel_url: `${req.headers.origin}/canceled`,
-        metadata: metadata,
+        // metadata: metadata,
       };
       const checkoutSession: Stripe.Checkout.Session = await stripe.checkout.sessions.create(
         params
