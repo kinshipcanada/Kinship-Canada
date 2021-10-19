@@ -16,7 +16,7 @@ export default async function handler(
 ) {
   if (req.method === 'POST') {
     const amount: number = req.body.details[0].amount;
-    const profile: any[] = req.body.profile;
+    const profile: any = req.body.profile;
     const user_id: string = req.body.user_id
     const cart: any[] = req.body.details
     
@@ -74,7 +74,7 @@ export default async function handler(
         customer: stripe_donor_id,
         success_url: `${req.headers.origin}/success`,
         cancel_url: `${req.headers.origin}/canceled`,
-        // metadata: metadata,
+        metadata: metadata,
       };
       const checkoutSession: Stripe.Checkout.Session = await stripe.checkout.sessions.create(
         params
