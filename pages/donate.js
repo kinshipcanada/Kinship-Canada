@@ -2,7 +2,7 @@ import Navbar from '../components/Root/Navbar.js'
 import { supabase } from '../lib/supabaseClient'
 import { useState, useEffect, useRef, Fragment } from 'react'
 import { FocusTrap, RadioGroup } from '@headlessui/react'
-import { AcademicCapIcon, CheckIcon, UserGroupIcon, BriefcaseIcon, GlobeIcon, HeartIcon, HomeIcon, CashIcon, GiftIcon, BookOpenIcon, CurrencyDollarIcon, ArrowRightIcon } from '@heroicons/react/outline'
+import { AcademicCapIcon, CheckIcon, UserGroupIcon, BriefcaseIcon, GlobeIcon, HeartIcon, HomeIcon, CashIcon, GiftIcon, BookOpenIcon, CurrencyDollarIcon, ArrowRightIcon, PlayIcon } from '@heroicons/react/outline'
 import { DotsVerticalIcon } from '@heroicons/react/solid'
 import Image from 'next/image'
 import { Dialog, Transition } from '@headlessui/react'
@@ -289,9 +289,9 @@ export default function Home() {
 	},[])
 
 	const steps = [
-		{ id: 'Step 1', name: 'Choose your causes', href: '#StepOne', status: stepOneComplete },
-		{ id: 'Step 2', name: 'Choose regions to donate to', href: '#StepTwo', status: stepTwoComplete },
-		{ id: 'Step 3', name: 'Choose an amount', href: '#StepThree', status: stepThreeComplete },
+		{ id: 'Step 1', name: 'Choose your causes', href: '#StepOne', status: true },
+		{ id: 'Step 2', name: 'Choose regions to donate to', href: '#StepTwo', status: stepOneComplete },
+		{ id: 'Step 3', name: 'Choose an amount', href: '#StepThree', status: stepTwoComplete },
 	] 
 
 	const checkForItem = (a, obj, rec) => {
@@ -435,9 +435,9 @@ export default function Home() {
   	return (
     <div>
       <Navbar />
-      <div className = 'p-10'>
+      <div className = ''>
 		{/* Progress bar */}
-		<nav aria-label="Progress" className = {step == 1 ? 'mb-8 sticky top-0 bg-white pb-4 opacity-100 z-10' : 'mb-8 sticky top-0 bg-white pb-4 opacity-100 z-10'}>
+		<nav aria-label="Progress" className = {step == 1 ? 'p-10 mb-2 sticky top-0 bg-gray-50 pb-8 opacity-100 z-9 border-b border-gray-300' : 'mb-2 sticky top-0 bg-gray-50 pb-8 opacity-100 z-9 p-10 border-b border-gray-300'}>
 			<ol role="list" className="space-y-4 md:flex md:space-y-0 md:space-x-8">
 			{steps.map((step) => (
 				<li key={step.name} className="md:flex-1">
@@ -466,11 +466,38 @@ export default function Home() {
 			))}
 			</ol>
 		</nav>
+		{/* <div className = 'p-10'>
+			Need help? Watch this quick demo about how to donate.
+			<div className="px-5 py-5 bg-gray-50 space-y-6 sm:flex sm:space-y-0 sm:space-x-10 sm:px-8">
+				<div  className="flow-root">
+					<a
+					href='#'
+					className="-m-3 p-3 flex items-center rounded-md text-base font-medium text-gray-900 hover:bg-gray-100 transition ease-in-out duration-150"
+					>
+					<PlayIcon className="flex-shrink-0 h-6 w-6 text-gray-400" aria-hidden="true" />
+					<span className="ml-3">Watch Demo</span>
+					</a>
+				</div>
+			</div>
+		</div> */}
 		<>
-	  	<form  onSubmit = {submitStepOne} id = 'StepOne' className = {step == 1 ? '' : 'opacity-50'}>
+	  	<form  onSubmit = {submitStepOne} id = 'StepOne' className = {step == 1 ? 'p-10' : 'p-10 opacity-50'}>
 		  	<div className="md:flex md:items-center md:justify-between">
 				<div className="flex-1 min-w-0">
-				<h2 className={step == 1 ? "text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate" : "text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate opacity-50"}>Step One: Choose Which Causes You Would Like To Contribute To{' '}{/* <a>How does this work?</a> */}</h2>
+					<h2 className={step == 1 ? "text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate flex items-center" : "flex text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate opacity-50  items-center"}>
+						Step One: Choose Causes To Contribute Toward{' '}
+						<div className="p-3 bg-gray-50 border border-gray-300 rounded-md ml-4 space-y-6 sm:flex sm:space-y-0 sm:space-x-10">
+							<div  className="flow-root">
+								<a
+								href='#'
+								className="-m-3 p-3 flex items-center rounded-md text-base font-medium text-gray-900 hover:bg-gray-100 transition ease-in-out duration-150"
+								>
+								<PlayIcon className="flex-shrink-0 h-6 w-6 text-gray-400" aria-hidden="true" />
+								<span className="ml-3">Watch Demo</span>
+								</a>
+							</div>
+						</div>
+					</h2>
 				</div>
 			</div>
 			<div className="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4 items-stretch">
@@ -655,7 +682,7 @@ export default function Home() {
       		{
 		    	step >= 2 ?
 
-		    		<div>
+		    		<div className = 'p-10'>
 
 					    <div className={step == 2 ? "md:flex md:items-center md:justify-between" : "md:flex md:items-center md:justify-between opacity-25"}>
 					      <div className="flex-1 min-w-0">
@@ -756,7 +783,7 @@ export default function Home() {
 
 				: 
 
-		    	<div className = 'opacity-50'>
+		    	<div className = 'opacity-50 p-10'>
 
 					    <div className="md:flex md:items-center md:justify-between">
 					      <div className="flex-1 min-w-0">
@@ -784,7 +811,7 @@ export default function Home() {
 			{
 		    	step == 3 ?
 				
-				<form className="md:flex md:items-center md:justify-between" onSubmit = {submitStepThree} id = 'StepThree'>
+				<form className="md:flex md:items-center md:justify-between p-10" onSubmit = {submitStepThree} id = 'StepThree'>
 
 		    		<div>
 

@@ -15,6 +15,7 @@ export default function Cart() {
 
   const [cart, setCart] = useState([])
   const [loading, setLoading] = useState(true)
+  const [profile, setProfile] = useState([])
   const [checkoutLoading, setCheckoutLoading] = useState(false)
   const [empty, setEmpty] = useState(null)
   const [error, setError] = useState(null)
@@ -62,7 +63,7 @@ export default function Cart() {
     setEligible(eligibleToAdd)
 
   }
-  useEffect(()=>{
+  useEffect(async ()=>{
     let cart = JSON.parse(localStorage.getItem('kinship_cart'))
     
     if (cart) {
@@ -72,6 +73,24 @@ export default function Cart() {
     } else {
       setEmpty(true)
       setLoading(false)
+    }
+
+    const user = supabase.auth.user()
+
+    if (user) {
+      const profile = await supabase
+			  .from('profiles')
+			  .select()
+			  .eq('id', user.id)
+
+			if (profile) {
+				setProfile(profile.data[0])
+			} else {
+				setProfile([])
+			}
+
+    } else {
+      setProfile([])
     }
   },[])
 
@@ -95,6 +114,7 @@ export default function Cart() {
     setCheckoutLoading(true);
 
     const valid = checkForRecurring()
+    const user = supabase.auth.user()
 
     if (valid) {
       if (recurringAmt == 0) {
@@ -115,10 +135,13 @@ export default function Cart() {
     
         console.warn(error.message);
 
-        
+
       } else {
         const response = await fetchPostJSON('/api/recurringCheckout', {
           details: cart,
+          user_id: user.id,
+          profile: profile,
+          email: user.email
         });
 
         if (response.statusCode === 500) {
@@ -186,7 +209,7 @@ export default function Cart() {
 
   return (
     <div>
-      {console.log(cart)}
+      {console.log(profile)}
       <Navbar />
       <div className="bg-white">
       <div className="max-w-2xl mx-auto pt-16 pb-24 px-4 sm:px-6 lg:max-w-7xl lg:px-8">

@@ -16,8 +16,20 @@ export default async function handler(
 ) {
   if (req.method === 'POST') {
     const amount: number = req.body.details[0].amount;
+    const profile: any[] = req.body.profile;
+    const user_id: string = req.body.user_id
     const cart: any[] = req.body.details
+    
+    // Get extra parameters
+    const stripe_donor_id: string = req.body.profile.stripe_donor_id
+    const email: string = req.body.email
+
     const lineItems: any = []
+
+    const metadata: any = {
+      user_id: user_id,
+      profile: profile,
+    }
 
     for (let i = 0; i < cart.length; i++) {
 
@@ -59,8 +71,10 @@ export default async function handler(
         mode: 'subscription',
         payment_method_types: ['card'],
         line_items: lineItems,
+        customer: stripe_donor_id,
         success_url: `${req.headers.origin}/success`,
         cancel_url: `${req.headers.origin}/canceled`,
+        metadata: metadata,
       };
       const checkoutSession: Stripe.Checkout.Session = await stripe.checkout.sessions.create(
         params
