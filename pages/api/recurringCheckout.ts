@@ -19,6 +19,7 @@ export default async function handler(
     const profile: any = req.body.profile;
     const user_id: string = req.body.user_id
     const cart: any[] = req.body.details
+    const decoded_cart: string = JSON.stringify(cart);
     
     // Get extra parameters
     const stripe_donor_id: string = req.body.profile.stripe_donor_id
@@ -28,7 +29,7 @@ export default async function handler(
 
     const metadata: any = {
       user_id: user_id,
-      cart: cart,
+      cart: decoded_cart,
     }
 
     for (let i = 0; i < cart.length; i++) {

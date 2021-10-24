@@ -10,6 +10,7 @@ import { supabase } from '../lib/supabaseClient';
 import Footer from '../components/Root/Footer'
 import { FingerPrintIcon } from '@heroicons/react/outline'
 import toast from 'react-hot-toast'
+import Head from 'next/head'
 
 export default function Cart() {
 
@@ -223,7 +224,9 @@ export default function Cart() {
 
   return (
     <div>
-      {console.log(profile)}
+      <Head>
+        <title>Kinship Canada · Your Cart</title>
+      </Head>
       <Navbar />
       <div className="bg-white">
       <div className="max-w-2xl mx-auto pt-16 pb-24 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
