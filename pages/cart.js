@@ -63,6 +63,20 @@ export default function Cart() {
     setEligible(eligibleToAdd)
 
   }
+
+  const calculateSubtotal = (cart) => {
+    let subtotalToAdd = 0.00
+
+    for (let i = 0; i < cart.length; i++) {
+      let donation = cart[i]
+      let amount = parseFloat(donation['amount'])
+
+      subtotalToAdd += amount
+    }
+
+    return subtotalToAdd;
+  }
+
   useEffect(async ()=>{
     let cart = JSON.parse(localStorage.getItem('kinship_cart'))
     
@@ -369,18 +383,18 @@ export default function Cart() {
                 <dl className="mt-6 space-y-4">
                   <div className="flex items-center justify-between">
                     <dt className="text-sm text-gray-600">Subtotal</dt>
-                    <dd className="text-sm font-medium text-gray-900">${subtotal}</dd>
+                    <dd className="text-sm font-medium text-gray-900">${subtotal.toFixed(2)}</dd>
                   </div>
                   
                   <div className="border-t border-gray-200 pt-4">
                     <div className="flex items-center justify-between">
                       <dt className="text-sm text-gray-600">Eligible for tax receipt</dt>
-                      <dd className="text-sm font-medium text-gray-900">${eligible}</dd>
+                      <dd className="text-sm font-medium text-gray-900">${eligible.toFixed(2)}</dd>
                     </div>
                   </div>
 
                   {/* FEES COVERING SECTION TO BE ADDED LATER */}
-                  {/* <div className="border-t border-gray-200 pt-4">
+                  <div className="border-t border-gray-200 pt-4">
                     <div className = 'flex items-center justify-between'>
                       <dt className="flex text-sm text-gray-600">
                         <span>Fees Covering</span>
@@ -396,63 +410,24 @@ export default function Cart() {
                       <input type = 'checkbox' id = 'fees_covering' className = 'rounded' onChange = {
                         (e) => {
                           let status = e.target.checked;
-                          let amt
+                          let fees = 0.029*subtotal
+                          
                           if (status) {
-                            let obj = JSON.parse(localStorage.getItem('cart'));
-                            let subtotalAmt = 0.00; 
-
-                            for (let i = 0; i < obj.length; i++) {
-                              let recurringVal = obj[i]['recurring'];
-                              let amount = obj[i]['amount'];
-                              let eligibleVal = obj[i]['eligible'];
-
-                              if (eligibleVal) {
-                                setEligible(eligible + amount);
-                              }
-
-                              subtotalAmt += amount;
-
-                              if (recurringVal) {
-                                setRecurringAmt((1.029*recurringAmt) + amount)
-                              } else {
-                                setOneTime((1.029*oneTime) + amount)
-                              }
-
-                            }
-
-                            setFeesCovering(0.029*subtotalAmt);
-
-
+                            let subtotalRaw = calculateSubtotal(cart)
+                            let total = subtotalRaw + fees
+                            setFeesCovering(fees)
+                            setSubtotal(total)
                           } else {
-                            let amt = 0.00
-                            let obj = JSON.parse(localStorage.getItem('cart'));
-
-                            for (let i = 0; i < obj.length; i++) {
-                              let recurringVal = obj[i]['recurring'];
-                              let amount = obj[i]['amount'];
-                              let eligibleVal = obj[i]['eligible'];
-
-                              if (eligibleVal) {
-                                setEligible(eligible + amount);
-                              }
-
-                              if (recurringVal) {
-                                setRecurringAmt(recurringAmt + amount)
-                              } else {
-                                setOneTime(oneTime + amount)
-                              }
-
-                            }
-                            setFeesCovering(amt)
+                            let subtotalRaw = calculateSubtotal(cart)
+                            setFeesCovering(0)
+                            setSubtotal(subtotalRaw)
                           }
-
-
                         }  
                       }
                       />
                       <label className = 'text-sm text-gray-800 ml-2' htmlFor = 'fees_covering'>(Optional) Help Kinship Canada cover credit card processing fees</label>
                     </div>
-                  </div> */}
+                  </div>
                   <div className="border-t border-gray-200 pt-4 flex items-center justify-between">
                     <dt className="text-base font-medium text-gray-900">Donation Total:</dt>
                     <dd className="text-base font-medium text-gray-900">
@@ -463,7 +438,7 @@ export default function Cart() {
 
                         :
 
-                        <p>${oneTime} one time payment</p>
+                        <p>${oneTime.toFixed(2)} one time payment</p>
                       } 
                       {' '}
                       {
@@ -473,7 +448,7 @@ export default function Cart() {
 
                         :
 
-                        <p>${recurringAmt} recurring</p>
+                        <p>${recurringAmt.toFixed(2)} recurring</p>
                       }
                     </dd>
                   </div>
@@ -486,7 +461,7 @@ export default function Cart() {
                 type = 'submit'
                 className="w-full bg-blue-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-blue-500"
               >
-                {checkoutLoading ? <span className = 'flex w-full text-center justify-center'><Loader /></span> : 'Checkout'}
+                {checkoutLoading ? <span className = 'flex w-full text-center justify-center'><Loader /></span> : <>Checkout &rarr;</>}
               </button>
             </div>
             {error ?

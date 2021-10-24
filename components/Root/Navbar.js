@@ -296,14 +296,14 @@ export default function Navbar() {
                         </button>
                       </Link>
 
-                      <p className="mt-4 text-center">
+                      {/* <p className="mt-4 text-center">
                         <button
                           className="text-sm font-medium text-blue-600 hover:text-blue-500"
                           onClick={handleSubmit}
                         >
                           {checkoutLoading ? <span className = 'flex text-center justify-center items-center'>Redirecting you to checkout<Loader /></span> : 'Checkout'}
                         </button>
-                      </p>
+                      </p> */}
                       </>
                       }
                     </form>
