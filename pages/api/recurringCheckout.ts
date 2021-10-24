@@ -28,7 +28,7 @@ export default async function handler(
 
     const metadata: any = {
       user_id: user_id,
-      profile: profile,
+      cart: cart,
     }
 
     for (let i = 0; i < cart.length; i++) {
