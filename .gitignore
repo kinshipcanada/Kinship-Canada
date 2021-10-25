@@ -32,7 +32,6 @@ yarn-error.log*
 .env.production.local
 
 # internal api
-/pages/api/donationprocessing.js
 
 # vercel
 .vercel

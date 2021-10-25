@@ -30,6 +30,7 @@ export default async function handler(
     const metadata: any = {
       user_id: user_id,
       cart: decoded_cart,
+      fees_covered: fees_covered
     }
 
     for (let i = 0; i < cart.length; i++) {
@@ -105,6 +106,7 @@ export default async function handler(
         success_url: `${req.headers.origin}/success`,
         cancel_url: `${req.headers.origin}/canceled`,
         metadata: metadata,
+        billing_address_collection: "required"
       };
       const checkoutSession: Stripe.Checkout.Session = await stripe.checkout.sessions.create(
         params

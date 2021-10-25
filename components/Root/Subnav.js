@@ -51,7 +51,11 @@ export default function SubNav({partner}) {
 		
 		if (data) {
 			setProfile(data[0])
-			setAdminAccess(data[0].admin)
+			try {
+				setAdminAccess(data[0].admin)
+			} catch {
+				setAdminAccess(false)
+			}
 			setPartnerAccess(data[0].partner)
 		} else {
 			console.log(error)

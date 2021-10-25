@@ -157,16 +157,7 @@ export default function Welcome() {
 										</div>
 										<div className = 'grid grid-cols-2 mb-3 gap-4 '>
 											<div className = 'col-span-1'>
-												<label className="block text-sm font-medium text-gray-700 mb-1">Postal Code</label>
-												<input
-													type='text'
-													placeholder='Postal Code'
-													className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
-													onChange={(e)=>{setPostalCode(e.target.value)}}
-													required
-												/>
-											</div>
-											<div className = 'col-span-1'>
+												
 												<label className="block text-sm font-medium text-gray-700 mb-1">City</label>
 												<input
 													type='text'
@@ -183,6 +174,17 @@ export default function Welcome() {
 													placeholder='State or Province'
 													className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
 													onChange={(e)=>{setState(e.target.value)}}
+													required
+												/>
+											</div>
+											<div className = 'col-span-1'>
+												
+												<label className="block text-sm font-medium text-gray-700 mb-1">Postal Code</label>
+												<input
+													type='text'
+													placeholder='Postal Code'
+													className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+													onChange={(e)=>{setPostalCode(e.target.value)}}
 													required
 												/>
 											</div>

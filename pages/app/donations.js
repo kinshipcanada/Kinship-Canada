@@ -158,7 +158,7 @@ export default function AppIndex() {
 						                {donations.map((donation, donationIdx) => (
 						                  <tr key={donation.donationIdx} className={donationIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
 						                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-						                    	{donation.causes.causes.map((cause) => (
+						                    	{donation.causes.map((cause) => (
 						                    		<div key = {cause.id}>{cause.cause}</div>
 						                    	))}
 						                    </td>
