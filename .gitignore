@@ -31,5 +31,8 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 
+# internal api
+/pages/api/donationprocessing.js
+
 # vercel
 .vercel

@@ -15,11 +15,11 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === 'POST') {
-    const amount: number = req.body.details[0].amount;
     const profile: any = req.body.profile;
     const user_id: string = req.body.user_id
     const cart: any[] = req.body.details
     const decoded_cart: string = JSON.stringify(cart);
+    const fees_covered: boolean = req.body.fees_covered
     
     // Get extra parameters
     const stripe_donor_id: string = req.body.profile.stripe_donor_id
@@ -37,28 +37,57 @@ export default async function handler(
       let arr: object;
 
       if (cart[i]['recurring']) {
-        arr = {
-          quantity: 1,
-          price_data: {
-            product_data: {
-              name: cart[i]['name'],
-            },
-            unit_amount: formatAmountForStripe(cart[i]['amount'], CURRENCY),
-            currency: CURRENCY,
-            recurring: {
-              interval: cart[i]['interval'],
+        if (fees_covered) {
+          arr = {
+            quantity: 1,
+            price_data: {
+              product_data: {
+                name: cart[i]['name'],
+              },
+              unit_amount: formatAmountForStripe((parseFloat(cart[i]['amount'])*1.029), CURRENCY),
+              currency: CURRENCY,
+              recurring: {
+                interval: cart[i]['interval'],
+              }
             }
           }
+        } else {
+            arr = {
+              quantity: 1,
+              price_data: {
+                product_data: {
+                  name: cart[i]['name'],
+                },
+                unit_amount: formatAmountForStripe(cart[i]['amount'], CURRENCY),
+                currency: CURRENCY,
+                recurring: {
+                  interval: cart[i]['interval'],
+                }
+              }
+            }
         }
       } else {
-        arr = {
-          quantity: 1,
-          price_data: {
-            product_data: {
-              name: cart[i]['name'],
-            },
-            unit_amount: formatAmountForStripe(cart[i]['amount'], CURRENCY),
-            currency: CURRENCY,
+        if (fees_covered) {
+          arr = {
+            quantity: 1,
+            price_data: {
+              product_data: {
+                name: cart[i]['name'],
+              },
+              unit_amount: formatAmountForStripe((parseFloat(cart[i]['amount'])*1.029), CURRENCY),
+              currency: CURRENCY,
+            }
+          }
+        } else {
+          arr = {
+            quantity: 1,
+            price_data: {
+              product_data: {
+                name: cart[i]['name'],
+              },
+              unit_amount: formatAmountForStripe(cart[i]['amount'], CURRENCY),
+              currency: CURRENCY,
+            }
           }
         }
       }

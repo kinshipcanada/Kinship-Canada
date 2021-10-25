@@ -24,6 +24,7 @@ export default function Cart() {
   const [subtotal, setSubtotal] = useState(0.00);
   const [eligible, setEligible] = useState(0.00);
   const [feesCovering, setFeesCovering] = useState(0.00)
+  const [feesStatus, setFeesStatus] = useState(false)
   const [oneTime, setOneTime] = useState(0.00)
   const [recurringAmt, setRecurringAmt] = useState(0.00)
 
@@ -156,7 +157,8 @@ export default function Cart() {
           details: cart,
           user_id: user.id,
           profile: profile,
-          email: user.email
+          email: user.email,
+          fees_covered: feesStatus
         });
 
         if (response.statusCode === 500) {
@@ -224,6 +226,7 @@ export default function Cart() {
 
   return (
     <div>
+      {console.log(cart)}
       <Head>
         <title>Kinship Canada · Your Cart</title>
       </Head>
@@ -415,6 +418,8 @@ export default function Cart() {
                           let status = e.target.checked;
                           let fees = 0.029*subtotal
                           
+                          // This is just for display purposes
+                          // The actual calc is the function below this
                           if (status) {
                             let subtotalRaw = calculateSubtotal(cart)
                             let total = subtotalRaw + fees
@@ -424,6 +429,12 @@ export default function Cart() {
                             let subtotalRaw = calculateSubtotal(cart)
                             setFeesCovering(0)
                             setSubtotal(subtotalRaw)
+                          }
+
+                          if (status) {
+                            setFeesStatus(true)
+                          } else {
+                            setFeesStatus(false)
                           }
                         }  
                       }

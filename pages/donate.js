@@ -263,6 +263,7 @@ const causes = [
 export default function Home() {
 
 	const [causeList, setCauseList] = useState([])
+	const [numChosenCauses, setNumChosenCauses] = useState(0)
 	const [step, setStep] = useState(1);
 	const [cart, setCart] = useState([])
 	const [userCauses, setUserCauses] = useState([])
@@ -481,12 +482,13 @@ export default function Home() {
 			</div>
 		</div> */}
 		<>
-	  	<form  onSubmit = {submitStepOne} id = 'StepOne' className = {step == 1 ? 'p-10' : 'p-10 opacity-50'}>
+	  	<form  onSubmit = {submitStepOne} id = 'StepOne' className = {step == 1 ? 'p-10' : 'hidden'}>
 		  	<div className="md:flex md:items-center md:justify-between">
 				<div className="flex-1 min-w-0">
 					<h2 className={step == 1 ? "text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate flex items-center" : "flex text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate opacity-50  items-center"}>
 						Step One: Choose Causes To Contribute Toward{' '}
-						<div className="p-3 bg-gray-50 border border-gray-300 rounded-md ml-4 space-y-6 sm:flex sm:space-y-0 sm:space-x-10">
+						{/* DEMO COMING SOON */}
+						{/* <div className="p-3 bg-gray-50 border border-gray-300 rounded-md ml-4 space-y-6 sm:flex sm:space-y-0 sm:space-x-10">
 							<div  className="flow-root">
 								<a
 								href='#'
@@ -496,8 +498,9 @@ export default function Home() {
 								<span className="ml-3">Watch Demo</span>
 								</a>
 							</div>
-						</div>
+						</div> */}
 					</h2>
+					<p className = 'text text-base mb-4 mt-4'>Choose which causes you would like to contribute to today. You can choose as many causes as you would like to. After you are done, click the continue button at the bottom of the page.</p>
 				</div>
 			</div>
 			<div className="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4 items-stretch">
@@ -684,13 +687,14 @@ export default function Home() {
 
 		    		<div className = 'p-10'>
 
-					    <div className={step == 2 ? "md:flex md:items-center md:justify-between" : "md:flex md:items-center md:justify-between opacity-25"}>
+					    <div className={step == 2 ? "md:flex md:items-center md:justify-between" : "hidden"}>
 					      <div className="flex-1 min-w-0">
 					        <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">Choose A Region</h2>
+							<p className = 'text text-base mb-4 mt-4'>Select which region you want to donate to for each of your causes. For example, you may want to donate to poverty relief in India and education Africa.</p>
 					      </div>
 					    </div>
 
-			      	<div className = {step == 2 ? 'mt-4 mb-4' : 'mt-4 mb-4 opacity-50'}>
+			      	<div className = {step == 2 ? 'mt-4 mb-4' : 'hidden'}>
 					  	<form onSubmit = {submitStepTwo} id = 'StepTwo'>
 							{causeList.map((cause)=>(
 								<div key = {cause.id}>
@@ -811,13 +815,14 @@ export default function Home() {
 			{
 		    	step == 3 ?
 				
-				<form className="md:flex md:items-center md:justify-between p-10" onSubmit = {submitStepThree} id = 'StepThree'>
+				<form className="md:flex md:items-center md:justify-between p-10 -mt-16" onSubmit = {submitStepThree} id = 'StepThree'>
 
 		    		<div>
 
 					    <div className="md:flex md:items-center md:justify-between">
 					      <div className="flex-1 min-w-0">
 					        <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">Choose An Amount</h2>
+							<p className = 'text text-base mb-4 mt-4'>Finally, choose how much you would like to contribute to your causes. You can select a preset option, or choose a custom amount if you would like. Please note that if your custom donation is less than the preset amount, proof of donation may be delayed until we raise enough to send one full amount.</p>
 					      </div>
 					    </div>
 
@@ -907,7 +912,7 @@ export default function Home() {
 												</>
 											))
 										}
-										<option value = 'custom'>Choose a custom amount (we will pool funds until we can provide one full donation)</option>
+										<option value = 'custom'>Choose a custom amount</option>
 									</select>
 									
 									<div className="mt-1 relative rounded-md shadow-sm hidden" id = {cause.id + '_custom'} >
