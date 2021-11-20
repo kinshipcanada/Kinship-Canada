@@ -37,31 +37,61 @@ export default async function handler(
 
       let arr: object;
 
-      
-      if (fees_covered) {
-        arr = {
-          quantity: 1,
-          price_data: {
-            product_data: {
-              name: cart[i]['name'],
-            },
-            unit_amount: formatAmountForStripe((parseFloat(cart[i]['amount'])*1.029), CURRENCY),
-            currency: CURRENCY,
+      if (cart[i]['recurring']) {
+        if (fees_covered) {
+          arr = {
+            quantity: 1,
+            price_data: {
+              product_data: {
+                name: cart[i]['name'],
+              },
+              unit_amount: formatAmountForStripe((parseFloat(cart[i]['amount'])*1.029), CURRENCY),
+              currency: CURRENCY,
+              recurring: {
+                interval: cart[i]['interval'],
+              }
+            }
           }
+        } else {
+            arr = {
+              quantity: 1,
+              price_data: {
+                product_data: {
+                  name: cart[i]['name'],
+                },
+                unit_amount: formatAmountForStripe(cart[i]['amount'], CURRENCY),
+                currency: CURRENCY,
+                recurring: {
+                  interval: cart[i]['interval'],
+                }
+              }
+            }
         }
       } else {
-        arr = {
-          quantity: 1,
-          price_data: {
-            product_data: {
-              name: cart[i]['name'],
-            },
-            unit_amount: formatAmountForStripe(cart[i]['amount'], CURRENCY),
-            currency: CURRENCY,
+        if (fees_covered) {
+          arr = {
+            quantity: 1,
+            price_data: {
+              product_data: {
+                name: cart[i]['name'],
+              },
+              unit_amount: formatAmountForStripe((parseFloat(cart[i]['amount'])*1.029), CURRENCY),
+              currency: CURRENCY,
+            }
+          }
+        } else {
+          arr = {
+            quantity: 1,
+            price_data: {
+              product_data: {
+                name: cart[i]['name'],
+              },
+              unit_amount: formatAmountForStripe(cart[i]['amount'], CURRENCY),
+              currency: CURRENCY,
+            }
           }
         }
       }
-  
 
       lineItems.push(arr)
     }
@@ -69,7 +99,7 @@ export default async function handler(
     try {
       // Create Checkout Sessions from body params.
       const params: Stripe.Checkout.SessionCreateParams = {
-        mode: 'payment',
+        mode: 'subscription',
         payment_method_types: ['card'],
         line_items: lineItems,
         customer: stripe_donor_id,

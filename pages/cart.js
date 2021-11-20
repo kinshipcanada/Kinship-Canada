@@ -134,22 +134,46 @@ export default function Cart() {
 
     if (valid) {
       if (recurringAmt == 0) {
-        const response = await fetchPostJSON('/api/oneTimeCheckout', {
-          details: cart,
-        });
-
-        if (response.statusCode === 500) {
-          console.error(response.message);
-          return;
+        if (user) {
+          const response = await fetchPostJSON('/api/oneTimeCheckout', {
+            details: cart,
+            user_id: user.id,
+            profile: profile,
+            email: user.email,
+            fees_covered: feesStatus
+          });
+  
+          if (response.statusCode === 500) {
+            console.error(response.message);
+            return;
+          }
+      
+          // Redirect to Checkout.
+          const stripe = await getStripe();
+          const { error } = await stripe.redirectToCheckout({
+            sessionId: response.id,
+          });
+      
+          console.warn(error.message);
+        } else {
+          const response = await fetchPostJSON('/api/oneTimeCheckout', {
+            details: cart,
+            fees_covered: feesStatus
+          });
+  
+          if (response.statusCode === 500) {
+            console.error(response.message);
+            return;
+          }
+      
+          // Redirect to Checkout.
+          const stripe = await getStripe();
+          const { error } = await stripe.redirectToCheckout({
+            sessionId: response.id,
+          });
+      
+          console.warn(error.message);
         }
-    
-        // Redirect to Checkout.
-        const stripe = await getStripe();
-        const { error } = await stripe.redirectToCheckout({
-          sessionId: response.id,
-        });
-    
-        console.warn(error.message);
 
 
       } else {

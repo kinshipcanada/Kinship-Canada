@@ -22,12 +22,7 @@ export default async function handler(
     const fees_covered: boolean = req.body.fees_covered
     
     // Get extra parameters
-    if (req.body.profile.stripe_donor_id) {
-      const stripe_donor_id: string = req.body.profile.stripe_donor_id
-    } else {
-      const stripe_donor_id: string = null
-    }
-    
+    const stripe_donor_id: string = req.body.profile.stripe_donor_id
     const email: string = req.body.email
 
     const lineItems: any = []
@@ -42,58 +37,26 @@ export default async function handler(
 
       let arr: object;
 
-      if (cart[i]['recurring']) {
-        if (fees_covered) {
-          arr = {
-            quantity: 1,
-            price_data: {
-              product_data: {
-                name: cart[i]['name'],
-              },
-              unit_amount: formatAmountForStripe((parseFloat(cart[i]['amount'])*1.029), CURRENCY),
-              currency: CURRENCY,
-              recurring: {
-                interval: cart[i]['interval'],
-              }
-            }
+      if (fees_covered) {
+        arr = {
+          quantity: 1,
+          price_data: {
+            product_data: {
+              name: cart[i]['name'],
+            },
+            unit_amount: formatAmountForStripe((parseFloat(cart[i]['amount'])*1.029), CURRENCY),
+            currency: CURRENCY,
           }
-        } else {
-            arr = {
-              quantity: 1,
-              price_data: {
-                product_data: {
-                  name: cart[i]['name'],
-                },
-                unit_amount: formatAmountForStripe(cart[i]['amount'], CURRENCY),
-                currency: CURRENCY,
-                recurring: {
-                  interval: cart[i]['interval'],
-                }
-              }
-            }
         }
       } else {
-        if (fees_covered) {
-          arr = {
-            quantity: 1,
-            price_data: {
-              product_data: {
-                name: cart[i]['name'],
-              },
-              unit_amount: formatAmountForStripe((parseFloat(cart[i]['amount'])*1.029), CURRENCY),
-              currency: CURRENCY,
-            }
-          }
-        } else {
-          arr = {
-            quantity: 1,
-            price_data: {
-              product_data: {
-                name: cart[i]['name'],
-              },
-              unit_amount: formatAmountForStripe(cart[i]['amount'], CURRENCY),
-              currency: CURRENCY,
-            }
+        arr = {
+          quantity: 1,
+          price_data: {
+            product_data: {
+              name: cart[i]['name'],
+            },
+            unit_amount: formatAmountForStripe(cart[i]['amount'], CURRENCY),
+            currency: CURRENCY,
           }
         }
       }
@@ -104,14 +67,14 @@ export default async function handler(
     try {
       // Create Checkout Sessions from body params.
       const params: Stripe.Checkout.SessionCreateParams = {
-        payment_method_types: ['card'],
-        metadata: metadata,
-        billing_address_collection: "required",
-        submit_type: 'donate',
         mode: 'payment',
+        payment_method_types: ['card'],
         line_items: lineItems,
+        customer: stripe_donor_id,
         success_url: `${req.headers.origin}/success`,
         cancel_url: `${req.headers.origin}/canceled`,
+        metadata: metadata,
+        billing_address_collection: "required"
       };
       const checkoutSession: Stripe.Checkout.Session = await stripe.checkout.sessions.create(
         params
