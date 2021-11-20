@@ -15,74 +15,138 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === 'POST') {
-    const profile: any = req.body.profile;
-    const user_id: string = req.body.user_id
-    const cart: any[] = req.body.details
-    const decoded_cart: string = JSON.stringify(cart);
-    const fees_covered: boolean = req.body.fees_covered
-    
-    // Get extra parameters
-    const stripe_donor_id: string = req.body.profile.stripe_donor_id
-    const email: string = req.body.email
+    if (req.body.profile != null) {
+      const profile: any = req.body.profile;
+      const user_id: string = req.body.user_id
+      const cart: any[] = req.body.details
+      const decoded_cart: string = JSON.stringify(cart);
+      const fees_covered: boolean = req.body.fees_covered
+      
+      // Get extra parameters
+      const stripe_donor_id: string = req.body.profile.stripe_donor_id
+      const email: string = req.body.email
 
-    const lineItems: any = []
+      const lineItems: any = []
 
-    const metadata: any = {
-      user_id: user_id,
-      cart: decoded_cart,
-      fees_covered: fees_covered
-    }
-
-    for (let i = 0; i < cart.length; i++) {
-
-      let arr: object;
-
-      if (fees_covered) {
-        arr = {
-          quantity: 1,
-          price_data: {
-            product_data: {
-              name: cart[i]['name'],
-            },
-            unit_amount: formatAmountForStripe((parseFloat(cart[i]['amount'])*1.029), CURRENCY),
-            currency: CURRENCY,
-          }
-        }
-      } else {
-        arr = {
-          quantity: 1,
-          price_data: {
-            product_data: {
-              name: cart[i]['name'],
-            },
-            unit_amount: formatAmountForStripe(cart[i]['amount'], CURRENCY),
-            currency: CURRENCY,
-          }
-        }
+      const metadata: any = {
+        user_id: user_id,
+        cart: decoded_cart,
+        fees_covered: fees_covered
       }
 
-      lineItems.push(arr)
-    }
+      for (let i = 0; i < cart.length; i++) {
 
-    try {
-      // Create Checkout Sessions from body params.
-      const params: Stripe.Checkout.SessionCreateParams = {
-        mode: 'payment',
-        payment_method_types: ['card'],
-        line_items: lineItems,
-        customer: stripe_donor_id,
-        success_url: `${req.headers.origin}/success`,
-        cancel_url: `${req.headers.origin}/canceled`,
-        metadata: metadata,
-        billing_address_collection: "required"
-      };
-      const checkoutSession: Stripe.Checkout.Session = await stripe.checkout.sessions.create(
-        params
-      );
+        let arr: object;
 
-      res.status(200).json(checkoutSession);
-    } catch (err) {
-      res.status(500).json({ statusCode: 500, message: err.message });
+        if (fees_covered) {
+          arr = {
+            quantity: 1,
+            price_data: {
+              product_data: {
+                name: cart[i]['name'],
+              },
+              unit_amount: formatAmountForStripe((parseFloat(cart[i]['amount'])*1.029), CURRENCY),
+              currency: CURRENCY,
+            }
+          }
+        } else {
+          arr = {
+            quantity: 1,
+            price_data: {
+              product_data: {
+                name: cart[i]['name'],
+              },
+              unit_amount: formatAmountForStripe(cart[i]['amount'], CURRENCY),
+              currency: CURRENCY,
+            }
+          }
+        }
+
+        lineItems.push(arr)
+      }
+
+      try {
+        // Create Checkout Sessions from body params.
+        const params: Stripe.Checkout.SessionCreateParams = {
+          mode: 'payment',
+          payment_method_types: ['card'],
+          line_items: lineItems,
+          customer: stripe_donor_id,
+          success_url: `${req.headers.origin}/success`,
+          cancel_url: `${req.headers.origin}/canceled`,
+          metadata: metadata,
+          billing_address_collection: "required"
+        };
+        const checkoutSession: Stripe.Checkout.Session = await stripe.checkout.sessions.create(
+          params
+        );
+
+        res.status(200).json(checkoutSession);
+      } catch (err) {
+        res.status(500).json({ statusCode: 500, message: err.message });
+      }
+    } else {
+      const cart: any[] = req.body.details
+      const decoded_cart: string = JSON.stringify(cart);
+      const fees_covered: boolean = req.body.fees_covered
+      
+      const lineItems: any = []
+
+      const metadata: any = {
+        cart: decoded_cart,
+        fees_covered: fees_covered
+      }
+
+      for (let i = 0; i < cart.length; i++) {
+
+        let arr: object;
+
+        if (fees_covered) {
+          arr = {
+            quantity: 1,
+            price_data: {
+              product_data: {
+                name: cart[i]['name'],
+              },
+              unit_amount: formatAmountForStripe((parseFloat(cart[i]['amount'])*1.029), CURRENCY),
+              currency: CURRENCY,
+            }
+          }
+        } else {
+          arr = {
+            quantity: 1,
+            price_data: {
+              product_data: {
+                name: cart[i]['name'],
+              },
+              unit_amount: formatAmountForStripe(cart[i]['amount'], CURRENCY),
+              currency: CURRENCY,
+            }
+          }
+        }
+
+        lineItems.push(arr)
+      }
+
+      try {
+        // Create Checkout Sessions from body params.
+        const params: Stripe.Checkout.SessionCreateParams = {
+          mode: 'payment',
+          payment_method_types: ['card'],
+          line_items: lineItems,
+          success_url: `${req.headers.origin}/success`,
+          cancel_url: `${req.headers.origin}/canceled`,
+          metadata: metadata,
+          billing_address_collection: "required"
+        };
+        const checkoutSession: Stripe.Checkout.Session = await stripe.checkout.sessions.create(
+          params
+        );
+
+        res.status(200).json(checkoutSession);
+      } catch (err) {
+        res.status(500).json({ statusCode: 500, message: err.message });
+      }
     }
   } else {
     res.setHeader('Allow', 'POST');
