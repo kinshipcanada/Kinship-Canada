@@ -18,6 +18,32 @@ function classNames(...classes) {
 
 const causes = [
 	{
+		id: "1f9856db-d3f4-asdasdasd-ae9b-0c343998d512",
+		name: 'Sadaqah',
+		icon: UserGroupIcon,
+		bgColor: 'bg-yellow-600',
+		regions: [
+			{
+			  "name": "Iraq",
+			  "options": [
+			  ]
+			},
+			{
+			  "name": "India",
+			  "options": [
+			  ]
+			},
+			{
+				"name": "Africa",
+				"options": [
+				]
+			}
+			
+		],
+		eligible: true,
+		blurb: 'Make a general Sadaqah donation to a region of your choice'
+	},
+	{
 		id: "1f9856db-d3f4-4d82-ae9b-0c343998d512",
 		name: 'Orphans',
 		icon: UserGroupIcon,
@@ -555,106 +581,9 @@ export default function Home() {
 						</div>
 					</label>
 				))}
-				<div className="bg-white overflow-hidden shadow rounded-lg flex flex-col self-stretch">
-					<div className="px-4 py-5 sm:px-6 flex self-stretch h-full">
-						<div className = 'flex flex-col'>
-							<div className = 'flex'>
-								<div
-									className='bg-green-600 text-white p-3 rounded mb-3 w-auto h-auto'
-								>
-									<CashIcon className = 'w-6 h-6'/>
-								</div>
-							</div>
-							<div>
-								<label className="text-gray-900 font-medium hover:text-gray-600">Microfinancing</label>
-								<p className="text-gray-500 text-sm">Help finance a small business and lift a family out of poverty. Help a generation get off the ground and break the cycle.</p>
-								<p className = 'text-sm font-semibold mt-2'>Availiable anywhere
-								</p>
-							</div>
-						</div>
-					</div>
-					<div className="bg-gray-50">
-						<label className = 'w-full h-full flex items-center cursor-pointer px-4 py-5 sm:p-6'>
-							<Link href = '/campaigns/microfinancing'>
-								<p className = 'text-md font-medium flex items-center'>
-									View Microfinancing Campaign
-									<ArrowRightIcon className = 'w-4 h-4 ml-2' />
-								</p>
-							</Link>
-						</label>
-					</div>
-					</div>
 
 
-					<div className="bg-white overflow-hidden shadow rounded-lg flex flex-col self-stretch">
-						<div className="px-4 py-5 sm:px-6 flex self-stretch h-full">
-							<div className = 'flex flex-col'>
-								<div className = 'flex'>
-									<div
-										className='bg-yellow-600 text-white p-3 rounded mb-3 w-auto h-auto'
-									>
-										<CurrencyDollarIcon className = 'w-6 h-6'/>
-									</div>
-								</div>
-								<div>
-									<label className="text-gray-900 font-medium hover:text-gray-600 items-center mb-2">
-										Khums
-										<span className="ml-2 border border-yellow-800 inline-flex items-center px-2 py-0.25 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-											Coming Soon...
-										</span>
-									</label>
-									<p className="text-gray-500 text-sm">Pay your Sehme Imam and Sehme Sadat khums through Kinship Canada. Coming soon...</p>
-									<p className = 'text-sm font-semibold mt-2'>Availiable anywhere
-									</p>
-								</div>
-							</div>
-						</div>
-						<div className="bg-gray-50">
-							<label className = 'w-full h-full flex items-center cursor-pointer px-4 py-5 sm:p-6'>
-								<Link href = '#'>
-									<p className = 'text-md font-medium flex items-center cursor-not-allowed'>
-										Khums Page Coming Soon
-										{/* <ArrowRightIcon className = 'w-4 h-4 ml-2' /> */}
-									</p>
-								</Link>
-							</label>
-						</div>
-					</div>
-
-					<div className="bg-white overflow-hidden shadow rounded-lg flex flex-col self-stretch">
-						<div className="px-4 py-5 sm:px-6 flex self-stretch h-full">
-							<div className = 'flex flex-col'>
-								<div className = 'flex'>
-									<div
-										className='bg-blue-600 text-white p-3 rounded mb-3 w-auto h-auto'
-									>
-										<CurrencyDollarIcon className = 'w-6 h-6'/>
-									</div>
-								</div>
-								<div>
-									<label className="text-gray-900 font-medium hover:text-gray-600 items-center mb-2">
-										Sadaqah
-										<span className="ml-2 border border-yellow-800 inline-flex items-center px-2 py-0.25 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-											Coming Soon...
-										</span>
-									</label>
-									<p className="text-gray-500 text-sm">Pay your full Sadaqah obligations with Kinship Canada. Choose among a variety of causes. Coming soon...</p>
-									<p className = 'text-sm font-semibold mt-2'>Availiable anywhere
-									</p>
-								</div>
-							</div>
-						</div>
-						<div className="bg-gray-50">
-							<label className = 'w-full h-full flex items-center cursor-pointer px-4 py-5 sm:p-6'>
-								<Link href = '#'>
-									<p className = 'text-md font-medium flex items-center cursor-not-allowed'>
-										Khums Page Coming Soon
-										{/* <ArrowRightIcon className = 'w-4 h-4 ml-2' /> */}
-									</p>
-								</Link>
-							</label>
-						</div>
-					</div>
+					
 				
 					
 			</div>
@@ -987,7 +916,7 @@ export default function Home() {
 					  
 			      </div>
 				  <div className = 'p-4 flex justify-center'>
-						<button type = 'submit' className="inline-flex items-center px-6 py-4 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">{addToBasketButton}</button>
+						<button type = 'submit' className="inline-flex items-center px-6 py-4 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 flex-shrink-0">{addToBasketButton}</button>
 					</div>
 				</form>
 		    	: step < 3 ?

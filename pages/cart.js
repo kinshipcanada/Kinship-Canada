@@ -452,7 +452,7 @@ export default function Cart() {
 
                         :
 
-                        <p>${oneTime.toFixed(2)} one time payment</p>
+                        <p>${subtotal.toFixed(2)} one time payment</p>
                       } 
                       {' '}
                       {

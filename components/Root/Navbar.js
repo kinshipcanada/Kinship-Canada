@@ -209,7 +209,7 @@ export default function Navbar() {
             />
             <Link href = 'https://hobble.notion.site/Kinship-Canada-Alpha-6bb80cea62754c62a8c87e34b13347db'>
               <span className="ml-3 inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-blue-100 text-blue-800 border hover:bg-blue-200 border-blue-600 transition-200">
-                Beta V0.0.6
+                Beta V0.1.9
               </span>
             </Link>
           </a>
@@ -231,6 +231,12 @@ export default function Navbar() {
             <Link href="/donate">
 	            <a className="text-base font-medium text-gray-500 hover:text-gray-900">
 	              Make A Donation
+	            </a>
+            </Link>
+
+            <Link href="/khums">
+	            <a className="text-base font-medium text-gray-500 hover:text-gray-900">
+	              Khums
 	            </a>
             </Link>
 
