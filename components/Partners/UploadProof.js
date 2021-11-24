@@ -10,7 +10,7 @@ export default function PartnerProofModal() {
 	]
 
 	return (
-		<div className="bg-white overflow-hidden border border-gray-300 rounded-lg" enctype="multipart/form-data">
+		<div className="bg-white overflow-hidden border border-gray-300 rounded-lg" >
 	      <div className="px-4 py-5 sm:px-6">
 	        <h3 className="text-lg leading-6 font-medium text-gray-900">Upload proof of donation</h3>
 	        <p className = 'text-sm mt-2'>Once Kinship releases funds to you, you can upload proof that the donation has been processed here. Find the donation below and upload proof.</p>

@@ -141,7 +141,7 @@ export const UploadReceipts = (props) => {
 	}
 
 	return (
-		<form className="bg-white overflow-hidden border border-gray-300 rounded-lg" onSubmit = {uploadFile} enctype="multipart/form-data">
+		<form className="bg-white overflow-hidden border border-gray-300 rounded-lg" onSubmit = {uploadFile}>
       <div className="px-4 py-5 sm:px-6">
         <h3 className="text-lg leading-6 font-medium text-gray-900">Upload new list of donations</h3>
         <p className = 'text-sm mt-2'>Click choose file below to add your file, and then click Upload. The file should include the list of donations in .xlsx or .csv format according to the official Kinship template. If you do not have the template, you can download it below with the Download Template button below.</p>
@@ -170,7 +170,7 @@ export const UploadReceipts = (props) => {
 					// }}
 					className="mr-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
 				>
-					Upload "{targetFileName}"
+					Upload &quot;{targetFileName}&quot;
 					<ArrowRightIcon className="ml-2 h-5 w-5" aria-hidden="true" />
 				</button>
 
