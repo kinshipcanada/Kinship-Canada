@@ -18,7 +18,7 @@ export default function PartnerProofModal() {
 	      <div className="bg-gray-50 px-4 py-5 sm:p-6">
 	      	<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
 	      		{details.map((detail)=>(
-	      			<StatusCard details = {detail} />
+	      			<StatusCard details = {detail} key={details.email}/>
 	      		))}
 	      	</div>
 	      </div>
