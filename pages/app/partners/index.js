@@ -10,6 +10,7 @@ import { useRouter } from 'next/router'
 
 // Import partner specific modals
 import UploadReceipts from '../../../components/Partners/UploadReceipts.js'
+import UploadProof from '../../../components/Partners/UploadProof.js'
 
 export default function PartnersIndex() {
 
@@ -24,6 +25,7 @@ export default function PartnersIndex() {
 
 		if (userLoggedIn) {
 			setUser(userLoggedIn)
+			console.log(userLoggedIn)
 			const profile = await supabase
 			  .from('profiles')
 			  .select()
@@ -97,6 +99,7 @@ export default function PartnersIndex() {
 						    </div>
 
 						   	<UploadReceipts />
+						   	<UploadProof />
 				          </div>
 				        </div>
 				      </main>

@@ -1,5 +1,5 @@
 import Navbar from '../components/Root/Navbar.js'
-import { CheckIcon, ClockIcon, QuestionMarkCircleIcon, XIcon } from '@heroicons/react/solid'
+import { CheckIcon, ClockIcon, QuestionMarkCircleIcon, XIcon, CreditCardIcon, LibraryIcon } from '@heroicons/react/solid'
 import React, { useState, useEffect } from 'react'
 import Loader from '../components/Root/Loader'
 import Link from 'next/link'
@@ -476,7 +476,7 @@ export default function Cart() {
 
                         :
 
-                        <p>${subtotal.toFixed(2)} one time payment</p>
+                        <p>${subtotal.toFixed(2)} due today</p>
                       } 
                       {' '}
                       {
@@ -499,9 +499,35 @@ export default function Cart() {
                 type = 'submit'
                 className="w-full bg-blue-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-blue-500"
               >
-                {checkoutLoading ? <span className = 'flex w-full text-center justify-center'><Loader /></span> : <>Checkout &rarr;</>}
+                {checkoutLoading ? 
+                  <span className = 'flex items-center w-full text-center justify-center'>
+                    <Loader className = 'w-6 h-6 mr-2 ' />
+                    Checkout With Card &rarr;
+                  </span>
+                  : 
+                  <span className = 'flex items-center w-full text-center justify-center'>
+                    <CreditCardIcon className = 'w-6 h-6 mr-2 ' />
+                    Checkout With Card &rarr;
+                  </span>
+                }
               </button>
             </div>
+
+             {/*<div className="mt-2" onClick={handleSubmit}>
+              <button
+                type = 'submit'
+                className="w-full bg-blue-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-blue-500"
+              >
+                {checkoutLoading ? 
+                  <span className = 'flex w-full text-center justify-center'><Loader /></span> 
+                  : 
+                  <span className = 'flex items-center w-full text-center justify-center'>
+                    <LibraryIcon className = 'w-6 h-6 mr-2 ' />
+                    Checkout With Bank &rarr;
+                  </span>
+                }
+              </button>
+            </div>*/}
             {error ?
               <p className = 'text-center mt-4 text-red-600 font-semibold'>{error}</p>
 
