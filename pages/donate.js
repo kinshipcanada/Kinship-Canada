@@ -53,7 +53,7 @@ const causes = [
 			  "name": "Iraq",
 			  "options": [
 				{
-				  "amount": 500,
+				  "amount": 1200,
 				  "interval": "year",
 				  "buys": "Basic needs for one orphan for one year - provided by Al Anwar Iraq"
 				},
@@ -183,13 +183,7 @@ const causes = [
 		regions: [
 			{
 			  "name": "India",
-			  "options": [
-				{
-					"amount": 225,
-					"interval": "one-time",
-					"buys": "wheelchair"
-				}
-			  ]
+			  "options": []
 			},
 			{
 				"name": "Africa",
@@ -197,13 +191,7 @@ const causes = [
 			},
 			{
 			"name": "Iraq",
-			"options": [
-				{
-					"amount": 150,
-					"interval": "one-time",
-					"buys": "wheelchair"
-				}
-			]
+			"options": []
 			},
 		],
 		eligible: true,
@@ -230,17 +218,13 @@ const causes = [
 				}
 			  ]
 			},
-			{
-			"name": "Iraq",
-				"options": []
-			},
 		],
 		eligible: true,
 		blurb: "Help build a basic home with one or two bedrooms, kitchen, and a bathroom"
 	},
 	{
 		id: "8",
-		name: "Qur'an",
+		name: "Qur'an, Qadha Salah and Fasting",
 		icon: BookOpenIcon,
 		bgColor: 'bg-green-600',
 		regions: [
@@ -250,23 +234,8 @@ const causes = [
 					{
 						"amount": 25,
 						"interval": "one-time",
-						"buys": "one quran read in the name of your marhum"
+						"buys": "one Quran read in the name of your marhum"
 					},
-			  ]
-			},
-		],
-		eligible: false,
-		blurb: "Recitation of the Holy Quran in the name of your marhum."
-	},
-	{
-		id: "9",
-		name: 'Qadha Salah and Fasting',
-		icon: BookOpenIcon,
-		bgColor: 'bg-yellow-600',
-		regions: [
-			{
-			  "name": "India",
-			  "options": [
 					{
 						"amount": 300,
 						"interval": "one-time",
@@ -281,7 +250,7 @@ const causes = [
 			},
 		],
 		eligible: false,
-		blurb: "A person in need will perform one year of salah or fasting in the name of your marhum"
+		blurb: "Recitation of the Holy Quran in the name of your marhum."
 	},
 
 ]

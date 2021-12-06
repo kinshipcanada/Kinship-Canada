@@ -266,17 +266,6 @@ export default function Home() {
 
 const products = [
   {
-    id: "khums-1-sadat",
-    name: 'Al-Ayn Social Care',
-    sehme_imam: false,
-    sehme_sadat: true,
-    href: '#',
-    region: 'Iraq',
-    imageSrc: 'https://naturallysweetdesserts.com/wp-content/uploads/2021/06/hands-for-ancestor-article.jpg',
-    price: 'Tax Receipt Eligible',
-    description: <>Provides support to orphans in Iraq, including food, housing, and medical care.</>
-  },
-  {
     id: "khums-2-sadat",
     name: 'Al-Imam Foundation',
     sehme_imam: false,
@@ -286,17 +275,6 @@ const products = [
     imageSrc: 'https://kinshipcanada.com/images/060320-oh-prayerhandsjpg.jpeg',
     price: 'Tax Receipt Eligible',
     description: <>Provides support to impoverished in India, including food, housing, empowerment, education, and medical care.</>
-  },
-  {
-    id: "khums-3-sadat",
-    name: 'Al-Anwar Foundation',
-    sehme_imam: false,
-    sehme_sadat: true,
-    href: '#',
-    region: 'Iraq',
-    imageSrc: 'https://kinshipcanada.com/images/plantaseed.jpg',
-    price: 'Tax Receipt Eligible',
-    description: <>Provides support to impoverished in Iraq, including food, housing, empowerment, education, and medical care.</>
   },
   {
     id: "khums-4-sadat",
@@ -310,18 +288,7 @@ const products = [
     description: <>Provides support to impoverished in Iraq, including food, housing, education, and medical care.</>
   },
   {
-    id: "khums-5-imam",
-    name: 'Al-Ayn Social Care',
-    sehme_imam: true,
-    sehme_sadat: false,
-    href: '#',
-    region: 'Iraq',
-    imageSrc: 'https://kinshipcanada.com/images/plantaseed.jpg',
-    price: 'Tax Receipt Eligible',
-    description: <>Provides support to impoverished in Iraq, including food, housing, empowerment, education, and medical care.</>
-  },
-  {
-    id: "khums-6-imam",
+    id: "khums-6-ridha",
     name: 'Imam Ridha Foundation',
     sehme_imam: true,
     sehme_sadat: false,

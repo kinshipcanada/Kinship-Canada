@@ -83,10 +83,12 @@ export default function About() {
                     <div className="relative z-10">
                     <p className="text-lg text-gray-500">
                         Kinship prides itself on a few things that we do differently to help make as much impact as possible. We believe that every penny of your donation should go to the people you donated to - 
-                        as such, we cover any and all costs involved in getting your donation to those who need it, out of pocket.
-                    </p>
-                    <p className="text-lg text-gray-500 mt-2">
-                        Unless you opt to cover it, we will pay for credit card processing fees, exchange fees, wire fees, and everything in between. None of your donations goes towards our flights, hotels, or meals.
+                        as such:
+                        <ol>
+                            <li className = "flex"><CheckIcon className = "w-9 h-8 text-green-600 mr-2" /> We cover any and all costs involved in getting your donation to those who need it, out of pocket.</li>
+                            <li className = "flex mt-2 flex-row"><CheckIcon className = "w-12 h-8 text-green-600 mr-2 flex" /><span>Unless you opt to cover it, we will pay for credit card processing fees, exchange fees, wire fees, and everything in between.</span></li>
+                            <li className = "flex mt-2"><CheckIcon className = "w-7 h-8 text-green-600 mr-2" />None of your donations goes towards our flights, hotels, or meals.</li>
+                        </ol>
                     </p>
                     <p className="text-lg text-gray-500 mt-2">
                         We also believe that giving charity should be a pleasant and easy experience. We are proud to offer a dashboard from which you can download your tax receipts, receive proof of donation, and more.
@@ -232,7 +234,7 @@ const features = [
     name: 'Recurring Donations',
     description: <>With Kinship, you can make recurring donations and manage them from your dashboard.</>,
   },
-  { name: 'Campaigns', description: <>Kinship offers special campaigns, such as our <Link href = '/campaigns/tuition'><a className = 'text-blue-600 font-semibold'>Africa tuition campaign</a></Link>, that helps you find donees with a chance to break the cycle of poverty.</> },
+  { name: 'Campaigns', description: <>Kinship offers special campaigns, such as our <Link href = '/campaigns/tuition'><a className = 'text-blue-600 font-semibold'>Africa tuition</a></Link> and <Link href = '/campaigns/microfinancing'><a className = 'text-blue-600 font-semibold'>microfinancing</a></Link> campaigns, that helps you find donees with a chance to break the cycle of poverty.</> },
   { name: 'Email Notifications', description: <>Get tax receipts, proof of donation, and more. Customize what you are notified for on your dashboard.</> },
   { name: 'All Proceeds Go To Those Who Need It', description: <>Kinship covers all processing, exchange, and wire fees unless you opt to cover it. We also pay volunteer expenses out of pocket.</> },
   { name: 'Email Support', description: <>Need help? We&apos;re here for you. Send a ticket on our support page and we&apos;ll get back to you as soon as possible.</> },

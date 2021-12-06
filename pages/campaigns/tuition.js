@@ -165,7 +165,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="sm:mx-auto sm:max-w-3xl sm:px-6">
+          <div className="sm:mx-auto sm:max-w-3xl sm:px-6 z-10">
             <div className="py-12 sm:relative sm:mt-12 sm:py-16 lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
               <div className="hidden sm:block">
                 <div className="absolute inset-y-0 left-1/2 w-screen bg-gray-50 rounded-l-3xl lg:left-80 lg:right-0 lg:w-full" />
@@ -191,13 +191,12 @@ export default function Home() {
                   <rect width={404} height={392} fill="url(#837c3e70-6c3a-44e6-8854-cc48c737b659)" />
                 </svg>
               </div>
-              <div className="relative pl-4 -mr-40 sm:mx-auto sm:max-w-3xl sm:px-0 lg:max-w-none lg:h-full lg:pl-12">
-                <div className="ring-opacity-5 lg:w-auto lg:max-w-none h-96 -mt-20">
-                  <Image
+              <div className="relative z-10 pl-4 -mr-40 sm:mx-auto sm:max-w-3xl sm:px-0 lg:max-w-none lg:h-full lg:pl-12 z-10">
+                <div className="ring-opacity-5 lg:w-auto lg:max-w-none h-96 -mt-40 z-10">
+                  <img
                     src="/campaigns/india-globe.png"
                     priority='true'
                     alt="globe centered on africa"
-                    layout='fill'
                     loading='eager'
                   />
                 </div>
