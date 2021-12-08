@@ -272,7 +272,7 @@ const products = [
     sehme_sadat: true,
     href: '#',
     region: 'India',
-    imageSrc: 'https://kinshipcanada.com/images/060320-oh-prayerhandsjpg.jpeg',
+    imageSrc: 'https://s7d2.scene7.com/is/image/TWCNews/060320-oh-prayerhandsjpg',
     price: 'Tax Receipt Eligible',
     description: <>Provides support to impoverished in India, including food, housing, empowerment, education, and medical care.</>
   },
@@ -283,7 +283,7 @@ const products = [
     sehme_sadat: true,
     href: '#',
     region: 'Iraq',
-    imageSrc: 'https://kinshipcanada.com/images/Imam-Hussain-Shrine.jpg',
+    imageSrc: 'https://media.mehrnews.com/d/2020/04/11/4/3424038.jpg',
     price: 'Tax Receipt Eligible',
     description: <>Provides support to impoverished in Iraq, including food, housing, education, and medical care.</>
   },
@@ -294,7 +294,7 @@ const products = [
     sehme_sadat: false,
     href: '#',
     region: 'Iraq',
-    imageSrc: 'https://kinshipcanada.com/images/Imam-Hussain-Shrine.jpg',
+    imageSrc: 'https://media.mehrnews.com/d/2020/04/11/4/3424038.jpg',
     price: 'Tax Receipt Eligible',
     description: <>Provides support to impoverished in Iraq, including food, housing, education, and medical care.</>
   },

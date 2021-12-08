@@ -5,15 +5,13 @@ import { useEffect, useState } from 'react';
 import { Fragment } from 'react'
 import { Popover, Transition } from '@headlessui/react'
 import { ArrowRightIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
-import { ChevronRightIcon, QuestionMarkCircleIcon } from '@heroicons/react/solid'
+import { ChevronRightIcon, QuestionMarkCircleIcon, SpeakerphoneIcon } from '@heroicons/react/solid'
 import ReactTooltip from 'react-tooltip';
 import Footer from '../components/Root/Footer'
 import Features from '../components/Site/Features'
-import { fetchPostJSON } from '../lib/apiHelpers';
-import getStripe from '../lib/getStripe'
 import Loader from '../components/Root/Loader'
 import Head from 'next/head'
-import { SpeakerphoneIcon } from '@heroicons/react/outline'
+import { useRouter } from 'next/router'
 
 const incentives = [
   {
@@ -145,6 +143,14 @@ export default function Home() {
     setCart(cart)
     localStorage.setItem('kinship_cart', JSON.stringify(cart));
   }
+
+  /* CHECK FOR PASSWORD RESET LINK */
+
+  const router = useRouter()
+  const query = router.query
+  console.log(query)
+
+
   return (
     <div>
       <Head>
@@ -152,7 +158,6 @@ export default function Home() {
       </Head>
       <Banner />
       <Navbar/>
-
 
       <div className="relative bg-white overflow-hidden">
       <div className="hidden sm:block sm:absolute sm:inset-0" aria-hidden="true">
