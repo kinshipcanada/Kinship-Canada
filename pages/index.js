@@ -378,8 +378,30 @@ export default function Home() {
 
 
 export const Banner = () => {
+
+  const [hidden, setHidden] = useState(false);
+
+  const checkStatus = () => {
+    if (JSON.parse(localStorage.getItem('kinship_orphans_banner') != null)) {
+      console.log("banner is hidden")
+      setHidden(true)
+    } else {
+      console.log("banner is not hidden")
+      setHidden(false)
+    }
+  }
+
+  const hideBanner = () => {
+    localStorage.setItem('kinship_orphans_banner', true)
+    setHidden(true)
+  }
+
+  useEffect(() => {
+    checkStatus()
+  }, [])
+
   return (
-    <div className="bg-blue-600">
+    <div className={hidden ? "hidden" : "bg-blue-600"}>
       <div className="max-w-7xl mx-auto py-3 px-3 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between flex-wrap">
           <div className="w-0 flex-1 flex items-center">
@@ -403,6 +425,7 @@ export const Banner = () => {
           <div className="order-2 flex-shrink-0 sm:order-3 sm:ml-3">
             <button
               type="button"
+              onClick={() => {hideBanner()}}
               className="-mr-1 flex p-2 rounded-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-white sm:-mr-2"
             >
               <span className="sr-only">Dismiss</span>

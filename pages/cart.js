@@ -35,7 +35,7 @@ export default function Cart() {
   const cancelButtonRef = useRef(null)
   const [eTransferLoading, seteTransferLoading] = useState(false)
   const [kinshipCartIdCopied, setKinshipCartIdCopied] = useState(false)
-  const [kinshipCartId, setKinshipCartId] = useState('KinshipCart279173971')
+  const [kinshipCartId, setKinshipCartId] = useState('Loading...')
   const [kinshipEmailCopied, setKinshipEmailCopied] = useState(false)
 
   const calculateCart = (cart) => {
@@ -256,7 +256,28 @@ export default function Cart() {
   }
 
 
+  const generateETransfer = async (cart) => {
+    seteTransferLoading(true);
+    const cartID = `KinshipCart${Math.floor(Math.random() * 1000000000)}`
+    setKinshipCartId(cartID)
 
+    const user = supabase.auth.user()
+
+    const { data, error } = await supabase.from('carts').insert({
+      object: JSON.stringify(cart),
+      user: user ? user.id : null,
+      id: cartID,
+    })
+
+    if (error) {
+      toast.error(error.message, {position: 'top-right'})
+      seteTransferLoading(false);
+    } else {
+      seteTransferLoading(false);
+      setOpen(true)
+    }
+
+  }
 
   return (
     <div>
@@ -523,8 +544,21 @@ export default function Cart() {
               </button>
             </div>
             <div className="mt-6 flex justify-center text text-lg font-medium">
-              <p onClick={()=>{setOpen(true)}}>
-                Or <a href="#" className = "text-blue-700 hover:text-blue-800">make an eTransfer</a>
+              <p onClick={()=>{
+                generateETransfer(cart)
+              }}>
+                { eTransferLoading ? 
+                
+                  <>
+                    <a href="#" className = "text-blue-700 hover:text-blue-800">Preparing your details...</a>
+                  </>
+
+                  :
+
+                  <>
+                    Or <a href="#" className = "text-blue-600 hover:text-blue-700">make an eTransfer</a>
+                  </>
+                }
               </p>
             </div>
 
