@@ -207,12 +207,12 @@ const causes = [
 			  "name": "India",
 			  "options": [
 				{
-					"amount": 5400,
+					"amount": 5500,
 					"interval": "one-time",
 					"buys": "one bedroom home"
 				},
 				{
-					"amount": 6500,
+					"amount": 7500,
 					"interval": "one-time",
 					"buys": "two bedroom home"
 				}
