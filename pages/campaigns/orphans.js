@@ -13,13 +13,13 @@ export default function Orphans() {
                 <div className = "flex justify-center mt-4">
                     <Link href='https://buy.stripe.com/3cseVgeV39BWcqQ146'>
                         <a className="inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-blue-600 hover:bg-blue-700">
-                            Donate $100 Per Month
+                            Donate $150 Per Month
                             <ExternalLinkIcon className = "ml-2 w-5 h-5"/>
                         </a>
                     </Link>
                     <Link href='https://buy.stripe.com/bIY9AW14d8xS0I89AB'>
                         <a className="ml-2 inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-blue-600 hover:bg-blue-700">
-                            Donate $1200 For A Year
+                            Donate $1800 For A Year
                             <ExternalLinkIcon className = "ml-2 w-5 h-5"/>
                         </a>
                     </Link>
