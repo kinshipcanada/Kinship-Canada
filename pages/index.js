@@ -364,7 +364,10 @@ export default function Home() {
 
       
       <Features />
-
+      <div className = "flex justify-center">
+        <p className = "text-sm font-medium">Live Chat Powered By: </p>
+        <a href="https://www.livechat.com/"><img src="https://cdn.livechatinc.com/website/media/img/resources/logos/livechat-color.svg" alt="LiveChat" className = "w-48 h-24" /></a>
+      </div>
       <Footer />
     </div>
   )
