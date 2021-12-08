@@ -462,38 +462,12 @@ export default function Home() {
 			))}
 			</ol>
 		</nav>
-		{/* <div className = 'p-10'>
-			Need help? Watch this quick demo about how to donate.
-			<div className="px-5 py-5 bg-gray-50 space-y-6 sm:flex sm:space-y-0 sm:space-x-10 sm:px-8">
-				<div  className="flow-root">
-					<a
-					href='#'
-					className="-m-3 p-3 flex items-center rounded-md text-base font-medium text-gray-900 hover:bg-gray-100 transition ease-in-out duration-150"
-					>
-					<PlayIcon className="flex-shrink-0 h-6 w-6 text-gray-400" aria-hidden="true" />
-					<span className="ml-3">Watch Demo</span>
-					</a>
-				</div>
-			</div>
-		</div> */}
 		<>
 	  	<form  onSubmit = {submitStepOne} id = 'StepOne' className = {step == 1 ? 'p-10' : 'hidden'}>
 		  	<div className="md:flex md:items-center md:justify-between">
 				<div className="flex-1 min-w-0">
 					<h2 className={step == 1 ? "text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate flex items-center" : "flex text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate opacity-50  items-center"}>
 						Step One: Choose Causes To Contribute Toward{' '}
-						{/* DEMO COMING SOON */}
-						{/* <div className="p-3 bg-gray-50 border border-gray-300 rounded-md ml-4 space-y-6 sm:flex sm:space-y-0 sm:space-x-10">
-							<div  className="flow-root">
-								<a
-								href='#'
-								className="-m-3 p-3 flex items-center rounded-md text-base font-medium text-gray-900 hover:bg-gray-100 transition ease-in-out duration-150"
-								>
-								<PlayIcon className="flex-shrink-0 h-6 w-6 text-gray-400" aria-hidden="true" />
-								<span className="ml-3">Watch Demo</span>
-								</a>
-							</div>
-						</div> */}
 					</h2>
 					<p className = 'text text-base mb-4 mt-4'>Choose which causes you would like to contribute to today. You can choose as many causes as you would like to. After you are done, click the continue button at the bottom of the page.</p>
 				</div>
@@ -550,11 +524,6 @@ export default function Home() {
 						</div>
 					</label>
 				))}
-
-
-					
-				
-					
 			</div>
 
 			<div className = 'p-4 flex justify-center'>
@@ -577,12 +546,10 @@ export default function Home() {
 				''
 			}
 		</form>
+		
 		</>
-
-      	
       		{
 		    	step >= 2 ?
-
 		    		<div className = 'p-10'>
 
 					    <div className={step == 2 ? "md:flex md:items-center md:justify-between" : "hidden"}>
@@ -617,39 +584,9 @@ export default function Home() {
 														<p className = 'text-lg font-semibold' >{region.name}</p>
 													</div>
 													<div>
-														{
-															region.name == 'Africa'
-
-															?
-
-															<div>
-																<Image src = '/regions/africa.png' width = '60' height = '60' />
-															</div>
-
-															:
-
-															region.name == 'India'
-
-															?
-
-															<div>
-																<Image src = '/regions/india.png' width = '60' height = '60' />
-															</div>
-
-															:
-
-															region.name == 'Iraq' 
-														
-															?
-
-															<div>
-																<Image src = '/regions/iraq.png' width = '60' height = '60' />
-															</div>
-
-															:
-
-															''
-														}
+														<div>
+															<Image src = {`/regions/${region.name.toLowerCase()}.png`} width = '60' height = '60' />
+														</div>
 													</div>
 												</label>
 											))}
@@ -667,6 +604,15 @@ export default function Home() {
 								''
 							}
 							<div className = 'p-4 flex justify-center'>
+								<button
+									type="button"
+									onClick={()=>{
+										setStep(1)
+									}}
+									className="mr-4 inline-flex items-center px-6 py-3 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+								>
+									Go Back
+								</button>
 								<button
 									type="submit"
 									className="inline-flex items-center px-6 py-3 border border-transparent shadow-sm text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
@@ -713,7 +659,7 @@ export default function Home() {
 			{
 		    	step == 3 ?
 				
-				<form className="md:flex md:items-center md:justify-between p-10 -mt-16" onSubmit = {submitStepThree} id = 'StepThree'>
+				<form className="md:items-center md:justify-between p-10 -mt-16" onSubmit = {submitStepThree} id = 'StepThree'>
 
 		    		<div>
 
@@ -725,14 +671,13 @@ export default function Home() {
 					    </div>
 
 			      	<div className = 'flex justify-between mt-4 mb-4'>
-						<div onSubmit = {submitStepThree}>
+						<div onSubmit = {submitStepThree} className = "w-1/2">
 							{causeList.map((cause)=>(
 								<div key = {cause.id}>
 									<h1 className="text-xl font-semibold leading-7 text-gray-900 sm:text-xl sm:truncate">Cause: {cause.name}</h1>
-
 									<select 
 										id = {cause.id + '_select'}
-										className="mt-2 mb-2 block w-full pl-3 pr-10 py-3 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
+										className="w-1/2 mt-2 mb-2 block w-full pl-3 pr-10 py-3 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
 										onChange = {
 											(e)=>{
 												let value = e.target.value;
@@ -884,7 +829,17 @@ export default function Home() {
 			      	</div>
 					  
 			      </div>
-				  <div className = 'p-4 flex justify-center'>
+					
+				  	<div className = 'p-4 flex justify-center'>
+					  	<button
+							type="button"
+							onClick={()=>{
+								setStep(2)
+							}}
+							className="mr-4 inline-flex items-center px-6 py-3 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+						>
+							Go Back
+						</button>
 						<button type = 'submit' className="inline-flex items-center px-6 py-4 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 flex-shrink-0">{addToBasketButton}</button>
 					</div>
 				</form>

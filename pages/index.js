@@ -13,6 +13,7 @@ import { fetchPostJSON } from '../lib/apiHelpers';
 import getStripe from '../lib/getStripe'
 import Loader from '../components/Root/Loader'
 import Head from 'next/head'
+import { SpeakerphoneIcon } from '@heroicons/react/outline'
 
 const incentives = [
   {
@@ -149,7 +150,7 @@ export default function Home() {
       <Head>
         <title>{base}{page}</title>
       </Head>
-      
+      <Banner />
       <Navbar/>
 
 
@@ -198,7 +199,7 @@ export default function Home() {
                     </a>
                   </Link>
                   <h1 className="mt-4 text-4xl tracking-tight font-extrabold text-gray-800 sm:mt-5 sm:leading-none lg:mt-6 lg:text-5xl xl:text-6xl">
-                    <span className="md:block">Charity in it&apos;s purest essence</span>
+                    <span className="md:block">Charity in its purest essence</span>
                   </h1>
                   <p className="mt-3 text-base text-gray-800 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
                     All proceeds go directly to those who need it - Kinship pays any fees involved. Manage your tax receipts, get proof of donation, and more.
@@ -214,7 +215,7 @@ export default function Home() {
                   <Link href = '/about'>
                     <button
                       type="button"
-                      className="ml-2 inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                      className="ml-2 inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                     >
                       About Kinship
                     </button>
@@ -369,4 +370,45 @@ export default function Home() {
   )
 }
 
+
+
+
+
+export const Banner = () => {
+  return (
+    <div className="bg-blue-600">
+      <div className="max-w-7xl mx-auto py-3 px-3 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between flex-wrap">
+          <div className="w-0 flex-1 flex items-center">
+            <span className="flex p-2 rounded-lg bg-blue-800">
+              <SpeakerphoneIcon className="h-6 w-6 text-white" aria-hidden="true" />
+            </span>
+            <p className="ml-3 font-medium text-white truncate">
+              <span className="md:hidden">Donate To The 12 Orphans Campaign</span>
+              <span className="hidden md:inline">Please contribute to our 12 Orphans Campaign in the name of Sayyida Fatema (A.S.).</span>
+            </p>
+          </div>
+          <div className="order-3 mt-2 flex-shrink-0 w-full sm:order-2 sm:mt-0 sm:w-auto">
+            <Link href = "/campaigns/orphans">
+              <a
+                className="flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-blue-600 bg-white hover:bg-blue-50"
+              >
+                Learn more
+              </a>
+            </Link>
+          </div>
+          <div className="order-2 flex-shrink-0 sm:order-3 sm:ml-3">
+            <button
+              type="button"
+              className="-mr-1 flex p-2 rounded-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-white sm:-mr-2"
+            >
+              <span className="sr-only">Dismiss</span>
+              <XIcon className="h-6 w-6 text-white" aria-hidden="true" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
 
