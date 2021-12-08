@@ -8,7 +8,7 @@ export default function Orphans() {
         <div>
             <Navbar />
             <div className = "p-8">
-                <h1 className = "font-medium text-2xl mb-3">Help Support An Orphan</h1>
+                <h1 className = "font-medium text-2xl mb-3">Help Support An Orphan.</h1>
                 <p className = "font-regular text-lg">Kinship Canada is raising for a campaign to try and sponser 12 children this month, in the name of Sayyida Fatema (A.S.). Please contribute as much as you can.</p>
                 <div className = "flex justify-center mt-4">
                     <Link href='https://buy.stripe.com/3cseVgeV39BWcqQ146'>
