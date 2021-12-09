@@ -158,9 +158,9 @@ export default function AppIndex() {
 						                {donations.map((donation, donationIdx) => (
 						                  <tr key={donation.donationIdx} className={donationIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
 						                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-						                    	{donation.causes.map((cause) => (
+						                    	Causes Coming Soon...{/* {donation.causes.map((cause) => (
 						                    		<div key = {cause.id}>{cause.cause}</div>
-						                    	))}
+						                    	))} */}
 						                    </td>
 						                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{donation.date}</td>
 						                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${parseFloat(donation.amount).toFixed(2)}</td>
@@ -175,6 +175,7 @@ export default function AppIndex() {
 
 												<button
 													type="button"
+													href={donation.stripe_receipt_url}
 													className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
 												>
 													<DownloadIcon className="-ml-0.5 mr-2 h-4 w-4" aria-hidden="true" />
