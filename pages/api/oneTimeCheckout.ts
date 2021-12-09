@@ -21,6 +21,7 @@ export default async function handler(
       const cart: any[] = req.body.details
       const decoded_cart: string = JSON.stringify(cart);
       const fees_covered: boolean = req.body.fees_covered
+      const eligible: BigInteger = req.body.eligible
       
       // Get extra parameters
       const stripe_donor_id: string = req.body.profile.stripe_donor_id
@@ -31,7 +32,12 @@ export default async function handler(
       const metadata: any = {
         user_id: user_id,
         cart: decoded_cart,
-        fees_covered: fees_covered
+        fees_covered: fees_covered,
+        eligible: eligible
+      }
+
+      const payment_intent_data: Object = {
+        metadata: metadata,
       }
 
       for (let i = 0; i < cart.length; i++) {
@@ -74,7 +80,7 @@ export default async function handler(
           customer: stripe_donor_id,
           success_url: `${req.headers.origin}/success`,
           cancel_url: `${req.headers.origin}/canceled`,
-          metadata: metadata,
+          payment_intent_data: payment_intent_data,
           billing_address_collection: "required"
         };
         const checkoutSession: Stripe.Checkout.Session = await stripe.checkout.sessions.create(
@@ -128,6 +134,10 @@ export default async function handler(
         lineItems.push(arr)
       }
 
+      const payment_intent_data: Object = {
+        metadata: metadata,
+      }
+      
       try {
         // Create Checkout Sessions from body params.
         const params: Stripe.Checkout.SessionCreateParams = {
@@ -136,7 +146,7 @@ export default async function handler(
           line_items: lineItems,
           success_url: `${req.headers.origin}/success`,
           cancel_url: `${req.headers.origin}/canceled`,
-          metadata: metadata,
+          payment_intent_data: payment_intent_data,
           billing_address_collection: "required"
         };
         const checkoutSession: Stripe.Checkout.Session = await stripe.checkout.sessions.create(

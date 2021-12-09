@@ -10,10 +10,10 @@ export default function DownloadCard({receipt}) {
 	            <div className = 'flex justify-between'>
 	            	<div>
 		              <h2 id="payment-details-heading" className="text-lg leading-6 font-medium text-gray-900">
-		                Tax Receipt For XYZ Cause
+		                Tax Receipt For Donation On {new Date(Date.parse(receipt.logged)).toLocaleDateString()}
 		              </h2>
 		              <p className="mt-1 text-sm text-gray-500">
-			             CRA Eligible tax receipt for your donation of {receipt.amount} on {receipt.created_at}
+			             CRA Eligible tax receipt for your donation of {(receipt.amount/100).toFixed(2)} on {new Date(Date.parse(receipt.logged)).toLocaleDateString()}
 		              </p>
 		            </div>
 					<div>
@@ -59,7 +59,7 @@ export default function DownloadCard({receipt}) {
 	                  Amount Donated
 	                </label>
 	                <p className="block text-md font-medium text-black">
-	                  ${parseFloat(receipt.amount).toFixed(2)}
+	                  ${parseFloat(receipt.amount/100).toFixed(2)}
 	                </p>
 	              </div>
 
@@ -68,7 +68,7 @@ export default function DownloadCard({receipt}) {
 	                  Amount Eligible For Receipt
 	                </label>
 	                <p className="block text-md font-medium text-black">
-	                  ${parseFloat(receipt.eligible).toFixed(2)}
+	                  ${parseFloat(receipt.eligible/100).toFixed(2)}
 	                </p>
 	              </div>
 
@@ -77,7 +77,7 @@ export default function DownloadCard({receipt}) {
 	                  Date Donated
 	                </label>
 	                <p className="block text-md font-medium text-black">
-	                  {receipt.date}
+						{new Date(Date.parse(receipt.logged)).toLocaleDateString()}
 	                </p>
 	              </div>
 

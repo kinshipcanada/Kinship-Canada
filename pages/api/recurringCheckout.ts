@@ -20,6 +20,7 @@ export default async function handler(
     const cart: any[] = req.body.details
     const decoded_cart: string = JSON.stringify(cart);
     const fees_covered: boolean = req.body.fees_covered
+    const eligible: BigInteger = req.body.eligible
     
     // Get extra parameters
     const stripe_donor_id: string = req.body.profile.stripe_donor_id
@@ -30,8 +31,13 @@ export default async function handler(
     const metadata: any = {
       user_id: user_id,
       cart: decoded_cart,
-      fees_covered: fees_covered
+      fees_covered: fees_covered,
+      eligible: eligible,
     }
+
+    // const payment_intent_data: Object = {
+    //   metadata: metadata,
+    // }
 
     for (let i = 0; i < cart.length; i++) {
 

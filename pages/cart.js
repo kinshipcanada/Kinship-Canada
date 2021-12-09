@@ -150,7 +150,8 @@ export default function Cart() {
             user_id: user.id,
             profile: profile,
             email: user.email,
-            fees_covered: feesStatus
+            fees_covered: feesStatus,
+            eligible: eligible
           });
   
           if (response.statusCode === 500) {
@@ -168,7 +169,8 @@ export default function Cart() {
         } else {
           const response = await fetchPostJSON('/api/oneTimeCheckout', {
             details: cart,
-            fees_covered: feesStatus
+            fees_covered: feesStatus,
+            eligible: eligible
           });
   
           if (response.statusCode === 500) {
@@ -192,7 +194,8 @@ export default function Cart() {
           user_id: user.id,
           profile: profile,
           email: user.email,
-          fees_covered: feesStatus
+          fees_covered: feesStatus,
+          eligible: eligible
         });
 
         if (response.statusCode === 500) {
