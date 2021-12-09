@@ -169,9 +169,9 @@ export default function AppIndex() {
 							                {proof.map((donation, donationIdx) => (
 							                  <tr key={donation.created_at} className={donationIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
 							                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-							                    	{donation.causes.causes.map((cause) => (
+							                    	{/* {donation.causes.causes.map((cause) => (
 							                    		<div key = {cause.id}>{cause.cause}: ${cause.amount}</div>
-							                    	))}
+							                    	))} */}
 							                    </td>
 							                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{new Date(donation.created_at).toLocaleString()}</td>
 							                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -238,9 +238,9 @@ export default function AppIndex() {
 							                {proof.map((donation, donationIdx) => (
 							                  <tr key={donation.created_at} className={donationIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
 							                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-							                    	{donation.causes.causes.map((cause) => (
+							                    	{/* {donation.causes.causes.map((cause) => (
 							                    		<div key = {cause.id}>{cause.cause}: ${cause.amount}</div>
-							                    	))}
+							                    	))} */}
 							                    </td>
 							                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{new Date(donation.created_at).toLocaleString()}</td>
 							                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
