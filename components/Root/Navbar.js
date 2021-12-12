@@ -67,7 +67,6 @@ export default function Navbar() {
 
   const [subtotal, setSubtotal] = useState(0.00);
   const [eligible, setEligible] = useState(0.00);
-  const [feesCovering, setFeesCovering] = useState(0.00)
   const [oneTime, setOneTime] = useState(0.00)
   const [recurringAmt, setRecurringAmt] = useState(0.00)
 
@@ -450,6 +449,13 @@ const campaigns = [
     description: 'Help deserving students in Africa cover their tuition.',
     href: '/campaigns/tuition',
     icon: GlobeIcon,
+    ready: true
+  },
+  {
+    name: '12 Orphans Campaign',
+    description: 'Help support 12 deserving orphans this December',
+    href: '/campaigns/orphans',
+    icon: UserGroupIcon,
     ready: true
   },
   {

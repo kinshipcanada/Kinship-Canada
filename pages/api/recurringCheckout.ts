@@ -21,7 +21,8 @@ export default async function handler(
     const decoded_cart: string = JSON.stringify(cart);
     const fees_covered: boolean = req.body.fees_covered
     const eligible: BigInteger = req.body.eligible
-    
+    const customName: string = req.body.customName
+
     // Get extra parameters
     const stripe_donor_id: string = req.body.profile.stripe_donor_id
     const email: string = req.body.email
@@ -33,6 +34,7 @@ export default async function handler(
       cart: decoded_cart,
       fees_covered: fees_covered,
       eligible: eligible,
+      custom_name: customName,
     }
 
     // const payment_intent_data: Object = {

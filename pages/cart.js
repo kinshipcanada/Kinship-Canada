@@ -11,7 +11,7 @@ import Footer from '../components/Root/Footer'
 import { CheckCircleIcon, DuplicateIcon, FingerPrintIcon, InformationCircleIcon, MailIcon } from '@heroicons/react/outline'
 import toast from 'react-hot-toast'
 import Head from 'next/head'
-import { Dialog, Transition } from '@headlessui/react'
+import { Dialog, Transition, Tab } from '@headlessui/react'
 import { SwitchHorizontalIcon } from '@heroicons/react/outline'
 import { SortAscendingIcon, UsersIcon } from '@heroicons/react/solid'
 
@@ -34,9 +34,9 @@ export default function Cart() {
   const [open, setOpen] = useState(false)
   const cancelButtonRef = useRef(null)
   const [eTransferLoading, seteTransferLoading] = useState(false)
-  const [kinshipCartIdCopied, setKinshipCartIdCopied] = useState(false)
   const [kinshipCartId, setKinshipCartId] = useState('Loading...')
-  const [kinshipEmailCopied, setKinshipEmailCopied] = useState(false)
+  const [customNameRequired, setCustomNameRequired] = useState(false)
+  const [customName, setCustomName] = useState(null)
 
   const calculateCart = (cart) => {
 
@@ -151,6 +151,7 @@ export default function Cart() {
             profile: profile,
             email: user.email,
             fees_covered: feesStatus,
+            customName: customName,
             eligible: eligible
           });
   
@@ -170,6 +171,7 @@ export default function Cart() {
           const response = await fetchPostJSON('/api/oneTimeCheckout', {
             details: cart,
             fees_covered: feesStatus,
+            customName: customName,
             eligible: eligible
           });
   
@@ -194,6 +196,7 @@ export default function Cart() {
           user_id: user.id,
           profile: profile,
           email: user.email,
+          customName: customName,
           fees_covered: feesStatus,
           eligible: eligible
         });
@@ -457,7 +460,6 @@ export default function Cart() {
                     </div>
                   </div>
 
-                  {/* FEES COVERING SECTION TO BE ADDED LATER */}
                   <div className="border-t border-gray-200 pt-4">
                     <div className = 'flex items-center justify-between'>
                       <dt className="flex text-sm text-gray-600">
@@ -500,6 +502,40 @@ export default function Cart() {
                       <label className = 'text-sm text-gray-800 ml-2' htmlFor = 'fees_covering'>(Optional) Help Kinship Canada cover credit card processing fees</label>
                     </div>
                   </div>
+
+                  <div className="border-t border-gray-200 pt-4">
+                    <div>
+                      <input type = 'checkbox' id = 'custom_name' className = 'rounded' onChange = {
+                        (e) => {
+                          let status = e.target.checked;
+                          
+                          if (status) {
+                            setCustomNameRequired(true)
+                          } else {
+                            setCustomNameRequired(false)
+                          }
+                        }  
+                      }
+                      />
+                      <label className = 'text-sm text-gray-600 font-medium ml-2' htmlFor = 'custom_name'>(Optional) I need a custom name on my receipt</label>
+                    </div>
+                    {
+                      customNameRequired ?
+
+                      <input
+                        type="text"
+                        className="mt-4 shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                        onClick={() => setCustomName(false)}
+                        placeholder="Entity to issue receipt to"
+                      />
+
+                      :
+
+                      <></>
+                    }
+                  </div>
+
+
                   <div className="border-t border-gray-200 pt-4 flex items-center justify-between">
                     <dt className="text-base font-medium text-gray-900">Donation Total:</dt>
                     <dd className="text-base font-medium text-gray-900">
@@ -565,21 +601,6 @@ export default function Cart() {
               </p>
             </div>
 
-             {/*<div className="mt-2" onClick={handleSubmit}>
-              <button
-                type = 'submit'
-                className="w-full bg-blue-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-blue-500"
-              >
-                {checkoutLoading ? 
-                  <span className = 'flex w-full text-center justify-center'><Loader /></span> 
-                  : 
-                  <span className = 'flex items-center w-full text-center justify-center'>
-                    <LibraryIcon className = 'w-6 h-6 mr-2 ' />
-                    Checkout With Bank &rarr;
-                  </span>
-                }
-              </button>
-            </div>*/}
             {error ?
               <p className = 'text-center mt-4 text-red-600 font-semibold'>{error}</p>
 
@@ -627,107 +648,117 @@ export default function Cart() {
                     <SwitchHorizontalIcon className="h-6 w-6 text-green-600" aria-hidden="true" />
                   </div>
                   <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                    <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
-                      Make an eTransfer
-                    </Dialog.Title>
-                    <div className="mt-2">
-                      <p className="text-sm text-gray-500">
-                        Kinship accepts eTransfer donations. Send to info@kinshipcanada.com, and copy and paste the Kinship Cart ID into the subject line.
-                      </p>
-                    </div>
-
-                    <div className = "mt-4">
-                      <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                        Email Address To Transfer Funds To
-                      </label>
-                      <div className="mt-1 flex rounded-md shadow-sm">
-                        <div className="relative flex items-stretch flex-grow focus-within:z-10">
-                          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <MailIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-                          </div>
-                          <input
-                            type="email"
-                            name="email"
-                            id="email"
-                            className="focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-none rounded-l-md pl-10 sm:text-sm border-gray-300"
-                            value="info@kinshipcanada.com"
-                          />
-                        </div>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setKinshipEmailCopied(true)
-                            navigator.clipboard.writeText("info@kinshipcanada.com");
-
-                            setTimeout(() => {
-                              setKinshipEmailCopied(false)
-                            }, 3000)
-                          }}
-                          className="-ml-px relative inline-flex items-center space-x-2 px-4 py-2 border border-gray-300 text-sm font-medium rounded-r-md text-gray-700 bg-gray-50 hover:bg-gray-100 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
-                        >
-                          {
-                            kinshipEmailCopied ?
-
-                            <CheckCircleIcon className="h-5 w-5 text-green-600" />
-
-                            :
-
-                            <DuplicateIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-                          }
-                          <span>{kinshipEmailCopied ? <>Copied!</> : <>Copy</>}</span>
-                        </button>
+                  <Tab.Group>
+                    <Tab.List>
+                      <div className = "p-1 shadow-sm rounded-lg border mb-4">
+                        <Tab as={Fragment}>
+                          {({ selected }) => (
+                            <button
+                              className={
+                                selected ? 'focus:outline-none outline-none bg-blue-100 text-blue-700 w-1/3 p-1 text-md rounded-md' : 'bg-white text-gray-700 text-md w-1/3 p-1 rounded-md'
+                              }
+                            >
+                              eTransfer
+                            </button>
+                          )}
+                        </Tab>
+                        <Tab as={Fragment}>
+                          {({ selected }) => (
+                            <button
+                              className={
+                                selected ? 'focus:outline-none outline-none bg-blue-100 text-blue-700 w-1/3 p-1 text-md rounded-md' : 'bg-white text-gray-700 text-md w-1/3 p-1 rounded-md'
+                              }
+                            >
+                              Wire Transfer
+                            </button>
+                          )}
+                        </Tab>
+                        <Tab as={Fragment}>
+                          {({ selected }) => (
+                            <button
+                              className={
+                                selected ? 'focus:outline-none outline-none bg-blue-100 text-blue-700 w-1/3 p-1 text-md rounded-md' : 'bg-white text-gray-700 text-md w-1/3 p-1 rounded-md'
+                              }
+                            >
+                              Bank Transfer
+                            </button>
+                          )}
+                        </Tab>
                       </div>
-                    </div>
-
-                    <div className = "mt-4">
-                      <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                        Kinship Cart ID. Paste this into the subject line of your transfer.
-                      </label>
-                      <div className="mt-1 flex rounded-md shadow-sm">
-                        <div className="relative flex items-stretch flex-grow focus-within:z-10">
-                          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <InformationCircleIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                    </Tab.List>
+                    <Tab.Panels>
+                      <Tab.Panel className = "focus:outline-none outline-none">
+                        <div className = "focus:outline-none outline-none">
+                          <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
+                            Make an eTransfer
+                          </Dialog.Title>
+                          <div className="mt-2">
+                            <p className="text-sm text-gray-500">
+                              Kinship accepts eTransfer donations. Send to info@kinshipcanada.com, and copy and paste the Kinship Cart ID into the subject line.
+                            </p>
                           </div>
-                          <input
-                            type="email"
-                            name="email"
-                            id="email"
-                            className="focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-none rounded-l-md pl-10 sm:text-sm border-gray-300"
-                            value={kinshipCartId}
-                          />
+
+                          <CopyableElement content={{
+                            "label": "Email Address To Transfer Funds To",
+                            "value": "info@kinshipcanada.com"
+                          }} />
+
+                          <CopyableElement content={{
+                            "label": "Kinship Cart ID. Paste this into the subject line of your transfer.",
+                            "value": kinshipCartId
+                          }} />
                         </div>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setKinshipCartIdCopied(true)
-                            navigator.clipboard.writeText(kinshipCartId);
+                      </Tab.Panel>
+                      <Tab.Panel className = "focus:outline-none outline-none">
+                        <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
+                          Wire Transfer
+                        </Dialog.Title>
+                        <div className="mt-2">
+                          <p className="text-sm text-gray-500">
+                            Kinship accepts eTransfer donations. Send to info@kinshipcanada.com, and copy and paste the Kinship Cart ID into the subject line.
+                          </p>
+                        </div>
 
-                            setTimeout(() => {
-                              setKinshipCartIdCopied(false)
-                            }, 3000)
-                          }}
-                          className="-ml-px relative inline-flex items-center space-x-2 px-4 py-2 border border-gray-300 text-sm font-medium rounded-r-md text-gray-700 bg-gray-50 hover:bg-gray-100 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
-                        >
-                          {
-                            kinshipCartIdCopied ?
+                        <CopyableElement content={{
+                          "label": "Email Address To Transfer Funds To",
+                          "value": "info@kinshipcanada.com"
+                        }} />
 
-                            <CheckCircleIcon className="h-5 w-5 text-green-600" />
+                        <CopyableElement content={{
+                          "label": "Kinship Cart ID. Paste this into the subject line of your transfer.",
+                          "value": kinshipCartId
+                        }} />
+                      </Tab.Panel>
+                      <Tab.Panel className = "focus:outline-none outline-none">
+                        <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
+                          Bank Deposit
+                        </Dialog.Title>
+                        <div className="mt-2">
+                          <p className="text-sm text-gray-500">
+                            Kinship accepts direct bank deposits for American donors. Kindly use the following information to make a direct deposit.
+                          </p>
+                        </div>
 
-                            :
+                        <CopyableElement content={{
+                          "label": "Email Address To Transfer Funds To",
+                          "value": "info@kinshipcanada.com"
+                        }} />
 
-                            <DuplicateIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-                          }
-                          <span>{kinshipCartIdCopied ? <>Copied!</> : <>Copy</>}</span>
-                        </button>
-                      </div>
-                    </div>
-
+                        <CopyableElement content={{
+                          "label": "Kinship Cart ID. Paste this into the subject line of your transfer.",
+                          "value": kinshipCartId
+                        }} />
+                      </Tab.Panel>
+                    </Tab.Panels>
+                  </Tab.Group>
+                    
+                    
                   </div>
                 </div>
                 <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
                   <button
                     type="button"
-                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none  sm:ml-3 sm:w-auto sm:text-sm"
                     onClick={() => setOpen(false)}
                   >
                     Close Popup
@@ -748,4 +779,55 @@ export default function Cart() {
       </Transition.Root>
     </div>
   )
+}
+
+const CopyableElement = ({ content }) => {
+
+  const [copied, setCopied] = useState(false)
+
+  return (
+    <div className = "mt-4">
+      <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+        {content.label}
+      </label>
+      <div className="mt-1 flex rounded-md shadow-sm">
+        <div className="relative flex items-stretch flex-grow focus-within:z-10">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <MailIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+          </div>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            className="focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-none rounded-l-md pl-10 sm:text-sm border-gray-300"
+            value={content.value}
+          />
+        </div>
+        <button
+          type="button"
+          onClick={() => {
+            setCopied(true)
+            navigator.clipboard.writeText(content.value);
+
+            setTimeout(() => {
+              setCopied(false)
+            }, 3000)
+          }}
+          className="-ml-px relative inline-flex items-center space-x-2 px-4 py-2 border border-gray-300 text-sm font-medium rounded-r-md text-gray-700 bg-gray-50 hover:bg-gray-100 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
+        >
+          {
+            copied ?
+
+            <CheckCircleIcon className="h-5 w-5 text-green-600" />
+
+            :
+
+            <DuplicateIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+          }
+          <span>{copied ? <>Copied!</> : <>Copy</>}</span>
+        </button>
+      </div>
+    </div>
+  )
+  
 }
