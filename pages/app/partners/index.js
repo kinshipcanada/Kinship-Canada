@@ -9,7 +9,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 
 // Import partner specific modals
-import UploadReceipts from '../../../components/Partners/UploadReceipts.js'
+import FundsCard from '../../../components/Partners/FundsCard.js'
 import UploadProof from '../../../components/Partners/UploadProof.js'
 
 export default function PartnersIndex() {
@@ -97,9 +97,8 @@ export default function PartnersIndex() {
 								</Link>
 						      </div>
 						    </div>
-
-						   	<UploadReceipts />
-						   	<UploadProof />
+							<FundsCard />
+						   	<UploadProof partner_id = {partner.id}/>
 				          </div>
 				        </div>
 				      </main>
