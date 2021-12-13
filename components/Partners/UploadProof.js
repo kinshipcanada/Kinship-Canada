@@ -1,4 +1,4 @@
-import { PlusIcon, DocumentIcon } from '@heroicons/react/solid'
+import { PlusIcon, DocumentIcon, DownloadIcon } from '@heroicons/react/solid'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { supabase } from '../../lib/supabaseClient'
@@ -81,23 +81,25 @@ export default function PartnerProofModal({partner_id}) {
 export function StatusCard({details}) {
 	return (
 		<div
-        key={details.email}
-        className="cursor-default relative rounded-lg border border-gray-300 bg-white px-5 py-4 shadow-sm flex items-center space-x-3 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
-      >
-        <div className="flex-shrink-0 text-green-600">
-          <DocumentIcon className = 'h-5 w-5'/>
-        </div>
-        <div className="flex-1 min-w-0">
-          <div href="#" className="focus:outline-none">
-            <span className="absolute inset-0" aria-hidden="true" />
-            <div className = 'flex flex-row items-center'>
-			  <p className="text-sm font-medium text-gray-900">{details.recipient} received {details.currency == "IQD" ? "ع.د" : "$"}{details.amount/100} {details.currency}</p>
-              <span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-		        {details.activity}
-		      </span>
-	      </div>
-          </div>
-        </div>
-      </div>
+			key={details.email}
+			className="cursor-default relative rounded-lg border border-gray-300 bg-white px-5 py-4 shadow-sm flex items-center space-x-3 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+		>
+			{/* <div className="flex-shrink-0 text-green-600">
+				<DocumentIcon className = 'h-5 w-5'/>
+			</div> */}
+			<div className="flex-1 min-w-0">
+				<div href="#" className="focus:outline-none">
+					<div className = 'flex flex-row items-center'>
+						<p className="text-sm font-medium text-gray-900">{details.recipient.replace(/ .*/,'')} received {details.currency == "IQD" ? <span className = "ml-1">ع.د</span> : "$"}{details.amount/100} {details.currency}</p>
+						<span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+							{details.activity}
+						</span>
+					</div>
+				</div>
+			</div>
+			<a download href = "https://rulynyeqawfbgkyypkos.supabase.in/storage/v1/object/public/proof/46296dd1-4088-460e-bae9-0fe98bcb57e1.zip" className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+					<DownloadIcon className = "w-4 h-4" />
+			</a>
+      	</div>
 	)
 }
