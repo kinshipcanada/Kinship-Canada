@@ -29,15 +29,14 @@ export default function PartnersIndex() {
 			  .select()
 			  .eq('id', userLoggedIn.id)
 
-			const partner = await supabase
-			  .from('partners')
-			  .select()
-			  .eq('controlling_user', userLoggedIn.id)
-
-			setPartner(partner.data[0])
-
 			if (profile) {
 				setProfile(profile.data[0])
+				const partner = await supabase
+					.from('partners')
+					.select()
+					.eq('id', profile.data[0].partner_controlled)
+
+				setPartner(partner.data[0])
 				setLoading(false)
 			} else {
 				setProfile([])
