@@ -298,7 +298,10 @@ export default function Navbar() {
                         <button
                           className="w-full bg-blue-600 border border-transparent rounded-md shadow-sm py-2 px-4 text-sm font-medium text-white hover:bg-blue-700"
                         >
-                          View Donation Bag
+                          <span className = "flex items-center justify-center">
+                            <ShoppingBagIcon className = 'w-5 h-5 mr-2'/>
+                            View Donation Bag
+                          </span>
                         </button>
                       </Link>
 

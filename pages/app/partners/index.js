@@ -1,16 +1,14 @@
 import Navbar from '../../../components/Root/Navbar.js'
 import Subnav from '../../../components/Root/Subnav.js'
-import FullPageLoad from '../../../components/Root/FullPageLoad.js'
 import Loader from '../../../components/Root/Loader.js'
 import LoginRequired from '../../../components/Root/LoginRequired'
 import Link from 'next/link'
 import { supabase } from '../../../lib/supabaseClient.js'
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/router'
 
 // Import partner specific modals
-import FundsCard from '../../../components/Partners/FundsCard.js'
 import UploadProof from '../../../components/Partners/UploadProof.js'
+import StatsCard from '../../../components/Partners/StatsCard'
 
 export default function PartnersIndex() {
 
@@ -97,7 +95,7 @@ export default function PartnersIndex() {
 								</Link>
 						      </div>
 						    </div>
-							<FundsCard />
+							<StatsCard />
 						   	<UploadProof partner_id = {partner.id}/>
 				          </div>
 				        </div>

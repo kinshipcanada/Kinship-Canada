@@ -2,8 +2,6 @@ import Navbar from '../components/Root/Navbar.js'
 import Link from 'next/link'
 import { supabase } from '../lib/supabaseClient'
 import { useEffect, useState } from 'react';
-import { Fragment } from 'react'
-import { Popover, Transition } from '@headlessui/react'
 import { ArrowRightIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 import { ChevronRightIcon, QuestionMarkCircleIcon, SpeakerphoneIcon } from '@heroicons/react/solid'
 import ReactTooltip from 'react-tooltip';
@@ -11,6 +9,8 @@ import Footer from '../components/Root/Footer'
 import Features from '../components/Site/Features'
 import Loader from '../components/Root/Loader'
 import Head from 'next/head'
+import { fetchPostJSON } from '../lib/apiHelpers.ts';
+import getStripe from '../lib/getStripe';
 import { useRouter } from 'next/router'
 
 const incentives = [
