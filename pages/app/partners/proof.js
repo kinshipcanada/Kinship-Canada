@@ -221,9 +221,9 @@ export default function NewProof() {
                         <label htmlFor="proof-file" className="block text-sm font-medium text-gray-700">
                             Add Images
                         </label>
-                        <p className = "text-sm font-regular text-gray-600">Please attach only zip folders</p>
+                        <p className = "text-sm font-regular text-gray-600">Please attach only zip or rar folders</p>
                         <input required type="file" id="proof-file" className = "mt-3"
-                            accept="zip,application/octet-stream,application/zip,application/x-zip,application/x-zip-compressed"
+                            accept="application/x-rar-compressed,zip,application/octet-stream,application/zip,application/x-zip,application/x-zip-compressed"
                         />
                     </div>
                     
