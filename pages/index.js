@@ -16,17 +16,17 @@ import { useRouter } from 'next/router'
 const incentives = [
   {
     name: '100% of your donation goes to those who need it',
-    description: "Kinship pays for any processing or bank fees out of pocket, unless you opt to contribute it",
+    description: "Kinship pays for any processing or bank fees out of pocket, unless you opt to contribute it.",
     imageSrc: 'https://tailwindui.com/img/ecommerce/icons/icon-delivery-light.svg',
   },
   {
     name: 'Download tax receipts from your dashboard',
-    description: 'You can access and download CRA-eligible tax receipts from your dashboard',
+    description: 'You can access and download CRA-eligible tax receipts from your dashboard.',
     imageSrc: 'https://tailwindui.com/img/ecommerce/icons/icon-chat-light.svg',
   },
   {
     name: 'Receive proof of donation on your dashboard',
-    description: "You will receive proof of all donations you make",
+    description: "You will receive proof of all donations you make.",
     imageSrc: 'https://tailwindui.com/img/ecommerce/icons/icon-fast-checkout-light.svg',
   },
 ]
