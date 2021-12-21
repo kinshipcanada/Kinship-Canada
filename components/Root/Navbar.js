@@ -4,24 +4,17 @@ import { supabase } from '../../lib/supabaseClient.js'
 import { Fragment, useEffect, useState } from 'react'
 import { Popover, Transition } from '@headlessui/react'
 import {
-  ChartBarIcon,
-  CursorClickIcon,
-  DocumentReportIcon,
   MenuIcon,
-  RefreshIcon,
-  ShieldCheckIcon,
-  ViewGridIcon,
   XIcon,
   ShoppingBagIcon,
   MailIcon,
   TicketIcon,
   SupportIcon,
 } from '@heroicons/react/outline'
-import { AcademicCapIcon, CheckIcon, UserGroupIcon, BriefcaseIcon, GlobeIcon, HeartIcon, HomeIcon, CashIcon, GiftIcon, BookOpenIcon, CurrencyDollarIcon } from '@heroicons/react/outline'
+import { UserGroupIcon, GlobeIcon, CashIcon } from '@heroicons/react/outline'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 import getStripe from '../../lib/getStripe.js'
 import { fetchPostJSON } from '../../lib/apiHelpers';
-import Loader from './Loader'
 import { useRouter } from 'next/router'
 
 const products = [

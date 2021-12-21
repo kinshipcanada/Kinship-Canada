@@ -8,8 +8,9 @@ import { supabase } from '../../../lib/supabaseClient.js'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 
-// Import partner specific modals
+// Import admin specific modals
 import { ReportModal } from '../../../components/Admin/ReportModals.js'
+import ReceiptModal from '../../../components/Admin/ReceiptModal.js'
 
 export default function PartnersIndex() {
 
@@ -17,6 +18,7 @@ export default function PartnersIndex() {
 	const [user, setUser] = useState(null)
 	const [profile, setProfile] = useState([])
 	const userLoggedIn = supabase.auth.user()
+	const router = useRouter()
 
 	const fetchUser = async () => {
 		const userLoggedIn = supabase.auth.user()
@@ -29,8 +31,12 @@ export default function PartnersIndex() {
 			  .eq('id', userLoggedIn.id)
 
 			if (profile) {
-				setProfile(profile.data[0])
-				setLoading(false)
+				if (profile.data[0].admin != null) {
+					setProfile(profile.data[0])
+					setLoading(false)
+				} else {
+					router.push('/')
+				}
 			} else {
 				setProfile([])
 				setLoading(false)
@@ -81,8 +87,8 @@ export default function PartnersIndex() {
 						      </div>
 						    </div>
 
-						    Welcome to the dashboard home.
-
+						    <ReportModal />
+							<ReceiptModal />
 				          </div>
 				        </div>
 				      </main>
