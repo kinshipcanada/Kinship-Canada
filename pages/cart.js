@@ -13,7 +13,6 @@ import toast from 'react-hot-toast'
 import Head from 'next/head'
 import { Dialog, Transition, Tab } from '@headlessui/react'
 import { SwitchHorizontalIcon } from '@heroicons/react/outline'
-import { SortAscendingIcon, UsersIcon } from '@heroicons/react/solid'
 
 export default function Cart() {
 
@@ -287,7 +286,6 @@ export default function Cart() {
 
   return (
     <div>
-      {console.log(cart)}
       <Head>
         <title>Kinship Canada · Your Cart</title>
       </Head>
