@@ -197,7 +197,7 @@ export default function Navbar() {
   return (
     <Popover className="relative bg-white">
       <div className="flex justify-between items-center px-4 py-6 sm:px-6 md:justify-start md:space-x-10 border border-gray-300">
-        <div>
+        <div className=''>
           <a href="#" className="flex items-center">
             <span className="sr-only">Kinship Canada</span>
             <img
@@ -207,8 +207,8 @@ export default function Navbar() {
               alt=""
             />
             <Link href = 'https://hobble.notion.site/Kinship-Canada-Alpha-6bb80cea62754c62a8c87e34b13347db'>
-              <span className="ml-3 inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-blue-100 text-blue-800 border hover:bg-blue-200 border-blue-600 transition-200">
-                Beta V0.1.9
+              <span className="flex-shrink-0 ml-3 inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-blue-100 text-blue-800 border hover:bg-blue-200 border-blue-600 transition-200">
+                Beta V0.2.1
               </span>
             </Link>
           </a>
@@ -399,16 +399,16 @@ export default function Navbar() {
                   </a>
                 </Link>
 
-                <Link href = '/app'>
+                <Link href = '/login'>
                   <a href="#" className="text-base font-medium text-gray-900 hover:text-gray-700">
                     Donor Dashboard
                   </a>
                 </Link>
 
                 {/* CAMPAIGN HOME PAGE COMING SOON */}
-                <Link href = '#'>
+                <Link href = '/khums'>
                   <a href="#" className="text-base font-medium text-gray-900 hover:text-gray-700">
-                    Campaigns (Coming soon..)
+                    Khums
                   </a>
                 </Link>
                 
