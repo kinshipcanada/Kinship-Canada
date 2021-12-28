@@ -221,7 +221,7 @@ export function NewReport({ open, setOpen }) {
                                     Fee Differences
                                   </label>
                                   <p id="restricted-access-description" className="text-gray-500">
-								  	Details on the amount we are required to disburse, and how much we've collected. The difference is the gain or loss based on the fees.
+								  	Details on the amount we are required to disburse, and how much we&apos;ve collected. The difference is the gain or loss based on the fees.
                                   </p>
                                 </div>
                               </div>
