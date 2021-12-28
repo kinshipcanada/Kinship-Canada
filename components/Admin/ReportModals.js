@@ -20,9 +20,7 @@ export function ReportModal() {
 				reports.length > 0 ?
 
 				<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 mt-4">
-					{reports.map((report) => (
-						<div></div>
-					))}
+					
 				</div>
 
 				:
