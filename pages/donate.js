@@ -50,19 +50,12 @@ const causes = [
 		bgColor: 'bg-blue-600',
 		regions: [
 			{
-			  "name": "Iraq",
-			  "options": [
-				{
-				  "amount": 1200,
-				  "interval": "year",
-				  "buys": "Basic needs for one orphan for one year - provided by Al Anwar Iraq"
-				},
-				{
-					"amount": 150,
-					"interval": "month",
-					"buys": "Complete care for one orphan for one month - provided by Al Ayn Iraq"
-				}
-			  ]
+			  "name": "Iraq - Al Ayn",
+			  "options": []
+			},
+			{
+				"name": "Iraq - Al Anwar",
+				"options": []
 			},
 			{
 			  "name": "India",
