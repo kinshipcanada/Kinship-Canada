@@ -50,10 +50,6 @@ const causes = [
 		bgColor: 'bg-blue-600',
 		regions: [
 			{
-			  "name": "Iraq - Al Ayn",
-			  "options": []
-			},
-			{
 				"name": "Iraq - Al Anwar",
 				"options": []
 			},
