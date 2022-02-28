@@ -22,7 +22,6 @@ const stats = [
 ]
 const logos = [
   { name: 'Desk And Chair Foundation', url: '/campaigns/partner-logos/desk-and-chair-foundation.png' },
-  { name: 'Al Ayn Social Care Foundation', url: '/campaigns/partner-logos/al-ayn-social-care-foundation.png' },
   { name: 'Kinship Canada', url: '/campaigns/partner-logos/kinship-canada.png' },
   { name: 'Laravel', url: 'https://tailwindui.com/img/logos/laravel-logo-gray-400.svg' },
   { name: 'StaticKit', url: 'https://tailwindui.com/img/logos/statickit-logo-gray-400.svg' },
