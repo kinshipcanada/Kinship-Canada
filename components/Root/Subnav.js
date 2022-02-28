@@ -113,8 +113,9 @@ export default function SubNav({partner}) {
 	]
 
 	const signOut = async () => {
-		const { error } = await supabase.auth.signOut()
-		router.push('/')
+		const { error } = supabase.auth.signOut().then(()=>{
+			router.push('/')
+		})
 	}
 
   	return (

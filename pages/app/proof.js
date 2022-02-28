@@ -8,6 +8,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { QuestionMarkCircleIcon, DownloadIcon } from '@heroicons/react/solid'
 import Head from 'next/head'
+import toast from 'react-hot-toast'
 
 export default function AppIndex() {
 
@@ -36,10 +37,27 @@ export default function AppIndex() {
 	const fetchProofs = async () => {
 		const data = await supabase
 		  .from('proof')
-		  .select()
+		  .select(`
+		 		id (
+					logged
+				),
+				available,
+				recipient,
+				city,
+				amount,
+				currency
+		  `)
+		
+		console.log(data)
 
-		setProof(data.data)
-		setLoading(false)
+		try {
+			if (data.data.length > 0) {
+				setProof(data.data)
+			} 
+			setLoading(false)
+		} catch (error) {
+			toast.error("Couldn't fetch proof - please try again later.")
+		}
 	}
 
 	useEffect(()=>{

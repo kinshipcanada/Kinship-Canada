@@ -14,6 +14,7 @@ export default function Register() {
 	const cancelButtonRef = useRef(null)
 
 	const [loading, setLoading] = useState(false)
+	const [message, setMessage] = useState(null)
 	const [email, setEmail] = useState(null)
 	const [password, setPassword] = useState(null)
 	const [error, setError] = useState(null)
@@ -255,6 +256,15 @@ export default function Register() {
 										onChange={(e)=>{setEmail(e.target.value)}}
 										className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
 									/>
+									{
+										message ? 
+
+										<p className='text-sm text-left mt-4 text-green-600 font-medium'>
+											{message}
+										</p>
+
+										: null
+									}
 									</div>
 								</div>
 
@@ -269,8 +279,15 @@ export default function Register() {
 								type="button"
 								className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 sm:ml-3 sm:w-auto sm:text-sm"
 								onClick={() => {
-									const { data, error } = supabase.auth.api.resetPasswordForEmail(email);
-									setOpen(false);
+										  
+									const { data, error } = supabase.auth.api.resetPasswordForEmail(email, {
+										redirectTo: window.location.origin
+									  });
+									if (error) {
+										setMessage(error.message)
+									} else {
+										setMessage("Success! Password reset link sent to your email, if you have already signed up.")
+									}
 								}}
 							>
 								Get Reset Link
@@ -281,7 +298,7 @@ export default function Register() {
 								onClick={() => setOpen(false)}
 								ref={cancelButtonRef}
 							>
-								Cancel
+								Close Panel
 							</button>
 						</div>
 						</div>

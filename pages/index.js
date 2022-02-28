@@ -144,11 +144,7 @@ export default function Home() {
     localStorage.setItem('kinship_cart', JSON.stringify(cart));
   }
 
-  /* CHECK FOR PASSWORD RESET LINK */
 
-  const router = useRouter()
-  const query = router.query
-  console.log(query)
 
 
   return (
