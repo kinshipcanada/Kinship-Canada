@@ -5,7 +5,7 @@ import LoginRequired from '../../components/Root/LoginRequired.js'
 import Link from 'next/link'
 import { supabase } from '../../lib/supabaseClient.js'
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/router'
+import ReactTooltip from 'react-tooltip';
 import { QuestionMarkCircleIcon, DownloadIcon } from '@heroicons/react/solid'
 import Head from 'next/head'
 import toast from 'react-hot-toast'
@@ -14,6 +14,7 @@ export default function AppIndex() {
 
 	const [loading, setLoading] = useState(true)
 	const [user, setUser] = useState(null)
+	const [onTheWay, setOnTheWay] = useState([])
 	const [profile, setProfile] = useState(null)
 	const [proof, setProof] = useState([])
 	const userLoggedIn = supabase.auth.user()
@@ -38,22 +39,20 @@ export default function AppIndex() {
 		const data = await supabase
 		  .from('proof')
 		  .select(`
-		 		id (
-					logged
-				),
-				available,
-				recipient,
-				city,
+		  	id (
 				amount,
-				currency
+				logged
+			),
+			created_at,
+			proof_link,
+			email
 		  `)
+		  .eq('email', userLoggedIn.email)
 		
-		console.log(data)
 
 		try {
-			if (data.data.length > 0) {
-				setProof(data.data)
-			} 
+			console.log(data.data)
+			setProof(data.data)
 			setLoading(false)
 		} catch (error) {
 			toast.error("Couldn't fetch proof - please try again later.")
@@ -120,33 +119,6 @@ export default function AppIndex() {
 						        <h2 className="text-lg font-bold leading-7 text-gray-900 sm:text-xl sm:truncate">Available</h2>
 						      </div>
 						    </div>
-				            {/* Proof of donation, {profile.first_name}
-								<div>
-									{proof.map((proofItem) => (
-							          <div>
-							          	{proofItem.available ? 
-							          		<div id = {proofItem.id}>
-							          			Proof for your donation on {proofItem.created_at}
-												{proofItem.causes.causes.map((cause) => (
-										          <div>
-										          	{cause.cause} : ${cause.amount} donation
-										          </div>
-										        ))}
-										        <a href = {proofItem.proof_link} download>Download Proof Package</a>
-											</div>
-
-							          		: 
-
-											<div>
-												Proof isn't availiable, but is on the way.
-											</div>
-							          	}
-							          </div>
-							        ))}
-								</div> */}
-
-
-
 								<div className="flex flex-col">
 							      <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
 							        <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -158,13 +130,13 @@ export default function AppIndex() {
 							                    scope="col"
 							                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
 							                  >
-							                    Causes
+							                    Amount
 							                  </th>
 							                  <th
 							                    scope="col"
 							                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
 							                  >
-							                    Date
+							                    Date Donated
 							                  </th>
 							                  <th
 							                    scope="col"
@@ -178,7 +150,10 @@ export default function AppIndex() {
 							                  >
 							                  	<div className = 'flex'>
 								                    Proof
-								                    <QuestionMarkCircleIcon className = 'ml-1 w-4 h-4' />
+													<span data-tip="A folder, PDF, or image with the proof of where your donation went.">
+														<QuestionMarkCircleIcon className = 'ml-1 w-4 h-4' />
+													</span>
+													<ReactTooltip place="top" type="dark" effect="float"/>
 							                    </div>
 							                  </th>
 							                </tr>
@@ -187,24 +162,24 @@ export default function AppIndex() {
 							                {proof.map((donation, donationIdx) => (
 							                  <tr key={donation.created_at} className={donationIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
 							                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-							                    	{/* {donation.causes.causes.map((cause) => (
-							                    		<div key = {cause.id}>{cause.cause}: ${cause.amount}</div>
-							                    	))} */}
+							                    	${parseFloat(donation.id.amount/100).toFixed(2)} Donated
 							                    </td>
-							                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{new Date(donation.created_at).toLocaleString()}</td>
+							                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{new Date(donation.created_at).toLocaleString().split(',')[0]}</td>
 							                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
 							                    	<span className="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800">
-												        {donation.status}
+												        Available
 												    </span>
 							                    </td>
 							                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-							                      <button
-											        type="button"
-											        className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-											      >
-											      	<DownloadIcon className="-ml-0.5 mr-2 h-4 w-4" aria-hidden="true" />
-											        Download Proof
-											      </button>
+													<a href = {donation.proof_link} target = "_blank" rel = "noopener noreferrer">
+														<button
+															type="button"
+															className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+														>
+															<DownloadIcon className="-ml-0.5 mr-2 h-4 w-4" aria-hidden="true" />
+															Download Proof
+														</button>
+													</a>
 							                    </td>
 							                  </tr>
 							                ))}
@@ -235,7 +210,7 @@ export default function AppIndex() {
 							                    scope="col"
 							                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
 							                  >
-							                    Causes
+							                    Details
 							                  </th>
 							                  <th
 							                    scope="col"
@@ -253,22 +228,34 @@ export default function AppIndex() {
 							                </tr>
 							              </thead>
 							              <tbody>
-							                {proof.map((donation, donationIdx) => (
-							                  <tr key={donation.created_at} className={donationIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-							                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-							                    	{/* {donation.causes.causes.map((cause) => (
-							                    		<div key = {cause.id}>{cause.cause}: ${cause.amount}</div>
-							                    	))} */}
-							                    </td>
-							                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{new Date(donation.created_at).toLocaleString()}</td>
-							                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-							                    	<span className="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800">
-												        {donation.status}
-												    </span>
-							                    </td>
-							                    
-							                  </tr>
-							                ))}
+							                {onTheWay.length === 0 ? 
+
+												<>
+													<tr className='bg-white'>
+														<td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+															No Donations Currently On The Way.
+														</td>
+													</tr>
+												</>
+
+												:
+
+												<>
+												{onTheWay.map((donation, donationIdx) => (
+													<tr key={donation.created_at} className={donationIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+														<td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+														</td>
+														<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{new Date(donation.created_at).toLocaleString()}</td>
+														<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+															<span className="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800">
+																{donation.status}
+															</span>
+														</td>
+														
+													</tr>
+												))}
+												</>
+											}
 							              </tbody>
 							            </table>
 							          </div>
