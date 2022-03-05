@@ -141,18 +141,18 @@ export default function Register() {
 					{error ? <p className='text-md font-semibold text-red-600'>{error}</p> : ''}
 
 					<div className="mt-6">
-					<div className="relative">
+					{/* <div className="relative">
 						<div className="absolute inset-0 flex items-center">
 						<div className="w-full border-t border-gray-300" />
 						</div>
 						<div className="relative flex justify-center text-sm">
 						<span className="px-2 bg-white text-gray-500">Or continue with</span>
 						</div>
-					</div>
+					</div> */}
 
 					<div className="mt-6 grid grid-cols-3 gap-3">
 						<div>
-						<a
+						{/* <a
 							href="#"
 							className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
 							onClick={signInWithFacebook}
@@ -193,7 +193,7 @@ export default function Register() {
 								src="/auth/discord.png"
 								alt="Discord Logo"
 							/>
-						</a>
+						</a> */}
 						</div>
 					</div>
 					</div>

@@ -11,32 +11,11 @@ import {
   TicketIcon,
   SupportIcon,
 } from '@heroicons/react/outline'
-import { UserGroupIcon, GlobeIcon, CashIcon } from '@heroicons/react/outline'
+import { UserGroupIcon, GlobeIcon, CashIcon, MoonIcon } from '@heroicons/react/outline'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 import getStripe from '../../lib/getStripe.js'
 import { fetchPostJSON } from '../../lib/apiHelpers';
 import { useRouter } from 'next/router'
-
-const products = [
-  {
-    id: 1,
-    name: 'Throwback Hip Bag',
-    href: '#',
-    color: 'Salmon',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg',
-    imageAlt: 'Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.',
-  },
-  {
-    id: 2,
-    name: 'Medium Stuff Satchel',
-    href: '#',
-    color: 'Blue',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg',
-    imageAlt:
-      'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
-  },
-  // More products...
-]
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -229,6 +208,12 @@ export default function Navbar() {
             <Link href="/khums">
 	            <a className="text-base font-medium text-gray-500 hover:text-gray-900">
 	              Khums
+	            </a>
+            </Link>
+
+            <Link href="/campaigns/ramadhan">
+	            <a className="text-base font-medium text-gray-500 hover:text-gray-900">
+	              Ramadhan
 	            </a>
             </Link>
             
@@ -440,6 +425,13 @@ import {
 } from '@heroicons/react/outline'
 
 const campaigns = [
+  {
+    name: 'Ramadhan Campaign',
+    description: 'Help deserving students in Africa cover their tuition.',
+    href: '/campaigns/ramadhan',
+    icon: MoonIcon,
+    ready: true
+  },
   {
     name: 'Africa Tuition Campaign',
     description: 'Help deserving students in Africa cover their tuition.',
