@@ -81,7 +81,7 @@ export default function Home() {
                     Ramadhan Campaign
                 </span>
                 <span className="block text-white">Hunger is not about a lack of food.</span>
-                <span className="block text-white">It's a terrible injustice.</span>
+                <span className="block text-white">It&apos;s a terrible injustice.</span>
               </h1>
               <p className="mt-6 max-w-lg mx-auto text-center text-xl text-white sm:max-w-3xl">
                 Donate today to help ensure that someone can keep one meal on the table. Donations will be sent on the 20th of Shabaan.
@@ -104,40 +104,7 @@ export default function Home() {
             </div>
           
             {regions.map((region)=>{
-
-              const [loading, setLoading] = useState(false)
-              const [success, setSuccess] = useState(false)
-              const [amount, setAmount] = useState(region.defaultAmount)
-
-              return (
-                <div key={region.name} className="space-y-16 pt-10 mt-10 border-t border-gray-200 sm:pt-16 sm:mt-16">
-                  <div
-                    className="flex flex-col lg:grid lg:grid-cols-12 lg:gap-x-8 lg:items-center"
-                  >
-                    <div className="mt-6 lg:mt-0 lg:col-span-5 xl:col-span-4">
-                      <img src ={region.imageSource} className="w-20 mb-3" />
-                      <p className="mt-1 text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl">
-                          {region.name}
-                      </p>  
-                      <p className="mt-4 text-md text-gray-500">{region.description}</p>
-                    </div>
-                    <div className="flex-auto lg:col-span-7 xl:col-span-8">
-
-                      <div className="bg-white overflow-hidden shadow border rounded-lg divide-y divide-gray-200">
-                      <div className="px-4 py-5 sm:px-6 text-semibold font-medium">
-                          Make a donation in {region.name}
-                      </div>
-                      <div className="px-4 py-5 sm:p-6">
-
-                          <Form cart={cart} setCart={setCart} region = {region} success={success} setSuccess={setSuccess} loading={loading} setLoading={setLoading} amount={amount} setAmount={setAmount}/>
-
-                      </div>
-                      </div>
-
-                    </div>
-                  </div>
-              </div>
-              )
+              <RegionComponent region={region} />
             })}
 
             </div>
@@ -150,6 +117,42 @@ export default function Home() {
       </div>
       <Footer />
     </div>
+  )
+}
+
+const RegionComponent = ({region}) => {
+  const [loading, setLoading] = useState(false)
+  const [success, setSuccess] = useState(false)
+  const [amount, setAmount] = useState(region.defaultAmount)
+
+  return (
+    <div key={region.name} className="space-y-16 pt-10 mt-10 border-t border-gray-200 sm:pt-16 sm:mt-16">
+      <div
+        className="flex flex-col lg:grid lg:grid-cols-12 lg:gap-x-8 lg:items-center"
+      >
+        <div className="mt-6 lg:mt-0 lg:col-span-5 xl:col-span-4">
+          <img src ={region.imageSource} className="w-20 mb-3" />
+          <p className="mt-1 text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl">
+              {region.name}
+          </p>  
+          <p className="mt-4 text-md text-gray-500">{region.description}</p>
+        </div>
+        <div className="flex-auto lg:col-span-7 xl:col-span-8">
+
+          <div className="bg-white overflow-hidden shadow border rounded-lg divide-y divide-gray-200">
+          <div className="px-4 py-5 sm:px-6 text-semibold font-medium">
+              Make a donation in {region.name}
+          </div>
+          <div className="px-4 py-5 sm:p-6">
+
+              <Form cart={cart} setCart={setCart} region = {region} success={success} setSuccess={setSuccess} loading={loading} setLoading={setLoading} amount={amount} setAmount={setAmount}/>
+
+          </div>
+          </div>
+
+        </div>
+      </div>
+  </div>
   )
 }
 
