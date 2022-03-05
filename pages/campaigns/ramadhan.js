@@ -76,7 +76,7 @@ export default function Home() {
             <div className="relative px-4 py-16 sm:px-6 sm:py-24 lg:py-32 lg:px-8">
                 
               <h1 className="text-center text-4xl font-extrabold sm:text-5xl lg:text-6xl">
-                <span class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                <span className="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
                     <MoonIcon className="w-4 h-4 mr-2" />
                     Ramadhan Campaign
                 </span>
