@@ -103,9 +103,9 @@ export default function Home() {
               </p>
             </div>
           
-            {regions.map((region)=>{
-              <RegionComponent region={region} />
-            })}
+            {regions.map((region)=>(
+              <RegionComponent region={region} cart={cart} setCart={setCart}/>
+            ))}
 
             </div>
 
@@ -120,7 +120,7 @@ export default function Home() {
   )
 }
 
-const RegionComponent = ({region}) => {
+const RegionComponent = ({region, cart, setCart}) => {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [amount, setAmount] = useState(region.defaultAmount)
