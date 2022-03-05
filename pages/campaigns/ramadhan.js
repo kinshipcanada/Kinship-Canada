@@ -104,7 +104,7 @@ export default function Home() {
             </div>
           
             {regions.map((region)=>(
-              <RegionComponent region={region} cart={cart} setCart={setCart}/>
+              <RegionComponent key={region.name} region={region} cart={cart} setCart={setCart}/>
             ))}
 
             </div>
