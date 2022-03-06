@@ -11,6 +11,7 @@ export default function Home() {
   const [cart, setCart] = useState([]);
 
   useEffect(async ()=>{
+    animateValue("familiesSupported", 0, 4, 400);
     let cart = JSON.parse(localStorage.getItem('kinship_cart'))
     
     if (cart) {
@@ -19,6 +20,23 @@ export default function Home() {
       setCart([])
     }
   },[])
+
+  function animateValue(id, start, end, duration) {
+        if (start === end) return;
+        var range = end - start;
+        var current = start;
+        var increment = end > start? 1 : -1;
+        var stepTime = Math.abs(Math.floor(duration / range));
+        var obj = document.getElementById(id);
+        var timer = setInterval(function() {
+            current += increment;
+            obj.innerHTML = current;
+            if (current == end) {
+                clearInterval(timer);
+            }
+        }, stepTime);
+    }
+
 
   const regions = [
     {
@@ -50,10 +68,6 @@ export default function Home() {
     }
 
   ]
-
-  const addFunction = (region, setLoading, setSuccess) => {
-    console.log("bruh")
-  }
 
   return (
     <div>
@@ -95,14 +109,25 @@ export default function Home() {
       <div className="bg-white">
         <div className="max-w-7xl mx-auto py-24 sm:py-32 sm:px-2 lg:px-4">
           <div className="max-w-2xl mx-auto px-4 lg:max-w-none">
-            <div className="max-w-3xl">
-              <h2 className="font-semibold text-gray-500">Where your donation goes</h2>
-              <p className="mt-2 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">What&apos;s actually included?</p>
-              <p className="mt-4 text-gray-500">
-                Amounts shown per region will provide a months worth of basic rations, including oil, flour, rice, and sugar. You can donate either the suggested amount or a custom amount. All donations are tax receipt eligible.
-<br/>Please donate to a maximum of three causes at a time.
-              </p>
+            <div className="flex sm:flex-row flex-col justify-between">
+                <div className='sm:max-w-2xl'>
+                    <h2 className="font-semibold text-gray-500">Where your donation goes</h2>
+                    <p className="mt-2 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">What&apos;s actually included?</p>
+                    <p className="mt-4 text-gray-500">Amounts shown per region will provide a months worth of basic rations, including oil, flour, rice, and sugar. You can donate either the suggested amount or a custom amount. All donations are tax receipt eligible.
+                    <br/>Please donate to a maximum of three causes at a time.
+                    </p>
+                </div>
+                <div className='sm:w-1/3 bg-white shadow-xl border-blue-600 border-4 shadow-blue-600 rounded-lg mt-8'>
+                    
+                    <div className="p-10 flex flex-col text-center justify-center content-center">
+                        <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">Families Supported So Far</dt>
+                        <dd  id = "familiesSupported" className="order-1 text-5xl font-extrabold text-blue-600">4</dd>
+                    </div>
+
+                </div>
+                
             </div>
+
           
             {regions.map((region)=>(
               <RegionComponent key={region.name} region={region} cart={cart} setCart={setCart}/>
@@ -138,7 +163,7 @@ const RegionComponent = ({region, cart, setCart}) => {
           </p>  
           <p className="mt-4 text-md text-gray-500">{region.description}</p>
         </div>
-        <div className="flex-auto lg:col-span-7 xl:col-span-8">
+        <div className="flex-auto lg:col-span-7 xl:col-span-8 mt-4 sm:mt-0">
 
           <div className="bg-white overflow-hidden shadow border rounded-lg divide-y divide-gray-200">
           <div className="px-4 py-5 sm:px-6 text-semibold font-medium">
@@ -209,7 +234,7 @@ const Form = ({cart, setCart, region, success, setSuccess, loading, setLoading, 
 
 
   return (
-    <div className="mt-4 sm:mt-0">
+    <div className="">
       {
         success ?
 
@@ -242,7 +267,7 @@ const Form = ({cart, setCart, region, success, setSuccess, loading, setLoading, 
 
         <>
         <div className='flex flex-col'>
-          <label htmlFor="india" className="block text-sm font-medium text-gray-700">
+          <label htmlFor={region.name} className="block text-sm font-medium text-gray-700">
               Choose an amount to donate (recommended: $100)
           </label>
           <div className="mt-2 relative rounded-md shadow-sm w-full">
