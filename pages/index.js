@@ -410,8 +410,8 @@ export const Banner = () => {
               <SpeakerphoneIcon className="h-6 w-6 text-white" aria-hidden="true" />
             </span>
             <p className="ml-3 font-medium text-white truncate">
-              <span className="md:hidden">Donate To The 12 Orphans Campaign</span>
-              <span className="hidden md:inline">Please contribute to our 12 Orphans Campaign in the name of Sayyida Fatema (A.S.).</span>
+              <span className="md:hidden">Donate To The Ramadhan Campaign</span>
+              <span className="hidden md:inline">Please contribute to our Ramadhan Campaign in the name of Imam Hussain (A.S.).</span>
             </p>
           </div>
           <div className="order-3 mt-2 flex-shrink-0 w-full sm:order-2 sm:mt-0 sm:w-auto">

@@ -389,10 +389,24 @@ export default function Navbar() {
                     Khums
                   </a>
                 </Link>
+
+                <Link href = '/khums'>
+                  <a href="#" className="text-base font-medium text-gray-900 hover:text-gray-700">
+                    Ramadhan
+                  </a>
+                </Link>
                 
                 
               </div>
               <div className="mt-6">
+                <Link href = '/cart'>
+                  <a
+                    href="#"
+                    className="mb-2 w-full flex items-center justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  >
+                    Cart
+                  </a>
+                </Link>
                 <Link href = '/donate'>
                   <a
                     href="#"
