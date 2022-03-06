@@ -187,7 +187,7 @@ export default function Home() {
             <div className="lg:grid lg:grid-cols-12 lg:gap-8">
               <div className="px-4 sm:px-6 sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left lg:flex lg:items-center">
                 <div>
-                  <Link href = '/campaigns/tuition'>
+                  <Link href = '/campaigns/ramadhan'>
                     <a
                       href="#"
                       className="inline-flex items-center text-gray-800 bg-white rounded-full p-1 pr-2 sm:text-base lg:text-sm xl:text-base hover:text-gray-900 border hover:border-gray-600 transition duration-200"
@@ -195,7 +195,7 @@ export default function Home() {
                       <span className="px-3 py-0.5 text-white text-xs font-semibold leading-5 uppercase tracking-wide bg-blue-600 rounded-full">
                         Campaign
                       </span>
-                      <span className="ml-4 text-sm">View the Africa Tuition Campaign</span>
+                      <span className="ml-4 text-sm">View the Ramadhan Campaign</span>
                       <ChevronRightIcon className="ml-2 w-5 h-5 text-gray-500" aria-hidden="true" />
                     </a>
                   </Link>
