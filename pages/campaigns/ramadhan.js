@@ -100,6 +100,7 @@ export default function Home() {
               <p className="mt-2 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">What&apos;s actually included?</p>
               <p className="mt-4 text-gray-500">
                 Amounts shown per region will provide a months worth of basic rations, including oil, flour, rice, and sugar. You can donate either the suggested amount or a custom amount. All donations are tax receipt eligible.
+<br/>Please donate to a maximum of three causes at a time.
               </p>
             </div>
           
@@ -208,7 +209,7 @@ const Form = ({cart, setCart, region, success, setSuccess, loading, setLoading, 
 
 
   return (
-    <div>
+    <div className="mt-4 sm:mt-0">
       {
         success ?
 
