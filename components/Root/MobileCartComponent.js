@@ -7,7 +7,7 @@ export default function MobileCart() {
     <Link href = '/cart'>
       <a
         aria-live="assertive"
-        className="fixed inset-0 flex items-end px-4 py-4 pointer-events-none cursor-pointer"
+        className="sm:hidden fixed inset-0 flex items-end px-4 py-4 pointer-events-none cursor-pointer"
       >
         <div className="w-full flex flex-col items-start space-y-4 sm:items-end">
           <div>

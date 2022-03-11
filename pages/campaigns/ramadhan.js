@@ -57,7 +57,7 @@ export default function Home() {
       "name": "Iraq",
       "description": "The recommended amount is $40, which will allow a family of 5 to have at least one meal per day for a month.",
       "imageSource": "/regions/iraq.png",
-      "defaultAmount": 40.00
+      "defaultAmount": 60.00
     },
 
     {
