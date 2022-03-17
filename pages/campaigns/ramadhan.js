@@ -50,14 +50,14 @@ export default function Home() {
       "name": "Africa",
       "description": "The recommended amount is $60, which will allow a family of 5 to have at least one meal per day for a month.",
       "imageSource": "/regions/africa.png",
-      "defaultAmount": 60.00
+      "defaultAmount": 100.00
     },
 
     {
       "name": "Iraq",
       "description": "The recommended amount is $40, which will allow a family of 5 to have at least one meal per day for a month.",
       "imageSource": "/regions/iraq.png",
-      "defaultAmount": 60.00
+      "defaultAmount": 100.00
     },
 
     {
@@ -121,7 +121,7 @@ export default function Home() {
                     
                     <div className="p-10 flex flex-col text-center justify-center content-center">
                         <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">Families Supported So Far</dt>
-                        <dd  id = "familiesSupported" className="order-1 text-5xl font-extrabold text-blue-600">4</dd>
+                        <dd  id = "familiesSupported" className="order-1 text-5xl font-extrabold text-blue-600">117</dd>
                     </div>
 
                 </div>
