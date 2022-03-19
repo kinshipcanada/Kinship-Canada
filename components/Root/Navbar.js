@@ -10,6 +10,7 @@ import {
   MailIcon,
   TicketIcon,
   SupportIcon,
+  ArrowRightIcon,
 } from '@heroicons/react/outline'
 import { UserGroupIcon, GlobeIcon, CashIcon, MoonIcon } from '@heroicons/react/outline'
 import { ChevronDownIcon } from '@heroicons/react/solid'
@@ -180,7 +181,7 @@ export default function Navbar() {
             />
             <Link href = 'https://hobble.notion.site/Kinship-Canada-Alpha-6bb80cea62754c62a8c87e34b13347db'>
               <span className="flex-shrink-0 ml-3 inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-blue-100 text-blue-800 border hover:bg-blue-200 border-blue-600 transition-200">
-                Beta V0.2.1
+                Beta V0.2.8
               </span>
             </Link>
           </a>
@@ -437,6 +438,7 @@ import {
   PhoneIcon,
   PlayIcon,
 } from '@heroicons/react/outline'
+import Loader from './Loader'
 
 const campaigns = [
   {
@@ -519,17 +521,31 @@ export function Campaigns() {
             <Popover.Panel className="absolute z-10 left-1/2 transform -translate-x-1/2 mt-3 px-2 w-screen max-w-md sm:px-0">
               <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
                 <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
-                  {campaigns.map((item) => (
-                    <Link href = {item.href} key = {item.name}>
+                  {campaigns.map((item) => {
+                    
+                    const [loading, setLoading] = useState(false);
+
+                    return (
+                      <Link href = {item.href} key = {item.name}>
                       <a
                         key={item.name}
                         href={item.href}
+                        onClick = {()=>{setLoading(true)}}
                         className="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50 transition ease-in-out duration-150"
                       >
                         <item.icon className="flex-shrink-0 h-6 w-6 text-blue-600" aria-hidden="true" />
                         <div className="ml-4">
-                          <p className="text-base font-medium text-gray-900">
+                          <p className="text-base font-medium text-gray-900 flex items-center">
                             {item.name}
+                            {
+                              loading && item.ready ? 
+
+                              <Loader />
+
+                              :
+
+                              null
+                            }
                             {
                               item.ready ?
 
@@ -546,7 +562,8 @@ export function Campaigns() {
                         </div>
                       </a>
                     </Link>
-                  ))}
+                    )
+                  })}
                 </div>
               </div>
             </Popover.Panel>

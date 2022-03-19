@@ -10,6 +10,7 @@ export default function Orphans() {
 
     const [open, setOpen] = useState(false)
     const [cart, setCart] = useState([]);
+	const [empty, setEmpty] = useState(null)
     const [customAmount, setCustomAmount] = useState(null);
     const [error, setError] = useState(null);
     const cancelButtonRef = useRef(null)

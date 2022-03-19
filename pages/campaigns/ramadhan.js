@@ -11,7 +11,7 @@ export default function Home() {
   const [cart, setCart] = useState([]);
 
   useEffect(async ()=>{
-    animateValue("familiesSupported", 0, 140, 2000);
+    animateValue("familiesSupported", 0, 152, 2000);
     let cart = JSON.parse(localStorage.getItem('kinship_cart'))
     
     if (cart) {
@@ -48,14 +48,14 @@ export default function Home() {
 
     {
       "name": "Africa",
-      "description": "The recommended amount is $60, which will allow a family of 5 to have at least one meal per day for a month.",
+      "description": "The recommended amount is $100, which will allow a family of 5 to have at least one meal per day for a month.",
       "imageSource": "/regions/africa.png",
       "defaultAmount": 100.00
     },
 
     {
       "name": "Iraq",
-      "description": "The recommended amount is $40, which will allow a family of 5 to have at least one meal per day for a month",
+      "description": "The recommended amount is $100, which will allow a family of 5 to have at least one meal per day for a month",
       "imageSource": "/regions/iraq.png",
       "defaultAmount": 100.00
     },
