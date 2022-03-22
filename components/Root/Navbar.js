@@ -521,49 +521,9 @@ export function Campaigns() {
             <Popover.Panel className="absolute z-10 left-1/2 transform -translate-x-1/2 mt-3 px-2 w-screen max-w-md sm:px-0">
               <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
                 <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
-                  {campaigns.map((item) => {
-                    
-                    const [loading, setLoading] = useState(false);
-
-                    return (
-                      <Link href = {item.href} key = {item.name}>
-                      <a
-                        key={item.name}
-                        href={item.href}
-                        onClick = {()=>{setLoading(true)}}
-                        className="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50 transition ease-in-out duration-150"
-                      >
-                        <item.icon className="flex-shrink-0 h-6 w-6 text-blue-600" aria-hidden="true" />
-                        <div className="ml-4">
-                          <p className="text-base font-medium text-gray-900 flex items-center">
-                            {item.name}
-                            {
-                              loading && item.ready ? 
-
-                              <Loader />
-
-                              :
-
-                              null
-                            }
-                            {
-                              item.ready ?
-
-                              <></>
-
-                              :
-
-                              <span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                Coming Soon...
-                              </span>
-                            }
-                          </p>
-                          <p className="mt-1 text-sm text-gray-500">{item.description}</p>
-                        </div>
-                      </a>
-                    </Link>
-                    )
-                  })}
+                  {campaigns.map((item) => (
+                    <CampaignLink item = {item} key = {item.name} />
+                  ))}
                 </div>
               </div>
             </Popover.Panel>
@@ -571,6 +531,49 @@ export function Campaigns() {
         </>
       )}
     </Popover>
+  )
+}
+
+const CampaignLink = ({item}) => {
+  const [loading, setLoading] = useState(false);
+
+  return (
+    <Link href = {item.href}>
+    <a
+      key={item.name}
+      href={item.href}
+      onClick = {()=>{setLoading(true)}}
+      className="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50 transition ease-in-out duration-150"
+    >
+      <item.icon className="flex-shrink-0 h-6 w-6 text-blue-600" aria-hidden="true" />
+      <div className="ml-4">
+        <p className="text-base font-medium text-gray-900 flex items-center">
+          {item.name}
+          {
+            loading && item.ready ? 
+
+            <Loader />
+
+            :
+
+            null
+          }
+          {
+            item.ready ?
+
+            <></>
+
+            :
+
+            <span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+              Coming Soon...
+            </span>
+          }
+        </p>
+        <p className="mt-1 text-sm text-gray-500">{item.description}</p>
+      </div>
+    </a>
+  </Link>
   )
 }
 
