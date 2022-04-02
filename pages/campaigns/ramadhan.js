@@ -11,7 +11,7 @@ export default function Home() {
   const [cart, setCart] = useState([]);
 
   useEffect(async ()=>{
-    animateValue("familiesSupported", 0, 285, 2000);
+    animateValue("familiesSupported", 0, 411, 2000);
     let cart = JSON.parse(localStorage.getItem('kinship_cart'))
     
     if (cart) {
