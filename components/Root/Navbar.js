@@ -391,7 +391,7 @@ export default function Navbar() {
                   </a>
                 </Link>
 
-                <Link href = '/khums'>
+                <Link href = '/campaigns/ramadhan'>
                   <a href="#" className="text-base font-medium text-gray-900 hover:text-gray-700">
                     Ramadhan
                   </a>
