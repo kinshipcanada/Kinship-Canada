@@ -212,12 +212,12 @@ export default function Navbar() {
 	            </a>
             </Link>
 
-            <Link href="/campaigns/ramadhan">
+            {/* <Link href="/campaigns/ramadhan">
 	            <a className="text-base font-medium text-gray-500 hover:text-gray-900">
 	              Ramadhan
 	            </a>
             </Link>
-            
+             */}
             <Campaigns />
 
             <Support />
@@ -391,12 +391,12 @@ export default function Navbar() {
                   </a>
                 </Link>
 
-                <Link href = '/campaigns/ramadhan'>
+                {/* <Link href = '/campaigns/ramadhan'>
                   <a href="#" className="text-base font-medium text-gray-900 hover:text-gray-700">
                     Ramadhan
                   </a>
                 </Link>
-                
+                 */}
                 
               </div>
               <div className="mt-6">
@@ -441,13 +441,13 @@ import {
 import Loader from './Loader'
 
 const campaigns = [
-  {
-    name: 'Ramadhan Campaign',
-    description: 'Help deserving students in Africa cover their tuition.',
-    href: '/campaigns/ramadhan',
-    icon: MoonIcon,
-    ready: true
-  },
+  // {
+  //   name: 'Ramadhan Campaign',
+  //   description: 'Help deserving students in Africa cover their tuition.',
+  //   href: '/campaigns/ramadhan',
+  //   icon: MoonIcon,
+  //   ready: true
+  // },
   {
     name: 'Africa Tuition Campaign',
     description: 'Help deserving students in Africa cover their tuition.',
