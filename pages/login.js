@@ -281,7 +281,7 @@ export default function Register() {
 								onClick={() => {
 										  
 									const { data, error } = supabase.auth.api.resetPasswordForEmail(email, {
-										redirectTo: `${window.location.origin}/authentication/`
+										redirectTo: `${window.location.origin}/`
 									  });
 									if (error) {
 										setMessage(error.message)

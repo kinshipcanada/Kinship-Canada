@@ -14,7 +14,7 @@ export default function PasswordRecoveryPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (password !== passwordRepeat) {
-      alert("passwords-do-not-match");
+      alert("Passwords do not match.");
       return;
     }
     
