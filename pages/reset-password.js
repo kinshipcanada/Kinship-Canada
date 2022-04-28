@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useState, FormEventHandler } from "react";
-import { supabase } from "../../lib/supabaseClient";
+import { supabase } from "../lib/supabaseClient";
 
 export default function PasswordRecoveryPage() {
   const [error, setError] = useState(null);
