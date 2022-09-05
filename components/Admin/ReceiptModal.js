@@ -9,14 +9,6 @@ const searchClient = algoliasearch(
 import { Fragment, useEffect, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { supabase } from "../../lib/supabaseClient";
-
-const people = [
-    {
-      name: 'Naeem Thawer',
-      amount: '5806',
-      email: 'naeem@example.com',
-    },
-]
   
 export default function ReceiptModal() {
     return (
